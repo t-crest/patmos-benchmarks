@@ -35,7 +35,7 @@ set(TRIPLE "patmos-unknown-unknown-elf" CACHE STRING "Target triple to compile c
 # set some compiler-related variables;
 set(CMAKE_C_COMPILE_OBJECT   "<CMAKE_C_COMPILER>   -target ${TRIPLE} -fno-builtin -emit-llvm <DEFINES> <FLAGS> -o <OBJECT> -c <SOURCE>")
 set(CMAKE_CXX_COMPILE_OBJECT "<CMAKE_CXX_COMPILER> -target ${TRIPLE} -fno-builtin -emit-llvm <DEFINES> <FLAGS> -o <OBJECT> -c <SOURCE>")
-set(CMAKE_C_LINK_EXECUTABLE  "${PATMOS_GOLD_ENV}<CMAKE_C_COMPILER> -target ${TRIPLE} -fno-builtin <FLAGS> <CMAKE_C_LINK_FLAGS> <LINK_FLAGS> <OBJECTS> -o <TARGET> <LINK_LIBRARIES>")
+set(CMAKE_C_LINK_EXECUTABLE  "${PATMOS_GOLD_ENV}<CMAKE_C_COMPILER> -target ${TRIPLE} -fno-builtin <FLAGS> <CMAKE_C_LINK_FLAGS> <LINK_FLAGS> <OBJECTS> -o <TARGET> -mpreemit-bitcode=<TARGET>.bc -mserialize=<TARGET>.pml <LINK_LIBRARIES>")
 set(CMAKE_FORCE_C_OUTPUT_EXTENSION ".bc" FORCE)
 
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
@@ -147,5 +147,40 @@ else()
     message(WARNING "pasim not found, testing is disabled.")
   endif()
 endif()
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+# find emulator
+
+find_program(PATMOS_EMULATOR NAMES patmos-emulator DOC "Path to the Chisel-based patmos emulator.")
+
+set(PATMOS_EMULATOR_OPTIONS "" CACHE STRING "Additional command-line options passed to the Chisel-based patmos emulator.")
+
+separate_arguments(PATMOS_EMULATOR_OPTIONS)
+
+if(PATMOS_EMULATOR)
+  set(ENABLE_HARDWARE_TESTING true)
+  macro (run_emulator name prog in out ref timeout)
+    # Create symlinks to programs to make job_patmos.sh happy
+    string(REGEX REPLACE "^[a-zA-Z0-9]+-" "" _progname ${name})
+    file(TO_CMAKE_PATH ${CMAKE_CURRENT_BINARY_DIR}/${_progname} _namepath)
+    file(TO_CMAKE_PATH ${prog} _progpath)
+    if (NOT ${_namepath} STREQUAL ${_progpath})
+	add_custom_command(OUTPUT ${_namepath} COMMAND ${CMAKE_COMMAND} -E remove -f ${_namepath} COMMAND ${CMAKE_COMMAND} -E create_symlink ${prog} ${_namepath})
+	add_custom_target(${name} ALL SOURCES ${_namepath})
+    endif()
+    add_test(NAME ${name} COMMAND ${PATMOS_EMULATOR} -q -I ${in} -O ${out} ${PATMOS_EMULATOR_OPTIONS} ${prog})
+    set_tests_properties (${name} PROPERTIES TIMEOUT ${timeout})
+    set_property(DIRECTORY APPEND PROPERTY ADDITIONAL_MAKE_CLEAN_FILES ${out})
+    if(NOT ${ref} STREQUAL "")
+      add_test(NAME ${name}-cmp COMMAND ${CMAKE_COMMAND} -E compare_files ${out} ${ref})
+      set_tests_properties(${name}-cmp PROPERTIES DEPENDS ${name})
+    endif()
+  endmacro(run_emulator)
+else()
+  if(REQUIRES_PASIM)
+    message(WARNING "patmos-emulator not found, hardware testing is disabled.")
+  endif()
+endif()
+
 
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
