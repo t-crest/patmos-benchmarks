@@ -4,9 +4,12 @@
   * Changes: JG 2005/12/23: Inserted prototype.
   *                         Indented program.
   */
+#ifdef PRINT_RESULTS
+#include <stdio.h>
+#endif
 int             fac(int n);
 
-int 
+int
 fac(int n)
 {
 	if (n == 0)
@@ -15,7 +18,7 @@ fac(int n)
 		return (n * fac(n - 1));
 }
 
-int 
+int
 main(void)
 {
 	int             i;
@@ -23,6 +26,9 @@ main(void)
 
 	for (i = 0; i <= 5; i++)
 		s += fac(i);
-
-	return (s);
+#ifdef PRINT_RESULTS
+        printf("fac: s = %d\n", s);
+#endif
+        if (s != 154) return (1);
+	return (0);
 }

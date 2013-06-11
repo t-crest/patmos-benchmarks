@@ -27,26 +27,9 @@
   * Changes: JG 2005/12/23: Indented program.
   */
 
-/* #define DO_TRACING */
-
-#ifdef DO_TRACING		/* ON PC
-				 * 
-				 * #include <stdio.h> #define TRACE(x)
-				 * trace((x)) #undef TEST                   /*
-				 * finished testing! */
-void 
-trace(char *s)
-{
-	printf("%s\n", s);
-}
-
-#else				/* ON TARGET */
-
-#define TRACE(x)
-#undef TEST
-
+#ifdef PRINT_RESULTS
+#include <stdio.h>
 #endif
-
 
 
 volatile int    P1_is_marked = 3;
@@ -4017,12 +4000,11 @@ main()
 		}
 	}
 
-
-	dummy_i = 77;
-
-	return dummy_i;
-
-
+#ifdef PRINT_RESULTS
+        printf("nsichneu: %d, %d, %d\n", P1_is_marked, P2_is_marked, P3_is_marked);
+#endif
+        if(P1_is_marked + P2_is_marked + P3_is_marked != 8) return (1);
+        return (0);
 }
 
 /***************************************************************************

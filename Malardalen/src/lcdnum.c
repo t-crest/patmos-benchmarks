@@ -15,6 +15,9 @@
   * Changes: JG 2005/12/23: Changed type of main to int Inserted prototypes.
                             Indented program.
   */
+#ifdef PRINT_RESULTS
+#include <stdio.h>
+#endif
 
 unsigned char   num_to_lcd(unsigned char a);
 
@@ -66,17 +69,20 @@ num_to_lcd(unsigned char a)
 volatile unsigned char IN;
 volatile unsigned char OUT;
 
-int 
+int
 main(void)
 {
 	int             i;
 	unsigned char   a;
 
 	for (i = 0; i < 10; i++) {
-		a = IN;		/* scan port */
+                a = (IN+=1);		/* scan port */
 		if (i < 5) {
 			a = a & 0x0F;
 			OUT = num_to_lcd(a);
+#ifdef PRINT_RESULTS
+                        printf("lcdnum: OUT = %d\n", OUT);
+#endif
 		}
 	}
 	return 0;

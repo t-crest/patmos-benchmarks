@@ -1,0 +1,26 @@
+Maelardalen WCET Benchmarks
+---------------------------
+
+The benchmarks in the src directory have been adapted as follows:
+- Fixed compiler warnings
+- Exit Code 0 on expected result, 1 otherwise
+- If Macro PRINT_RESULTS is defined, print out the results
+- If Macro TIMING is defined, time routine and print measurements
+- Fixed the following bugs:
+* bsort100: the check whether the array is successfully/unsuccessfully sorted is wrong
+* duff: to/from need to be switched
+* fft1: changed name of reserve function log
+* lms: changed name of reserved functions log,fabs,sin
+
+List of benchmarks using floating points (without TIMING):
+- fft
+- lms
+- ludcmop
+- minver
+- qsort-exam
+- qurt
+- select
+- sqrt
+- statemate
+=> No print/check results for floating point benchmarks at the moment
+

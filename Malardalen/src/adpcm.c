@@ -50,11 +50,11 @@
 /*************************************************************************/
 
 /* Changes:
- * BH 2013/06/06: Check results. If IO is defined, print debug information.
+ * BH 2013/06/06: Check results, PRINT_RESULTS macro
  * JG 2005/12/12: Indented program.
  */
 
-#ifdef IO
+#ifdef PRINT_RESULTS
 #include <stdio.h>
 #endif
 
@@ -907,11 +907,11 @@ main()
 		result[i + 1] = xout2;
 	}
 
-#ifdef IO
+#ifdef PRINT_RESULTS
         /* print ih, il */
-        for(i = 0 ; i < IN_END/2 ; i++) printf("%4d %2d %2d\n",
+        for(i = 0 ; i < IN_END/2 ; i++) printf("adpcm: %4d %2d %2d\n",
                                                i,compressed[i] >> 6,compressed[i] & 63);
-        for(i = 0 ; i < IN_END ; i++) printf("%4d %2d\n", i, result[i]);
+        for(i = 0 ; i < IN_END ; i++) printf("adpcm: %4d %2d\n", i, result[i]);
 #endif
 
         i = IN_END/2;

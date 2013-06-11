@@ -7,15 +7,13 @@
  */
 
 /* Changes:
+ * BH 2013/06/06: Check results, PRINT_RESULTS macro
  * JG 2005/12/06: All timing code excluded (made to comments)
  * JG 2005/12/13: The use of memory based I/O (KNOWN_VALUE etc.) is removed
  *                Instead unknown values should be set using annotations
  * JG 2005/12/20: LastIndex removed from function BubbleSort
  *                Indented program.
  */
-
-/* All output disabled for wcsim */
-#define WCSIM 1
 
 /* A read from this address will result in an known value of 1
 #define KNOWN_VALUE (int)(*((char *)0x80200001))
@@ -28,8 +26,10 @@
 /*
 #include <sys/types.h>
 #include <sys/times.h>
-#include <stdio.h>
 */
+#ifdef PRINT_RESULTS
+#include <stdio.h>
+#endif
 #define WORSTCASE 1
 #define FALSE 0
 #define TRUE 1
@@ -41,7 +41,7 @@ int             factor;
 void            BubbleSort(int Array[]);
 void            Initialize(int Array[]);
 
-int 
+int
 main(void)
 {
 /*
@@ -49,9 +49,10 @@ main(void)
    float TotalTime;
 */
 
-#ifndef WCSIM
-	printf("\n *** BUBBLE SORT BENCHMARK TEST ***\n\n");
-	printf("RESULTS OF TEST:\n\n");
+#ifdef PRINT_RESULTS
+        int i;
+	printf("bsort100: *** BUBBLE SORT BENCHMARK TEST ***\nbsort100:\n");
+	printf("bsort100: RESULTS OF TEST:\nbsort100:\n");
 #endif
 
 	Initialize(Array);
@@ -59,10 +60,13 @@ main(void)
 	BubbleSort(Array);
 	/* StopTime = ttime(); */
 	/* TotalTime = (StopTime - StartTime) / 1000.0; */
-#ifndef WCSIM
-	printf("     - Number of elements sorted is %d\n", NUMELEMS);
-	printf("     - Total time sorting is %3.3f seconds\n\n", TotalTime);
+#ifdef PRINT_RESULTS
+	printf("bsort100:     - Number of elements sorted is %d\n", NUMELEMS);
+	/* printf("bsort100:     - Total time sorting is %3.3f seconds\n\n", TotalTime); */
+        for(i=1;i<=NUMELEMS;i++)
+          printf("bsort100:     - Value of Element %d: %d\n", i,Array[i]);
 #endif
+        if(Array[1] != 1 && Array[1] != -100) return 1;
 	return 0;
 }
 
@@ -95,13 +99,13 @@ void Initialize(int Array[])
    factor = 1;
 #endif
 
-fact = factor;
-for (Index = 1; Index <= NUMELEMS; Index ++) {
-    Array[Index] = Index * fact/* * KNOWN_VALUE*/;
-  }
+   fact = factor;
+   for (Index = 1; Index <= NUMELEMS; Index ++) {
+     Array[Index] = Index * fact/* * KNOWN_VALUE*/;
+   }
 }
 
-void 
+void
 BubbleSort(int Array[])
 /*
  * Sorts an array of integers of size NUMELEMS in ascending order.
@@ -130,11 +134,4 @@ BubbleSort(int Array[])
 		if (Sorted)
 			break;
 	}
-
-#ifndef WCSIM
-	if (Sorted || i == 1)
-		fprintf(stderr, "array was successfully sorted in %d passes\n", i - 1);
-	else
-		fprintf(stderr, "array was unsuccessfully sorted in %d passes\n", i - 1);
-#endif
 }

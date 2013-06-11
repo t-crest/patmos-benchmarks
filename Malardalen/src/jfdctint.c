@@ -44,6 +44,9 @@
 /*                                                                       */
 /*************************************************************************/
 
+#ifdef PRINT_RESULTS
+#include <stdio.h>
+#endif
 
 /**********************************************************************
     Functions to be timed
@@ -379,7 +382,7 @@ jpeg_fdct_islow()
 int 
 main(void)
 {
-	int             i, seed;
+        int             i, seed;
 
 	/* Worst case settings */
 	/* Set array to random values */
@@ -390,6 +393,11 @@ main(void)
 	}
 
 	jpeg_fdct_islow();
-
+#ifdef PRINT_RESULTS
+        for (i = 0; i < 64; i++) {
+          printf("jfdctint: data[%d] = %d\n",i,data[i]);
+        }
+#endif
+        if(data[1] != 184557) return 1;
 	return 0;
 }

@@ -81,14 +81,14 @@ rand(void)
 }
 
 static float 
-log(r)
+my_log(r)
 	float           r;
 {
 	return 4.5;
 }
 
 static float 
-fabs(float n)
+my_fabs(float n)
 {
 	float           f;
 
@@ -121,7 +121,7 @@ mysqrt(val)
 				dx = (val - (x * x)) / (2.0 * x);
 				x = x + dx;
 				diff = val - (x * x);
-				if (fabs(diff) <= min_tol)
+				if (my_fabs(diff) <= min_tol)
 					flag = 1;
 			} else
 				x = x;
@@ -132,7 +132,7 @@ mysqrt(val)
 
 
 static float 
-sin(rad)
+my_sin(rad)
 	float           rad;
 {
 	float           app;
@@ -149,7 +149,7 @@ sin(rad)
 		((2.0 * inc) * (2.0 * inc + 1.0));
 	app = app + diff;
 	inc++;
-	while (fabs(diff) >= 0.00001) {
+	while (my_fabs(diff) >= 0.00001) {
 		diff = (diff * (-(rad * rad))) /
 			((2.0 * inc) * (2.0 * inc + 1.0));
 		app = app + diff;
@@ -185,7 +185,7 @@ gaussian()
 		}		/* make radius less than 1 */
 
 /* remap v1 and v2 to two Gaussian numbers */
-		fac = mysqrt(-2.0f * log(r) / r);
+		fac = mysqrt(-2.0f * my_log(r) / r);
 		gstore = v1 * fac;	/* store one */
 		gaus = v2 * fac;/* return one */
 		ready = 1;	/* set ready flag */
@@ -211,7 +211,7 @@ main()
 	noise_amp = 0.2 * mysqrt(12.0);
 	arg = 2.0 * PI / 20.0;
 	for (k = 0; k < N; k++) {
-		d[k] = signal_amp * sin(arg * k) + noise_amp * gaussian();
+		d[k] = signal_amp * my_sin(arg * k) + noise_amp * gaussian();
 	}
 
 /* scale based on L */
@@ -255,9 +255,6 @@ lms(float x, float d, float *b, int l,
 
 /* calculate filter output */
 	y = b[0] * px[0];
-#ifdef DEBUG
-	printf("l=%d\n", l);
-#endif
 	for (ll = 1; ll <= l; ll++)
 		y = y + b[ll] * px[ll];
 

@@ -46,10 +46,12 @@
   * Changes: JG 2005/12/21: Inserted prototypes.
   *                         Indented program.
   */
-
+#ifdef PRINT_RESULTS
+#include <stdio.h>
+#endif
 int             fib(int n);
 
-int 
+int
 fib(int n)
 {
 	int             i, Fnew, Fold, temp, ans;
@@ -67,12 +69,16 @@ fib(int n)
 	return ans;
 }
 
-int 
+int
 main()
 {
 	int             a;
 
 	a = 30;
-	fib(a);
-	return a;
+	int r = fib(a);
+#ifdef PRINT_RESULTS
+        printf("fib: r=%d\n", r);
+#endif
+        if(r != 832040) return 1;
+	return 0;
 }

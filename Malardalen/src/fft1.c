@@ -52,6 +52,10 @@
   * log. Indented program.
   */
 
+#ifdef PRINT_RESULTS
+#include <stdio.h>
+#endif
+
 #define PI 3.14159
 #define M_PI 3.14159
 
@@ -73,7 +77,7 @@ fabs(double n)
 }
 
 static double 
-log(void)
+my_log(void)
 {
 	return (4.5);
 }
@@ -150,11 +154,8 @@ fft1(int n, int flag)
 
 	if (n < 2)
 		return (999);
-	iter = log( /* (double)n */ ) / log( /* 2.0 */ );
+	iter = my_log( /* (double)n */ ) / my_log( /* 2.0 */ );
 	j = 1;
-#ifdef DEBUG
-	printf("iter=%d\n", iter);
-#endif
 	for (i = 0; i < iter; i++)
 		j *= 2;
 	if (fabs(n - j) > 1.0e-6)
@@ -167,9 +168,6 @@ fft1(int n, int flag)
 		xp = xp2;
 		xp2 /= 2;
 		w = PI / xp2;
-#ifdef DEBUG
-		printf("xp2=%d\n", xp2);
-#endif
 		for (k = 0; k < xp2; k++) {
 			arg = k * w;
 			wr = cos(arg);
@@ -197,9 +195,6 @@ fft1(int n, int flag)
 	j1 = n / 2;
 	j2 = n - 1;
 	j = 1;
-#ifdef DEBUG
-	printf("j2=%d\n", j2);
-#endif
 	for (i = 1; i <= j2; i++) {
 		if (i < j) {
 			tr = ar[j - 1];

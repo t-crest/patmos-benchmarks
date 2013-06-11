@@ -46,14 +46,15 @@
 /* Changes:
  * JG 2005/12/12: Indented program.
  */
-
-#ifdef DEBUG
-int             cnt1, cnt2;
+#ifdef PRINT_RESULTS
+#include <stdio.h>
 #endif
+
+int             cnt1, cnt2;
 
 unsigned int    a[11];
 
-int 
+int
 main()
 {
 	int             i, j, temp;
@@ -71,29 +72,26 @@ main()
 	a[10] = 2;
 	i = 2;
 	while (i <= 10) {
-#ifdef DEBUG
 		cnt1++;
-#endif
 		j = i;
-#ifdef DEBUG
 		cnt2 = 0;
-#endif
 		while (a[j] < a[j - 1]) {
-#ifdef DEBUG
 			cnt2++;
-#endif
 			temp = a[j];
 			a[j] = a[j - 1];
 			a[j - 1] = temp;
 			j--;
 		}
-#ifdef DEBUG
-		printf("Inner Loop Counts: %d\n", cnt2);
+#ifdef PRINT_RESULTS
+		printf("insertsort: Inner Loop Counts: %d\n", cnt2);
 #endif
 		i++;
 	}
-#ifdef DEBUG
-	printf("Outer Loop : %d ,  Inner Loop : %d\n", cnt1, cnt2);
+#ifdef PRINT_RESULTS
+	printf("insertsort: Outer Loop : %d ,  Inner Loop : %d\n", cnt1, cnt2);
+        printf("insertsort: a[5]=%d\n",a[5]);
 #endif
-	return 1;
+        if(cnt1 != 9 || cnt2 != 9) return 1;
+        if(a[5] != 6) return 1;
+	return 0;
 }

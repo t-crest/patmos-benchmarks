@@ -30,10 +30,12 @@
   * Changes: JG 2005/12/25: Inserted prototypes.
                             Indented program.
   */
-
+#ifdef PRINT_RESULTS
+#include <stdio.h>
+#endif
 int             complex(int a, int b);
 
-int 
+int
 complex(int a, int b)
 {
 	while (a < 30) {
@@ -53,7 +55,7 @@ complex(int a, int b)
 	return 1;
 }
 
-int 
+int
 main()
 {
 	/* a = [1..30] b = [1..30] */
@@ -62,5 +64,9 @@ main()
 	 * if(answer) {a = 1; b = 1;} else {a = 30; b = 30;}
 	 */
 	answer = complex(a, b);
-	return answer;
+#ifdef PRINT_RESULTS
+        printf("janne_complex: answer=%d\n", answer);
+#endif
+        if (answer != 1) return 1;
+	return 0;
 }

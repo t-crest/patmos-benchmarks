@@ -1,15 +1,20 @@
 /* MDH WCET BENCHMARK SUITE. File version $Id:  Exp $ */
 
 /* Changes:
+ * BH 2013/06/06: Check results, print results if PRINT_RESULTS is defined
  * JG 2005/12/21: Inserted function prototypes
                   Indented program.
  */
+
+#ifdef PRINT_RESULTS
+#include <stdio.h>
+#endif
 
 int             swi120(int c);
 int             swi50(int c);
 int             swi10(int c);
 
-int 
+int
 swi120(int c)
 {
 	int             i;
@@ -631,9 +636,10 @@ main()
 	cnt = swi10(cnt);
 	cnt = swi50(cnt);
 	cnt = swi120(cnt);
-
-	/* printf("cnt: %d\n", cnt); */
-
-	return cnt;
+#ifdef PRINT_RESULTS
+	printf("cnt: %d\n", cnt);
+#endif
+        if(cnt != 180) return 1;
+	return 0;
 
 }

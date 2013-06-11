@@ -14,33 +14,14 @@
  * Removed the prototype declaration of "code_int getcode();" that is
  * niether defined nor used. Christer Sandberg
  *
-/* Changes:
+ * Changes:
+ * BH 2013/06/06: Check results, print results if PRINT_RESULTS is defined
  * JG 2005/12/20: Changed declaration of maxmaxcode to avoid warning
                   Indented program.
  */
-
-/* #define DO_TRACING */
-
-#ifdef DO_TRACING		/* ON PC */
-
+#ifdef PRINT_RESULTS
 #include <stdio.h>
-#define TRACE(x) trace((x))
-#undef TEST			/* finished testing! */
-
-/*
-void trace(char *s)
-{
-    printf("%s\n",s);
-}
-*/
-
-#else				/* ON TARGET */
-
-#define TRACE(x)
-#undef TEST
-
 #endif
-
 
 #define BUFFERSIZE	50
 #define IN_COUNT        BUFFERSIZE
@@ -220,14 +201,20 @@ main(void)
 	OutBuff = (unsigned char *) comp_text_buffer;
 
 	compress();
-
+#ifdef PRINT_RESULTS
+        int i;
+        for (i = 0; i < HSIZE; i++) {
+          printf("compress: htab[%d] = %lu\n", i, htabof(i));
+        }
+#endif
+        if(htabof(2) != 10485922) return (1);
 	return (0);
 
 }
 
 
 
-void 
+void
 initbuffer(void)
 {
 	int             seed = 1;
@@ -238,7 +225,6 @@ initbuffer(void)
 		/* Generates random integers between 0 and 8095 */
 		tabort = i;
 		seed = ((seed * 133) + 81) % 8095;
-
 		orig_text_buffer[i] = seed % 256;
 	}
 }

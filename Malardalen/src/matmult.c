@@ -21,13 +21,12 @@
 /* Changes:
  * JG 2005/12/12: Indented program.
  */
- 
-#define UPPSALAWCET 1
+#ifdef PRINT_RESULTS
+#include <stdio.h>
+#endif
 
 
-/* ***UPPSALA WCET***:
-   disable stupid UNIX includes */
-#ifndef UPPSALAWCET
+#ifdef TIMING
 #include <sys/types.h>
 #include <sys/times.h>
 #endif
@@ -46,31 +45,32 @@ typedef int     matrix[UPPERLIMIT][UPPERLIMIT];
 int             Seed;
 matrix          ArrayA, ArrayB, ResultArray;
 
-#ifdef UPPSALAWCET
 /* Our picky compiler wants prototypes! */
 void            Multiply(matrix A, matrix B, matrix Res);
 void            InitSeed(void);
-void            Test(matrix A, matrix B, matrix Res);
+int             Test(matrix A, matrix B, matrix Res);
 void            Initialize(matrix Array);
 int             RandomInteger(void);
-#endif
 
 int 
 main(void)
 {
+        int r;
 	InitSeed();
-/* ***UPPSALA WCET***:
-   no printing please! */
-#ifndef UPPSALAWCET
-	printf("\n   *** MATRIX MULTIPLICATION BENCHMARK TEST ***\n\n");
-	printf("RESULTS OF THE TEST:\n");
+#ifdef  PRINT_RESULTS
+	printf("matmult:   *** MATRIX MULTIPLICATION BENCHMARK TEST ***\n");
+	printf("matmult: RESULTS OF THE TEST:\n");
 #endif
-	Test(ArrayA, ArrayB, ResultArray);
+	r = Test(ArrayA, ArrayB, ResultArray);
+#ifdef  PRINT_RESULTS
+	printf("matmult:    - First element of result is %d\n", r);
+#endif
+        if(r != 291018000) return 1;
 	return 0;
 }
 
 
-void 
+void
 InitSeed(void)
 /*
  * Initializes the seed used in the random number generator.
@@ -84,14 +84,14 @@ InitSeed(void)
 }
 
 
-void 
+int
 Test(matrix A, matrix B, matrix Res)
 /*
  * Runs a multiplication test on an array.  Calculates and prints the
  * time it takes to multiply the matrices.
  */
 {
-#ifndef UPPSALAWCET
+#ifdef  TIMING
 	long            StartTime, StopTime;
 	float           TotalTime;
 #endif
@@ -99,24 +99,27 @@ Test(matrix A, matrix B, matrix Res)
 	Initialize(A);
 	Initialize(B);
 
-	/* ***UPPSALA WCET***: don't print or time */
-#ifndef UPPSALAWCET
+#ifdef  TIMING
 	StartTime = ttime();
 #endif
 
 	Multiply(A, B, Res);
 
-	/* ***UPPSALA WCET***: don't print or time */
-#ifndef UPPSALAWCET
+#ifdef TIMING
 	StopTime = ttime();
 	TotalTime = (StopTime - StartTime) / 1000.0;
-	printf("    - Size of array is %d\n", UPPERLIMIT);
-	printf("    - Total multiplication time is %3.3f seconds\n\n", TotalTime);
 #endif
+#ifdef PRINT_RESULTS
+	printf("matmult:    - Size of array is %d\n", UPPERLIMIT);
+#endif
+#ifdef TIMING
+	printf("matmult:    - Total multiplication time is %3.3f seconds\n", TotalTime);
+#endif
+        return Res[0][0];
 }
 
 
-void 
+void
 Initialize(matrix Array)
 /*
  * Intializes the given array with random integers.
@@ -130,7 +133,7 @@ Initialize(matrix Array)
 }
 
 
-int 
+int
 RandomInteger(void)
 /*
  * Generates random integers between 0 and 8095
@@ -141,8 +144,8 @@ RandomInteger(void)
 }
 
 
-#ifndef UPPSALAWCET
-int 
+#ifdef TIMING
+int
 ttime()
 /*
  * This function returns in milliseconds the amount of compiler time
@@ -158,7 +161,7 @@ ttime()
 }
 #endif
 
-void 
+void
 Multiply(matrix A, matrix B, matrix Res)
 /*
  * Multiplies arrays A and B and stores the result in ResultArray.

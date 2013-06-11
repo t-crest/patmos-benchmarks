@@ -8,12 +8,16 @@
 ************************************************************************/
 
 /*
+ * Changes: BG 2013/06/06: PRINT_RESULTS macro, check result and exit code
  * Changes: JG 2005/12/22: Inserted prototypes, changed type of main to int
  * etc. Added parenthesis in expressions in jpegdct. Removed unused variable
  * dx. Changed int to long to avoid problems when compiling to 16 bit target
  * Indented program.
  * JG 2006-01-27: Removed code in codebook
  */
+#ifdef PRINT_RESULTS
+#include <stdio.h>
+#endif
 
 #define N 100
 #define ORDER 50
@@ -280,5 +284,13 @@ main(void)
 	iir1(a, b, &output[100], output);
 	e[0] = codebook(d, 1, 17, e[0], d, a, c, 1);
 	jpegdct(a, b);
+#ifdef PRINT_RESULTS
+        printf("edn: iir1/output[100] = %ld\n", output[100]);
+        printf("edn: codebook = %d\n", e[0]);
+        printf("edn: jpegdct/a[100] = %d\n", a[100]);
+#endif
+        if(output[100] != 1968) return 1;
+        if(e[0] != -441886230) return 1;
+        if(a[100] != 511) return 1;
 	return 0;
 }

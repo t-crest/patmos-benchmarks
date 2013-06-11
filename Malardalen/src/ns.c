@@ -44,12 +44,9 @@
  *-------------------------------------------------- */
 
 
-/* -------------------------------------------------- *
- *  Define TEST to check the # iterations in inner loop,
- *  and that the right value is found and returned
- * -------------------------------------------------- */
-
-/* #define TEST */
+#ifdef PRINT_RESULTS
+#include <stdio.h>
+#endif
 
 /* --------------------------------------------------
  *  Array of keys and values, 4-dimensional just
@@ -520,13 +517,14 @@ foo(int x)
 }
 
 
-int 
+int
 main(void)
 {
-#ifdef TEST
-	printf("result=%d\n", foo(400));
-#else
-	foo(400);
+        int r;
+        r = foo(400);
+#ifdef PRINT_RESULTS
+	printf("ns: result=%d\n", r);
 #endif
+        if(r != -1) return 1;
 	return 0;
 }

@@ -4,6 +4,9 @@
 /* Changes:
  * JG 2005/12/12: Indented program. Removed argument to main.
  */
+#ifdef PRINT_RESULTS
+#include <stdio.h>
+#endif
  
 #define PLOOP(A,B,I) do                \
 {                                      \
@@ -36,8 +39,8 @@
 } while (0)
 
 
-int 
-main(int argc)
+int
+main(int argc, char **argv)
 {
 	int             s = 0;
 	int             i;
@@ -77,6 +80,9 @@ main(int argc)
 	MLOOP(-1, -5, argc);
 	MLOOP(-2, -7, argc);
 	MLOOP(16, -8, argc);
-
-	return s;
+#ifdef PRINT_RESULTS
+        printf("loop3: s=%d\n", s);
+#endif
+        if(s != 1044) return 1;
+	return 0;
 }

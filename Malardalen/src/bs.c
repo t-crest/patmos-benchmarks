@@ -42,17 +42,13 @@
 /*                                                                       */
 /*************************************************************************/
 /* Changes:
- * BH 2013/06/06: Check result, check loop count if DEBUG is defined, print both if IO is defined
+ * BH 2013/06/06: Check results, check loop count, inline DEBUG, print results if PRINT_RESULTS is defined
  * JG 2005/12/12: Prototypes added, printf removed, and changed exit to return in main
  */
 
-#ifdef IO
-#include <stdio.h>
-#include <stdlib.h>
-#endif
 
-#ifndef DEBUG
-#define DEBUG
+#ifdef PRINT_RESULTS
+#include <stdio.h>
 #endif
 
 struct DATA {
@@ -60,9 +56,7 @@ struct DATA {
 	int             value;
 };
 
-#ifdef DEBUG
 int             cnt1;
-#endif
 
 struct DATA     data[15] = {{1, 100},
 {5, 200},
@@ -86,10 +80,11 @@ int
 main(void)
 {
 	int r = binary_search(8);
-        if(r != 900) return (1);
-#ifdef DEBUG
-        if(cnt1 != 4) return (1);
+#ifdef PRINT_RESULTS
+        printf("binary_search: r=%d\n", r);
 #endif
+        if(r != 900) return (1);
+        if(cnt1 != 4) return (1);
 	return (0);
 }
 
@@ -106,29 +101,17 @@ binary_search(int x)
 		if (data[mid].key == x) {	/* found  */
 			up = low - 1;
 			fvalue = data[mid].value;
-#ifdef IO
-	printf("FOUND!!\n");
-#endif
 		} else
 		 /* not found */ if (data[mid].key > x) {
 			up = mid - 1;
-#ifdef IO
-	printf("MID-1\n");
-#endif
 		} else {
 			low = mid + 1;
-#ifdef IO
-	printf("MID+1\n");
-#endif
 		}
-#ifdef DEBUG
 		cnt1++;
-#endif
 	}
 
-#ifdef IO
-	printf("Loop Count : %d\n", cnt1);
+#ifdef PRINT_RESULTS
+	printf("bs: Loop Count : %d\n", cnt1);
 #endif
-
 	return fvalue;
 }

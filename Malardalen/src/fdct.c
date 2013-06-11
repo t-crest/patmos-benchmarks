@@ -31,7 +31,7 @@
   *                         Indented program.
   */
 
-#ifdef IO
+#ifdef PRINT_RESULTS
 #include <stdio.h>
 #endif
 
@@ -235,19 +235,20 @@ fdct(short int *blk, int lx)
 	}
 }
 
+int
 main()
 {
-#ifdef IO
+#ifdef PRINT_RESULTS
 	int             i;
 #endif
 
 	fdct(block, 8);		/* 8x8 Blocks, DC precision value = 0,
 				 * Quantization coefficient (mquant) = 64 */
 
-#ifdef IO
+#ifdef PRINT_RESULTS
 	for (i = 0; i < 64; i += 2)
-		printf("block[%2d] -> %8d . block[%2d] -> %8d\n", i, block[i], i + 1, block[i + 1]);
+		printf("fdct: block[%2d] -> %8d . block[%2d] -> %8d\n", i, block[i], i + 1, block[i + 1]);
 #endif
-
-	return block[0];
+        if(block[0] + block[63] != 703) return (1);
+	return (0);
 }

@@ -3,11 +3,11 @@
 /* sumcntmatrix.c */
 
 /* Changes:
- * BH 2013/06/06: Print if IO is defined, check value and return 0 on success
+ * BH 2013/06/06: Print if PRINT_RESULTS is defined, check value and return 0 on success
  * JG 2005/12/12: Indented program.
  */
 
-#ifdef IO
+#ifdef PRINT_RESULTS
 #include <stdio.h>
 #endif
 
@@ -39,9 +39,9 @@ int
 main(void)
 {
 	InitSeed();
-#ifdef IO
-	printf("\n   *** MATRIX SUM AND COUNT BENCHMARK TEST ***\n\n");
-	printf("RESULTS OF THE TEST:\n");
+#ifdef PRINT_RESULTS
+	printf("cnt: \ncnt:   *** MATRIX SUM AND COUNT BENCHMARK TEST ***\ncnt:\n");
+	printf("cnt:RESULTS OF THE TEST:\n");
 #endif
 	int r = Test(Array);
         if (r!=396675) return 1;
@@ -62,11 +62,11 @@ Test(matrix Array)
 
 	TotalTime = (StopTime - StartTime) / 1000.0;
 
-#ifdef IO
-	printf("    - Size of array is %d\n", MAXSIZE);
-	printf("    - Num pos was %d and Sum was %d\n", Poscnt, Postotal);
-	printf("    - Num neg was %d and Sum was %d\n", Negcnt, Negtotal);
-	printf("    - Total sum time is %3.3f seconds\n\n", TotalTime);
+#ifdef PRINT_RESULTS
+	printf("cnt:    - Size of array is %d\n", MAXSIZE);
+	printf("cnt:    - Num pos was %d and Sum was %d\n", Poscnt, Postotal);
+	printf("cnt:    - Num neg was %d and Sum was %d\n", Negcnt, Negtotal);
+	printf("cnt:    - Total sum time is %3.3f seconds\ncnt:\n", TotalTime);
 #endif
 	return Negtotal-Postotal;
 }

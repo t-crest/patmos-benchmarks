@@ -16,6 +16,10 @@
   *                         Indented program.
   */
 
+#ifdef PRINT_RESULTS
+#include <stdio.h>
+#endif
+
 /* #define LOOPS 720 */
 #define LOOPS 1
 
@@ -194,15 +198,22 @@ fir_filter_int(long *in, long *out, long in_len,
 /*--------------------------------------------------
  *--- Main Function
  *--------------------------------------------------*/
-int 
+int
 main(void)
 {
+        int i;
 	long            output[OUTSIZE];
 
 /*  fir_filter_int(in_data,output,700,fir_int,35,285); Changed JG/Ebbe */
 	fir_filter_int(in_data, output, 10, fir_int, 35, 285);
+#ifdef PRINT_RESULTS
+        for(i = 0; i < 10; i++) {
+          printf("fir: output[%d] = %ld\n",i,output[i]);
+        }
+#endif
 
 	/* Verify results */
+        if(output[6] != 135) return 1;
 	/* for(i=0;i<700;i++) */
 	/* if (output[i]!=out_data[i]) */
 	/* { printf("Error: index %d, data %x != %x\n", */

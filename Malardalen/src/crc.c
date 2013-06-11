@@ -47,8 +47,12 @@
 /*                                                                       */
 /*************************************************************************/
 /* Changes:
+ * BH 2013/06/06: Macro PRINT_RESULTS, check result and exit accordingly
  * JG 2005/12/12: Indented program.
  */
+#ifdef PRINT_RESULTS
+#include <stdio.h>
+#endif
 
 typedef unsigned char uchar;
 #define LOBYTE(x) ((uchar)((x) & 0xFF))
@@ -97,9 +101,6 @@ icrc(unsigned short crc, unsigned long len,
 		cword = ((uchar) jinit) | (((uchar) jinit) << 8);
 	else if (jrev < 0)
 		cword = rchr[HIBYTE(cword)] | rchr[LOBYTE(cword)] << 8;
-#ifdef DEBUG
-	printf("len = %d\n", len);
-#endif
 	for (j = 1; j <= len; j++) {
 		if (jrev < 0) {
 			tmp1 = rchr[lin[j]] ^ HIBYTE(cword);
@@ -130,5 +131,9 @@ main(void)
 	lin[n + 1] = HIBYTE(i1);
 	lin[n + 2] = LOBYTE(i1);
 	i2 = icrc(i1, n + 2, (short) 0, 1);
+#ifdef PRINT_RESULTS
+        printf("crc: i1,i2=%d,%d\n",i1,i2);
+#endif
+        if(i1+i2 != 54027) return 1;
 	return 0;
 }

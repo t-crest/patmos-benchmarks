@@ -17,15 +17,19 @@
  *----------------------------------------------------------------------*/
 
  /*
+  * BH 2013/06/06: Macro PRINT_RESULTS, check result and exit accordingly
   * Changes: JG 2005/12/21: Changed type of main to int
                             Indented program.
   */
+#ifdef PRINT_RESULTS
+#include <stdio.h>
+#endif
 
 #define ARRAYSIZE  100
 #define INVOCATION_COUNT 43	/* exec time depends on this one! */
 
 
-void 
+void
 duffcopy(char *to, char *from, int count)
 {
 	int             n = (count + 7) / 8;
@@ -52,7 +56,7 @@ duffcopy(char *to, char *from, int count)
 }
 
 
-void 
+void
 initialize(char *arr, int length)
 {
 	int             i;
@@ -65,11 +69,18 @@ initialize(char *arr, int length)
 char            source[ARRAYSIZE];
 char            target[ARRAYSIZE];
 
-int 
+int
 main(void)
 {
 	initialize(source, ARRAYSIZE);
-	duffcopy(source, target, INVOCATION_COUNT);
+	duffcopy(target, source, INVOCATION_COUNT);
+#ifdef PRINT_RESULTS
+        int i;
+        for (i=0;i<INVOCATION_COUNT;i++) {
+          printf("duff: %d -> %d\n",source[i],target[i]);
+        }
+#endif
+        if(target[INVOCATION_COUNT-1] != source[INVOCATION_COUNT-1]) return 1;
 	return 0;
 }
 
