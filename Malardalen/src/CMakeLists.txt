@@ -1,5 +1,3 @@
-
-
 set( SOURCES
   adpcm.c
   bs.c
@@ -34,6 +32,8 @@ set( SOURCES
   sqrt.c
   statemate.c
   )
+set( SOURCES_NO_HW adpcm.c ludcmp.c nsichneu.c )
+set( PASIM_OPTIONS "")
 
 # executable for each .c file
 foreach( SRC ${SOURCES} )
@@ -41,19 +41,24 @@ foreach( SRC ${SOURCES} )
 
   add_executable( ${EXEC_NAME} ${SRC} )
 
+  list(FIND SOURCES_NO_HW ${SRC} ENABLE_HW)
+  if(${ENABLE_HW} EQUAL -1)
+    set(mrtc-${EXEC_NAME}-run-hw-test true)
+  endif()
+
+  run_io(mrtc-${EXEC_NAME} ${CMAKE_CURRENT_BINARY_DIR}/${EXEC_NAME} "" "" "")
+
   if("${CMAKE_SYSTEM_NAME}" MATCHES "patmos")
     # On Patmos, compile for SPM, and run emulator tests
     set_target_properties( ${EXEC_NAME} PROPERTIES
                             COMPILE_FLAGS "-O0 -fno-builtin -DSTACK_SIZE=1024")
     set_target_properties( ${EXEC_NAME} PROPERTIES
                             LINK_FLAGS "-Xgold -T${PROJECT_SOURCE_DIR}/scripts/patmos-spm.t -mpatmos-method-cache-size=0x8000 -mpatmos-stack-base=0x3000 -mpatmos-shadow-stack-base=0x4000" )
-    run_emulator(mrtc_emulator-${EXEC_NAME} ${CMAKE_CURRENT_BINARY_DIR}/${EXEC_NAME} /dev/null ${EXEC_NAME}.out "" 10)
+    run_wcet(mrtc_platin-${EXEC_NAME}
+             ${CMAKE_CURRENT_BINARY_DIR}/${EXEC_NAME}
+             ${CMAKE_CURRENT_BINARY_DIR}/${EXEC_NAME}-wcet.txt
+             200 3.0
+             main)
   endif()
-
-  run_io(mrtc-${EXEC_NAME} ${CMAKE_CURRENT_BINARY_DIR}/${EXEC_NAME}
-         ${CMAKE_CURRENT_SOURCE_DIR}/../outputs/empty.txt
-         ${EXEC_NAME}.out
-         ${CMAKE_CURRENT_SOURCE_DIR}/../outputs/empty.txt
-         )
 endforeach(SRC)
 

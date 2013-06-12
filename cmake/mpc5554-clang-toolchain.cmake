@@ -89,11 +89,14 @@ find_program(PPCRUN_EXECUTABLE NAMES powerpc-eabi-run DOC "Path to the Patmos si
 if(PPCRUN_EXECUTABLE)
   set(ENABLE_TESTING true)
   macro (run_io name prog in out ref)
+    # Note: redirections do not work this way; this seems to be untested
     add_test(NAME ${name} COMMAND ${PPCRUN_EXECUTABLE} -i ${prog} < ${in} > ${out})
     set_property(DIRECTORY APPEND PROPERTY ADDITIONAL_MAKE_CLEAN_FILES ${out})
 
-    add_test(NAME ${name}-cmp COMMAND ${CMAKE_COMMAND} -E compare_files ${out} ${ref})
-    set_tests_properties(${name}-cmp PROPERTIES DEPENDS ${name})
+    if(NOT ${ref} STREQUAL "")
+      add_test(NAME ${name}-cmp COMMAND ${CMAKE_COMMAND} -E compare_files ${out} ${ref})
+      set_tests_properties(${name}-cmp PROPERTIES DEPENDS ${name})
+    endif()
   endmacro (run_io)
 else()
   message(FATAL_ERROR "powerpc-eabi-run required for a mpc5554 build.")
