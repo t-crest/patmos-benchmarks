@@ -1,0 +1,5 @@
+-obj jdapimin.o jdapistd.o jdinput.o jdphuff.o
+-include jpegc
+-obj jdcoefct.o jdcolor.o
+-obj jddctmgr.o jdhuff.o jdmainct.o jdmarker.o
+-obj jdmaster.o jdpostct.o jdsample.o jidctint.o

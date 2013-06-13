@@ -1,0 +1,2 @@
+-obj -include pdfmin cff cidfont cie cmapread compfont dctd
+-include ttfont type2

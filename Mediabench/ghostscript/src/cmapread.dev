@@ -1,0 +1,4 @@
+-obj zfcmap.o
+-include cmaplib psl2int
+-oper zfcmap
+-ps gs_cmap

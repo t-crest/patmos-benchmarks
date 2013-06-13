@@ -1,0 +1,4 @@
+-obj zcolor2.o zcsindex.o zht2.o zimage2.o
+-include psl2int dps2read
+-oper zcolor2_l2 zcsindex_l2
+-oper zht2_l2 zimage2_l2

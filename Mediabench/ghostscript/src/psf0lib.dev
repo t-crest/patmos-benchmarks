@@ -1,0 +1,2 @@
+-obj gschar0.o gsfont0.o
+-include cmaplib

@@ -1,0 +1,3 @@
+-obj gstype2.o
+gxtype1.o gxhint1.o gxhint2.o gxhint3.o
+-init gstype2

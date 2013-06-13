@@ -1,0 +1,3 @@
+-obj ialloc.o igc.o igcref.o igcstr.o
+-obj ilocate.o iname.o isave.o
+-init igcref

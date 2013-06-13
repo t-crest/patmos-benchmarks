@@ -1,0 +1,7 @@
+gxacpath.o gxbcache.o
+gxccache.o gxccman.o gxcht.o gxcmap.o gxcpath.o
+gxdcconv.o gxdcolor.o gxdither.o gxfill.o gxht.o
+gximage.o gximage0.o gximage1.o gximage2.o
+gxpaint.o gxpath.o gxpath2.o gxpcopy.o
+gxpdash.o gxpflat.o gxsample.o gxstroke.o
+-init gximage1 gximage2

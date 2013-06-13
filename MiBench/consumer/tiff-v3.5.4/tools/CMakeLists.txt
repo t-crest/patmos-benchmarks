@@ -1,0 +1,42 @@
+
+include_directories(${TIFF_LIBDIR})
+
+add_executable(tiff2bw    tiff2bw.c)
+add_executable(tiff2rgba  tiff2rgba.c)
+add_executable(tiffdither tiffdither.c)
+add_executable(tiffmedian tiffmedian.c)
+
+target_link_libraries(tiff2bw     tiff m)
+target_link_libraries(tiff2rgba   tiff m)
+target_link_libraries(tiffdither  tiff m)
+target_link_libraries(tiffmedian  tiff m)
+
+# Those binaries are not used by the benchmarks and are not very interesting, so we skip them
+#add_executable(tiffinfo   tiffinfo.c)
+#add_executable(tiffcp     tiffcp.c)
+#add_executable(tiffdump   tiffdump.c)
+#add_executable(tiffsplit  tiffsplit.c)
+#add_executable(tiff2ps    tiff2ps.c)
+#add_executable(ras2tiff   ras2tiff.c)
+#add_executable(gif2tiff   gif2tiff.c)
+#add_executable(ppm2tiff   ppm2tiff.c)
+#add_executable(fax2tiff   fax2tiff.c)
+#add_executable(fax2ps     fax2ps.c)
+#add_executable(pal2rgb    pal2rgb.c)
+#add_executable(rgb2ycbcr  rgb2ycbcr.c)
+#add_executable(thumbnail  thumbnail.c)
+#
+#target_link_libraries(tiffinfo    tiff m)
+#target_link_libraries(tiffcp      tiff m)
+#target_link_libraries(tiffdump    tiff m)
+#target_link_libraries(tiffsplit   tiff m)
+#target_link_libraries(tiff2ps     tiff m)
+#target_link_libraries(ras2tiff    tiff m)
+#target_link_libraries(gif2tiff    tiff m)
+#target_link_libraries(ppm2tiff    tiff m)
+#target_link_libraries(fax2tiff    tiff m)
+#target_link_libraries(fax2ps      tiff m)
+#target_link_libraries(pal2rgb     tiff m)
+#target_link_libraries(rgb2ycbcr   tiff m)
+#target_link_libraries(thumbnail   tiff m)
+

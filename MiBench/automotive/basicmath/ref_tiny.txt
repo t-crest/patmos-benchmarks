@@ -1,0 +1,1120 @@
+********* CUBIC FUNCTIONS ***********
+Solutions: 2.000000 6.000000 2.500000
+Solutions: 2.500000
+Solutions: 1.635838
+Solutions: 13.811084
+Solutions: 0.174559
+Solutions: 0.314596
+Solutions: 0.433428
+Solutions: 0.161967
+Solutions: 0.295459
+Solutions: 0.410396
+Solutions: 0.150911
+Solutions: 0.278163
+Solutions: 0.389194
+Solutions: 0.141153
+Solutions: 0.262504
+Solutions: 0.369670
+Solutions: 0.132494
+Solutions: 0.248298
+Solutions: 0.351683
+Solutions: 0.124771
+Solutions: 0.235379
+Solutions: 0.335096
+Solutions: 0.179509
+Solutions: 0.328269
+Solutions: 0.456164
+Solutions: 0.165963
+Solutions: 0.306976
+Solutions: 0.430092
+Solutions: 0.154171
+Solutions: 0.287910
+Solutions: 0.406288
+Solutions: 0.143839
+Solutions: 0.270793
+Solutions: 0.384542
+Solutions: 0.134728
+Solutions: 0.255383
+Solutions: 0.364656
+Solutions: 0.126647
+Solutions: 0.241467
+Solutions: 0.346446
+Solutions: 0.185037
+Solutions: 0.344389
+Solutions: 0.483752
+Solutions: 0.170365
+Solutions: 0.320343
+Solutions: 0.453646
+Solutions: 0.157721
+Solutions: 0.299063
+Solutions: 0.426453
+Solutions: 0.146735
+Solutions: 0.280159
+Solutions: 0.401864
+Solutions: 0.137117
+Solutions: 0.263299
+Solutions: 0.379590
+Solutions: 0.128637
+Solutions: 0.248200
+Solutions: 0.359372
+Solutions: 0.191282
+Solutions: 0.363882
+Solutions: 0.518392
+Solutions: 0.175255
+Solutions: 0.336180
+Solutions: 0.482656
+Solutions: 0.161610
+Solutions: 0.312041
+Solutions: 0.450849
+Solutions: 0.149873
+Solutions: 0.290888
+Solutions: 0.422478
+Solutions: 0.139681
+Solutions: 0.272244
+Solutions: 0.397099
+Solutions: 0.130756
+Solutions: 0.255718
+Solutions: 0.374324
+Solutions: 0.173750
+Solutions: 0.310747
+Solutions: 0.424891
+Solutions: 0.161356
+Solutions: 0.292377
+Solutions: 0.403305
+Solutions: 0.150443
+Solutions: 0.275682
+Solutions: 0.383290
+Solutions: 0.140790
+Solutions: 0.260495
+Solutions: 0.364740
+Solutions: 0.132209
+Solutions: 0.246660
+Solutions: 0.347552
+Solutions: 0.124545
+Solutions: 0.234036
+Solutions: 0.331622
+Solutions: 0.178586
+Solutions: 0.323610
+Solutions: 0.445528
+Solutions: 0.165277
+Solutions: 0.303310
+Solutions: 0.421389
+Solutions: 0.153653
+Solutions: 0.285003
+Solutions: 0.399145
+Solutions: 0.143442
+Solutions: 0.268472
+Solutions: 0.378657
+Solutions: 0.134420
+Solutions: 0.253515
+Solutions: 0.359787
+Solutions: 0.126404
+Solutions: 0.239952
+Solutions: 0.342400
+Solutions: 0.183971
+Solutions: 0.338608
+Solutions: 0.470068
+Solutions: 0.169587
+Solutions: 0.315888
+Solutions: 0.442660
+Solutions: 0.157142
+Solutions: 0.295598
+Solutions: 0.417597
+Solutions: 0.146297
+Solutions: 0.277438
+Solutions: 0.394688
+Solutions: 0.136781
+Solutions: 0.261142
+Solutions: 0.373745
+Solutions: 0.128374
+Solutions: 0.246474
+Solutions: 0.354584
+Solutions: 0.190033
+Solutions: 0.356468
+Solutions: 0.500000
+Solutions: 0.174363
+Solutions: 0.330620
+Solutions: 0.468254
+Solutions: 0.160959
+Solutions: 0.307819
+Solutions: 0.439506
+Solutions: 0.149387
+Solutions: 0.287641
+Solutions: 0.413484
+Solutions: 0.139312
+Solutions: 0.269716
+Solutions: 0.389915
+Solutions: 0.130471
+Solutions: 0.253727
+Solutions: 0.368542
+Solutions: 0.172963
+Solutions: 0.307145
+Solutions: 0.417193
+Solutions: 0.160757
+Solutions: 0.289467
+Solutions: 0.396837
+Solutions: 0.149983
+Solutions: 0.273321
+Solutions: 0.377848
+Solutions: 0.140432
+Solutions: 0.258570
+Solutions: 0.360155
+Solutions: 0.131927
+Solutions: 0.245082
+Solutions: 0.343679
+Solutions: 0.124322
+Solutions: 0.232736
+Solutions: 0.328343
+Solutions: 0.177690
+Solutions: 0.319298
+Solutions: 0.436114
+Solutions: 0.164606
+Solutions: 0.299877
+Solutions: 0.413574
+Solutions: 0.153144
+Solutions: 0.282256
+Solutions: 0.392647
+Solutions: 0.143050
+Solutions: 0.266260
+Solutions: 0.373243
+Solutions: 0.134115
+Solutions: 0.251722
+Solutions: 0.355264
+Solutions: 0.126163
+Solutions: 0.238490
+Solutions: 0.338608
+Solutions: 0.182940
+Solutions: 0.333333
+Solutions: 0.458259
+Solutions: 0.168829
+Solutions: 0.311764
+Solutions: 0.432997
+Solutions: 0.156575
+Solutions: 0.292350
+Solutions: 0.409676
+Solutions: 0.145867
+Solutions: 0.274862
+Solutions: 0.388178
+Solutions: 0.136449
+Solutions: 0.259083
+Solutions: 0.368376
+Solutions: 0.128115
+Solutions: 0.244815
+Solutions: 0.350137
+Solutions: 0.188829
+Solutions: 0.349835
+Solutions: 0.484694
+Solutions: 0.173497
+Solutions: 0.325548
+Solutions: 0.455953
+Solutions: 0.160322
+Solutions: 0.303906
+Solutions: 0.429599
+Solutions: 0.148911
+Solutions: 0.284593
+Solutions: 0.405476
+Solutions: 0.138949
+Solutions: 0.267319
+Solutions: 0.383414
+Solutions: 0.130191
+Solutions: 0.251824
+Solutions: 0.363237
+Solutions: 0.172195
+Solutions: 0.303761
+Solutions: 0.410186
+Solutions: 0.160172
+Solutions: 0.286711
+Solutions: 0.390892
+Solutions: 0.149531
+Solutions: 0.271069
+Solutions: 0.372803
+Solutions: 0.140079
+Solutions: 0.256722
+Solutions: 0.355870
+Solutions: 0.131650
+Solutions: 0.243560
+Solutions: 0.340035
+Solutions: 0.124100
+Solutions: 0.231475
+Solutions: 0.325236
+Solutions: 0.176819
+Solutions: 0.315285
+Solutions: 0.427676
+Solutions: 0.163951
+Solutions: 0.296650
+Solutions: 0.406484
+Solutions: 0.152645
+Solutions: 0.279651
+Solutions: 0.386689
+Solutions: 0.142665
+Solutions: 0.264147
+Solutions: 0.368231
+Solutions: 0.133814
+Solutions: 0.250000
+Solutions: 0.351040
+Solutions: 0.125925
+Solutions: 0.237078
+Solutions: 0.335041
+Solutions: 0.181941
+Solutions: 0.328484
+Solutions: 0.447884
+Solutions: 0.168090
+Solutions: 0.307924
+Solutions: 0.424379
+Solutions: 0.156021
+Solutions: 0.289295
+Solutions: 0.402516
+Solutions: 0.145444
+Solutions: 0.272417
+Solutions: 0.382223
+Solutions: 0.136122
+Solutions: 0.257114
+Solutions: 0.363412
+Solutions: 0.127859
+Solutions: 0.243219
+Solutions: 0.345988
+Solutions: 0.187668
+Solutions: 0.343836
+Solutions: 0.471605
+Solutions: 0.172655
+Solutions: 0.320885
+Solutions: 0.445227
+Solutions: 0.159701
+Solutions: 0.300260
+Solutions: 0.420809
+Solutions: 0.148443
+Solutions: 0.281722
+Solutions: 0.398263
+Solutions: 0.138592
+Solutions: 0.265040
+Solutions: 0.377480
+Solutions: 0.129914
+Solutions: 0.250000
+Solutions: 0.358339
+********* INTEGER SQR ROOTS ***********
+sqrt(  0) =  0
+sqrt(  1) = 65536
+sqrt(  2) = 92681
+sqrt(  3) = 113511
+sqrt(  4) = 131072
+sqrt(  5) = 146542
+sqrt(  6) = 160529
+sqrt(  7) = 173391
+sqrt(  8) = 185363
+sqrt(  9) = 196608
+sqrt( 10) = 207243
+sqrt( 11) = 217358
+sqrt( 12) = 227023
+sqrt( 13) = 236293
+sqrt( 14) = 245213
+sqrt( 15) = 253819
+sqrt( 16) = 262144
+sqrt( 17) = 270211
+sqrt( 18) = 278045
+sqrt( 19) = 285664
+sqrt( 20) = 293085
+sqrt( 21) = 300323
+sqrt( 22) = 307391
+sqrt( 23) = 314299
+sqrt( 24) = 321059
+sqrt( 25) = 327680
+sqrt( 26) = 334169
+sqrt( 27) = 340535
+sqrt( 28) = 346783
+sqrt( 29) = 352922
+sqrt( 30) = 358955
+sqrt( 31) = 364889
+sqrt( 32) = 370727
+sqrt( 33) = 376475
+sqrt( 34) = 382137
+sqrt( 35) = 387716
+sqrt( 36) = 393216
+sqrt( 37) = 398639
+sqrt( 38) = 403991
+sqrt( 39) = 409272
+sqrt( 40) = 414486
+sqrt( 41) = 419635
+sqrt( 42) = 424721
+sqrt( 43) = 429748
+sqrt( 44) = 434716
+sqrt( 45) = 439628
+sqrt( 46) = 444486
+sqrt( 47) = 449292
+sqrt( 48) = 454046
+sqrt( 49) = 458752
+sqrt( 50) = 463409
+sqrt( 51) = 468020
+sqrt( 52) = 472586
+sqrt( 53) = 477109
+sqrt( 54) = 481589
+sqrt( 55) = 486027
+sqrt( 56) = 490426
+sqrt( 57) = 494785
+sqrt( 58) = 499107
+sqrt( 59) = 503391
+sqrt( 60) = 507639
+sqrt( 61) = 511852
+sqrt( 62) = 516030
+sqrt( 63) = 520175
+sqrt( 64) = 524288
+sqrt( 65) = 528368
+sqrt( 66) = 532416
+sqrt( 67) = 536435
+sqrt( 68) = 540423
+sqrt( 69) = 544382
+sqrt( 70) = 548313
+sqrt( 71) = 552216
+sqrt( 72) = 556091
+sqrt( 73) = 559939
+sqrt( 74) = 563761
+sqrt( 75) = 567558
+sqrt( 76) = 571329
+sqrt( 77) = 575076
+sqrt( 78) = 578798
+sqrt( 79) = 582496
+sqrt( 80) = 586171
+sqrt( 81) = 589824
+sqrt( 82) = 593453
+sqrt( 83) = 597061
+sqrt( 84) = 600647
+sqrt( 85) = 604212
+sqrt( 86) = 607755
+sqrt( 87) = 611279
+sqrt( 88) = 614782
+sqrt( 89) = 618265
+sqrt( 90) = 621729
+sqrt( 91) = 625173
+sqrt( 92) = 628599
+sqrt( 93) = 632006
+sqrt( 94) = 635395
+sqrt( 95) = 638765
+sqrt( 96) = 642119
+sqrt( 97) = 645454
+sqrt( 98) = 648773
+sqrt( 99) = 652074
+
+sqrt(3FED0169) = 7FED0000
+********* ANGLE CONVERSION ***********
+  0 degrees = 0.000000000000 radians
+  1 degrees = 0.017453292520 radians
+  2 degrees = 0.034906585040 radians
+  3 degrees = 0.052359877560 radians
+  4 degrees = 0.069813170080 radians
+  5 degrees = 0.087266462600 radians
+  6 degrees = 0.104719755120 radians
+  7 degrees = 0.122173047640 radians
+  8 degrees = 0.139626340160 radians
+  9 degrees = 0.157079632679 radians
+ 10 degrees = 0.174532925199 radians
+ 11 degrees = 0.191986217719 radians
+ 12 degrees = 0.209439510239 radians
+ 13 degrees = 0.226892802759 radians
+ 14 degrees = 0.244346095279 radians
+ 15 degrees = 0.261799387799 radians
+ 16 degrees = 0.279252680319 radians
+ 17 degrees = 0.296705972839 radians
+ 18 degrees = 0.314159265359 radians
+ 19 degrees = 0.331612557879 radians
+ 20 degrees = 0.349065850399 radians
+ 21 degrees = 0.366519142919 radians
+ 22 degrees = 0.383972435439 radians
+ 23 degrees = 0.401425727959 radians
+ 24 degrees = 0.418879020479 radians
+ 25 degrees = 0.436332312999 radians
+ 26 degrees = 0.453785605519 radians
+ 27 degrees = 0.471238898038 radians
+ 28 degrees = 0.488692190558 radians
+ 29 degrees = 0.506145483078 radians
+ 30 degrees = 0.523598775598 radians
+ 31 degrees = 0.541052068118 radians
+ 32 degrees = 0.558505360638 radians
+ 33 degrees = 0.575958653158 radians
+ 34 degrees = 0.593411945678 radians
+ 35 degrees = 0.610865238198 radians
+ 36 degrees = 0.628318530718 radians
+ 37 degrees = 0.645771823238 radians
+ 38 degrees = 0.663225115758 radians
+ 39 degrees = 0.680678408278 radians
+ 40 degrees = 0.698131700798 radians
+ 41 degrees = 0.715584993318 radians
+ 42 degrees = 0.733038285838 radians
+ 43 degrees = 0.750491578358 radians
+ 44 degrees = 0.767944870878 radians
+ 45 degrees = 0.785398163397 radians
+ 46 degrees = 0.802851455917 radians
+ 47 degrees = 0.820304748437 radians
+ 48 degrees = 0.837758040957 radians
+ 49 degrees = 0.855211333477 radians
+ 50 degrees = 0.872664625997 radians
+ 51 degrees = 0.890117918517 radians
+ 52 degrees = 0.907571211037 radians
+ 53 degrees = 0.925024503557 radians
+ 54 degrees = 0.942477796077 radians
+ 55 degrees = 0.959931088597 radians
+ 56 degrees = 0.977384381117 radians
+ 57 degrees = 0.994837673637 radians
+ 58 degrees = 1.012290966157 radians
+ 59 degrees = 1.029744258677 radians
+ 60 degrees = 1.047197551197 radians
+ 61 degrees = 1.064650843717 radians
+ 62 degrees = 1.082104136236 radians
+ 63 degrees = 1.099557428756 radians
+ 64 degrees = 1.117010721276 radians
+ 65 degrees = 1.134464013796 radians
+ 66 degrees = 1.151917306316 radians
+ 67 degrees = 1.169370598836 radians
+ 68 degrees = 1.186823891356 radians
+ 69 degrees = 1.204277183876 radians
+ 70 degrees = 1.221730476396 radians
+ 71 degrees = 1.239183768916 radians
+ 72 degrees = 1.256637061436 radians
+ 73 degrees = 1.274090353956 radians
+ 74 degrees = 1.291543646476 radians
+ 75 degrees = 1.308996938996 radians
+ 76 degrees = 1.326450231516 radians
+ 77 degrees = 1.343903524036 radians
+ 78 degrees = 1.361356816556 radians
+ 79 degrees = 1.378810109076 radians
+ 80 degrees = 1.396263401595 radians
+ 81 degrees = 1.413716694115 radians
+ 82 degrees = 1.431169986635 radians
+ 83 degrees = 1.448623279155 radians
+ 84 degrees = 1.466076571675 radians
+ 85 degrees = 1.483529864195 radians
+ 86 degrees = 1.500983156715 radians
+ 87 degrees = 1.518436449235 radians
+ 88 degrees = 1.535889741755 radians
+ 89 degrees = 1.553343034275 radians
+ 90 degrees = 1.570796326795 radians
+ 91 degrees = 1.588249619315 radians
+ 92 degrees = 1.605702911835 radians
+ 93 degrees = 1.623156204355 radians
+ 94 degrees = 1.640609496875 radians
+ 95 degrees = 1.658062789395 radians
+ 96 degrees = 1.675516081915 radians
+ 97 degrees = 1.692969374434 radians
+ 98 degrees = 1.710422666954 radians
+ 99 degrees = 1.727875959474 radians
+100 degrees = 1.745329251994 radians
+101 degrees = 1.762782544514 radians
+102 degrees = 1.780235837034 radians
+103 degrees = 1.797689129554 radians
+104 degrees = 1.815142422074 radians
+105 degrees = 1.832595714594 radians
+106 degrees = 1.850049007114 radians
+107 degrees = 1.867502299634 radians
+108 degrees = 1.884955592154 radians
+109 degrees = 1.902408884674 radians
+110 degrees = 1.919862177194 radians
+111 degrees = 1.937315469714 radians
+112 degrees = 1.954768762234 radians
+113 degrees = 1.972222054754 radians
+114 degrees = 1.989675347274 radians
+115 degrees = 2.007128639793 radians
+116 degrees = 2.024581932313 radians
+117 degrees = 2.042035224833 radians
+118 degrees = 2.059488517353 radians
+119 degrees = 2.076941809873 radians
+120 degrees = 2.094395102393 radians
+121 degrees = 2.111848394913 radians
+122 degrees = 2.129301687433 radians
+123 degrees = 2.146754979953 radians
+124 degrees = 2.164208272473 radians
+125 degrees = 2.181661564993 radians
+126 degrees = 2.199114857513 radians
+127 degrees = 2.216568150033 radians
+128 degrees = 2.234021442553 radians
+129 degrees = 2.251474735073 radians
+130 degrees = 2.268928027593 radians
+131 degrees = 2.286381320113 radians
+132 degrees = 2.303834612633 radians
+133 degrees = 2.321287905152 radians
+134 degrees = 2.338741197672 radians
+135 degrees = 2.356194490192 radians
+136 degrees = 2.373647782712 radians
+137 degrees = 2.391101075232 radians
+138 degrees = 2.408554367752 radians
+139 degrees = 2.426007660272 radians
+140 degrees = 2.443460952792 radians
+141 degrees = 2.460914245312 radians
+142 degrees = 2.478367537832 radians
+143 degrees = 2.495820830352 radians
+144 degrees = 2.513274122872 radians
+145 degrees = 2.530727415392 radians
+146 degrees = 2.548180707912 radians
+147 degrees = 2.565634000432 radians
+148 degrees = 2.583087292952 radians
+149 degrees = 2.600540585472 radians
+150 degrees = 2.617993877991 radians
+151 degrees = 2.635447170511 radians
+152 degrees = 2.652900463031 radians
+153 degrees = 2.670353755551 radians
+154 degrees = 2.687807048071 radians
+155 degrees = 2.705260340591 radians
+156 degrees = 2.722713633111 radians
+157 degrees = 2.740166925631 radians
+158 degrees = 2.757620218151 radians
+159 degrees = 2.775073510671 radians
+160 degrees = 2.792526803191 radians
+161 degrees = 2.809980095711 radians
+162 degrees = 2.827433388231 radians
+163 degrees = 2.844886680751 radians
+164 degrees = 2.862339973271 radians
+165 degrees = 2.879793265791 radians
+166 degrees = 2.897246558311 radians
+167 degrees = 2.914699850831 radians
+168 degrees = 2.932153143350 radians
+169 degrees = 2.949606435870 radians
+170 degrees = 2.967059728390 radians
+171 degrees = 2.984513020910 radians
+172 degrees = 3.001966313430 radians
+173 degrees = 3.019419605950 radians
+174 degrees = 3.036872898470 radians
+175 degrees = 3.054326190990 radians
+176 degrees = 3.071779483510 radians
+177 degrees = 3.089232776030 radians
+178 degrees = 3.106686068550 radians
+179 degrees = 3.124139361070 radians
+180 degrees = 3.141592653590 radians
+181 degrees = 3.159045946110 radians
+182 degrees = 3.176499238630 radians
+183 degrees = 3.193952531150 radians
+184 degrees = 3.211405823670 radians
+185 degrees = 3.228859116190 radians
+186 degrees = 3.246312408709 radians
+187 degrees = 3.263765701229 radians
+188 degrees = 3.281218993749 radians
+189 degrees = 3.298672286269 radians
+190 degrees = 3.316125578789 radians
+191 degrees = 3.333578871309 radians
+192 degrees = 3.351032163829 radians
+193 degrees = 3.368485456349 radians
+194 degrees = 3.385938748869 radians
+195 degrees = 3.403392041389 radians
+196 degrees = 3.420845333909 radians
+197 degrees = 3.438298626429 radians
+198 degrees = 3.455751918949 radians
+199 degrees = 3.473205211469 radians
+200 degrees = 3.490658503989 radians
+201 degrees = 3.508111796509 radians
+202 degrees = 3.525565089029 radians
+203 degrees = 3.543018381548 radians
+204 degrees = 3.560471674068 radians
+205 degrees = 3.577924966588 radians
+206 degrees = 3.595378259108 radians
+207 degrees = 3.612831551628 radians
+208 degrees = 3.630284844148 radians
+209 degrees = 3.647738136668 radians
+210 degrees = 3.665191429188 radians
+211 degrees = 3.682644721708 radians
+212 degrees = 3.700098014228 radians
+213 degrees = 3.717551306748 radians
+214 degrees = 3.735004599268 radians
+215 degrees = 3.752457891788 radians
+216 degrees = 3.769911184308 radians
+217 degrees = 3.787364476828 radians
+218 degrees = 3.804817769348 radians
+219 degrees = 3.822271061868 radians
+220 degrees = 3.839724354388 radians
+221 degrees = 3.857177646907 radians
+222 degrees = 3.874630939427 radians
+223 degrees = 3.892084231947 radians
+224 degrees = 3.909537524467 radians
+225 degrees = 3.926990816987 radians
+226 degrees = 3.944444109507 radians
+227 degrees = 3.961897402027 radians
+228 degrees = 3.979350694547 radians
+229 degrees = 3.996803987067 radians
+230 degrees = 4.014257279587 radians
+231 degrees = 4.031710572107 radians
+232 degrees = 4.049163864627 radians
+233 degrees = 4.066617157147 radians
+234 degrees = 4.084070449667 radians
+235 degrees = 4.101523742187 radians
+236 degrees = 4.118977034707 radians
+237 degrees = 4.136430327227 radians
+238 degrees = 4.153883619747 radians
+239 degrees = 4.171336912266 radians
+240 degrees = 4.188790204786 radians
+241 degrees = 4.206243497306 radians
+242 degrees = 4.223696789826 radians
+243 degrees = 4.241150082346 radians
+244 degrees = 4.258603374866 radians
+245 degrees = 4.276056667386 radians
+246 degrees = 4.293509959906 radians
+247 degrees = 4.310963252426 radians
+248 degrees = 4.328416544946 radians
+249 degrees = 4.345869837466 radians
+250 degrees = 4.363323129986 radians
+251 degrees = 4.380776422506 radians
+252 degrees = 4.398229715026 radians
+253 degrees = 4.415683007546 radians
+254 degrees = 4.433136300066 radians
+255 degrees = 4.450589592586 radians
+256 degrees = 4.468042885105 radians
+257 degrees = 4.485496177625 radians
+258 degrees = 4.502949470145 radians
+259 degrees = 4.520402762665 radians
+260 degrees = 4.537856055185 radians
+261 degrees = 4.555309347705 radians
+262 degrees = 4.572762640225 radians
+263 degrees = 4.590215932745 radians
+264 degrees = 4.607669225265 radians
+265 degrees = 4.625122517785 radians
+266 degrees = 4.642575810305 radians
+267 degrees = 4.660029102825 radians
+268 degrees = 4.677482395345 radians
+269 degrees = 4.694935687865 radians
+270 degrees = 4.712388980385 radians
+271 degrees = 4.729842272905 radians
+272 degrees = 4.747295565425 radians
+273 degrees = 4.764748857945 radians
+274 degrees = 4.782202150464 radians
+275 degrees = 4.799655442984 radians
+276 degrees = 4.817108735504 radians
+277 degrees = 4.834562028024 radians
+278 degrees = 4.852015320544 radians
+279 degrees = 4.869468613064 radians
+280 degrees = 4.886921905584 radians
+281 degrees = 4.904375198104 radians
+282 degrees = 4.921828490624 radians
+283 degrees = 4.939281783144 radians
+284 degrees = 4.956735075664 radians
+285 degrees = 4.974188368184 radians
+286 degrees = 4.991641660704 radians
+287 degrees = 5.009094953224 radians
+288 degrees = 5.026548245744 radians
+289 degrees = 5.044001538264 radians
+290 degrees = 5.061454830784 radians
+291 degrees = 5.078908123303 radians
+292 degrees = 5.096361415823 radians
+293 degrees = 5.113814708343 radians
+294 degrees = 5.131268000863 radians
+295 degrees = 5.148721293383 radians
+296 degrees = 5.166174585903 radians
+297 degrees = 5.183627878423 radians
+298 degrees = 5.201081170943 radians
+299 degrees = 5.218534463463 radians
+300 degrees = 5.235987755983 radians
+301 degrees = 5.253441048503 radians
+302 degrees = 5.270894341023 radians
+303 degrees = 5.288347633543 radians
+304 degrees = 5.305800926063 radians
+305 degrees = 5.323254218583 radians
+306 degrees = 5.340707511103 radians
+307 degrees = 5.358160803623 radians
+308 degrees = 5.375614096143 radians
+309 degrees = 5.393067388662 radians
+310 degrees = 5.410520681182 radians
+311 degrees = 5.427973973702 radians
+312 degrees = 5.445427266222 radians
+313 degrees = 5.462880558742 radians
+314 degrees = 5.480333851262 radians
+315 degrees = 5.497787143782 radians
+316 degrees = 5.515240436302 radians
+317 degrees = 5.532693728822 radians
+318 degrees = 5.550147021342 radians
+319 degrees = 5.567600313862 radians
+320 degrees = 5.585053606382 radians
+321 degrees = 5.602506898902 radians
+322 degrees = 5.619960191422 radians
+323 degrees = 5.637413483942 radians
+324 degrees = 5.654866776462 radians
+325 degrees = 5.672320068982 radians
+326 degrees = 5.689773361502 radians
+327 degrees = 5.707226654021 radians
+328 degrees = 5.724679946541 radians
+329 degrees = 5.742133239061 radians
+330 degrees = 5.759586531581 radians
+331 degrees = 5.777039824101 radians
+332 degrees = 5.794493116621 radians
+333 degrees = 5.811946409141 radians
+334 degrees = 5.829399701661 radians
+335 degrees = 5.846852994181 radians
+336 degrees = 5.864306286701 radians
+337 degrees = 5.881759579221 radians
+338 degrees = 5.899212871741 radians
+339 degrees = 5.916666164261 radians
+340 degrees = 5.934119456781 radians
+341 degrees = 5.951572749301 radians
+342 degrees = 5.969026041821 radians
+343 degrees = 5.986479334341 radians
+344 degrees = 6.003932626860 radians
+345 degrees = 6.021385919380 radians
+346 degrees = 6.038839211900 radians
+347 degrees = 6.056292504420 radians
+348 degrees = 6.073745796940 radians
+349 degrees = 6.091199089460 radians
+350 degrees = 6.108652381980 radians
+351 degrees = 6.126105674500 radians
+352 degrees = 6.143558967020 radians
+353 degrees = 6.161012259540 radians
+354 degrees = 6.178465552060 radians
+355 degrees = 6.195918844580 radians
+356 degrees = 6.213372137100 radians
+357 degrees = 6.230825429620 radians
+358 degrees = 6.248278722140 radians
+359 degrees = 6.265732014660 radians
+360 degrees = 6.283185307180 radians
+
+0.000000000000 radians =   0 degrees
+0.017453292520 radians =   1 degrees
+0.034906585040 radians =   2 degrees
+0.052359877560 radians =   3 degrees
+0.069813170080 radians =   4 degrees
+0.087266462600 radians =   5 degrees
+0.104719755120 radians =   6 degrees
+0.122173047640 radians =   7 degrees
+0.139626340160 radians =   8 degrees
+0.157079632679 radians =   9 degrees
+0.174532925199 radians =  10 degrees
+0.191986217719 radians =  11 degrees
+0.209439510239 radians =  12 degrees
+0.226892802759 radians =  13 degrees
+0.244346095279 radians =  14 degrees
+0.261799387799 radians =  15 degrees
+0.279252680319 radians =  16 degrees
+0.296705972839 radians =  17 degrees
+0.314159265359 radians =  18 degrees
+0.331612557879 radians =  19 degrees
+0.349065850399 radians =  20 degrees
+0.366519142919 radians =  21 degrees
+0.383972435439 radians =  22 degrees
+0.401425727959 radians =  23 degrees
+0.418879020479 radians =  24 degrees
+0.436332312999 radians =  25 degrees
+0.453785605519 radians =  26 degrees
+0.471238898038 radians =  27 degrees
+0.488692190558 radians =  28 degrees
+0.506145483078 radians =  29 degrees
+0.523598775598 radians =  30 degrees
+0.541052068118 radians =  31 degrees
+0.558505360638 radians =  32 degrees
+0.575958653158 radians =  33 degrees
+0.593411945678 radians =  34 degrees
+0.610865238198 radians =  35 degrees
+0.628318530718 radians =  36 degrees
+0.645771823238 radians =  37 degrees
+0.663225115758 radians =  38 degrees
+0.680678408278 radians =  39 degrees
+0.698131700798 radians =  40 degrees
+0.715584993318 radians =  41 degrees
+0.733038285838 radians =  42 degrees
+0.750491578358 radians =  43 degrees
+0.767944870878 radians =  44 degrees
+0.785398163397 radians =  45 degrees
+0.802851455917 radians =  46 degrees
+0.820304748437 radians =  47 degrees
+0.837758040957 radians =  48 degrees
+0.855211333477 radians =  49 degrees
+0.872664625997 radians =  50 degrees
+0.890117918517 radians =  51 degrees
+0.907571211037 radians =  52 degrees
+0.925024503557 radians =  53 degrees
+0.942477796077 radians =  54 degrees
+0.959931088597 radians =  55 degrees
+0.977384381117 radians =  56 degrees
+0.994837673637 radians =  57 degrees
+1.012290966157 radians =  58 degrees
+1.029744258677 radians =  59 degrees
+1.047197551197 radians =  60 degrees
+1.064650843717 radians =  61 degrees
+1.082104136236 radians =  62 degrees
+1.099557428756 radians =  63 degrees
+1.117010721276 radians =  64 degrees
+1.134464013796 radians =  65 degrees
+1.151917306316 radians =  66 degrees
+1.169370598836 radians =  67 degrees
+1.186823891356 radians =  68 degrees
+1.204277183876 radians =  69 degrees
+1.221730476396 radians =  70 degrees
+1.239183768916 radians =  71 degrees
+1.256637061436 radians =  72 degrees
+1.274090353956 radians =  73 degrees
+1.291543646476 radians =  74 degrees
+1.308996938996 radians =  75 degrees
+1.326450231516 radians =  76 degrees
+1.343903524036 radians =  77 degrees
+1.361356816556 radians =  78 degrees
+1.378810109076 radians =  79 degrees
+1.396263401595 radians =  80 degrees
+1.413716694115 radians =  81 degrees
+1.431169986635 radians =  82 degrees
+1.448623279155 radians =  83 degrees
+1.466076571675 radians =  84 degrees
+1.483529864195 radians =  85 degrees
+1.500983156715 radians =  86 degrees
+1.518436449235 radians =  87 degrees
+1.535889741755 radians =  88 degrees
+1.553343034275 radians =  89 degrees
+1.570796326795 radians =  90 degrees
+1.588249619315 radians =  91 degrees
+1.605702911835 radians =  92 degrees
+1.623156204355 radians =  93 degrees
+1.640609496875 radians =  94 degrees
+1.658062789395 radians =  95 degrees
+1.675516081915 radians =  96 degrees
+1.692969374435 radians =  97 degrees
+1.710422666954 radians =  98 degrees
+1.727875959474 radians =  99 degrees
+1.745329251994 radians = 100 degrees
+1.762782544514 radians = 101 degrees
+1.780235837034 radians = 102 degrees
+1.797689129554 radians = 103 degrees
+1.815142422074 radians = 104 degrees
+1.832595714594 radians = 105 degrees
+1.850049007114 radians = 106 degrees
+1.867502299634 radians = 107 degrees
+1.884955592154 radians = 108 degrees
+1.902408884674 radians = 109 degrees
+1.919862177194 radians = 110 degrees
+1.937315469714 radians = 111 degrees
+1.954768762234 radians = 112 degrees
+1.972222054754 radians = 113 degrees
+1.989675347274 radians = 114 degrees
+2.007128639793 radians = 115 degrees
+2.024581932313 radians = 116 degrees
+2.042035224833 radians = 117 degrees
+2.059488517353 radians = 118 degrees
+2.076941809873 radians = 119 degrees
+2.094395102393 radians = 120 degrees
+2.111848394913 radians = 121 degrees
+2.129301687433 radians = 122 degrees
+2.146754979953 radians = 123 degrees
+2.164208272473 radians = 124 degrees
+2.181661564993 radians = 125 degrees
+2.199114857513 radians = 126 degrees
+2.216568150033 radians = 127 degrees
+2.234021442553 radians = 128 degrees
+2.251474735073 radians = 129 degrees
+2.268928027593 radians = 130 degrees
+2.286381320113 radians = 131 degrees
+2.303834612633 radians = 132 degrees
+2.321287905152 radians = 133 degrees
+2.338741197672 radians = 134 degrees
+2.356194490192 radians = 135 degrees
+2.373647782712 radians = 136 degrees
+2.391101075232 radians = 137 degrees
+2.408554367752 radians = 138 degrees
+2.426007660272 radians = 139 degrees
+2.443460952792 radians = 140 degrees
+2.460914245312 radians = 141 degrees
+2.478367537832 radians = 142 degrees
+2.495820830352 radians = 143 degrees
+2.513274122872 radians = 144 degrees
+2.530727415392 radians = 145 degrees
+2.548180707912 radians = 146 degrees
+2.565634000432 radians = 147 degrees
+2.583087292952 radians = 148 degrees
+2.600540585472 radians = 149 degrees
+2.617993877991 radians = 150 degrees
+2.635447170511 radians = 151 degrees
+2.652900463031 radians = 152 degrees
+2.670353755551 radians = 153 degrees
+2.687807048071 radians = 154 degrees
+2.705260340591 radians = 155 degrees
+2.722713633111 radians = 156 degrees
+2.740166925631 radians = 157 degrees
+2.757620218151 radians = 158 degrees
+2.775073510671 radians = 159 degrees
+2.792526803191 radians = 160 degrees
+2.809980095711 radians = 161 degrees
+2.827433388231 radians = 162 degrees
+2.844886680751 radians = 163 degrees
+2.862339973271 radians = 164 degrees
+2.879793265791 radians = 165 degrees
+2.897246558311 radians = 166 degrees
+2.914699850831 radians = 167 degrees
+2.932153143350 radians = 168 degrees
+2.949606435870 radians = 169 degrees
+2.967059728390 radians = 170 degrees
+2.984513020910 radians = 171 degrees
+3.001966313430 radians = 172 degrees
+3.019419605950 radians = 173 degrees
+3.036872898470 radians = 174 degrees
+3.054326190990 radians = 175 degrees
+3.071779483510 radians = 176 degrees
+3.089232776030 radians = 177 degrees
+3.106686068550 radians = 178 degrees
+3.124139361070 radians = 179 degrees
+3.141592653590 radians = 180 degrees
+3.159045946110 radians = 181 degrees
+3.176499238630 radians = 182 degrees
+3.193952531150 radians = 183 degrees
+3.211405823670 radians = 184 degrees
+3.228859116189 radians = 185 degrees
+3.246312408709 radians = 186 degrees
+3.263765701229 radians = 187 degrees
+3.281218993749 radians = 188 degrees
+3.298672286269 radians = 189 degrees
+3.316125578789 radians = 190 degrees
+3.333578871309 radians = 191 degrees
+3.351032163829 radians = 192 degrees
+3.368485456349 radians = 193 degrees
+3.385938748869 radians = 194 degrees
+3.403392041389 radians = 195 degrees
+3.420845333909 radians = 196 degrees
+3.438298626429 radians = 197 degrees
+3.455751918949 radians = 198 degrees
+3.473205211469 radians = 199 degrees
+3.490658503989 radians = 200 degrees
+3.508111796509 radians = 201 degrees
+3.525565089029 radians = 202 degrees
+3.543018381548 radians = 203 degrees
+3.560471674068 radians = 204 degrees
+3.577924966588 radians = 205 degrees
+3.595378259108 radians = 206 degrees
+3.612831551628 radians = 207 degrees
+3.630284844148 radians = 208 degrees
+3.647738136668 radians = 209 degrees
+3.665191429188 radians = 210 degrees
+3.682644721708 radians = 211 degrees
+3.700098014228 radians = 212 degrees
+3.717551306748 radians = 213 degrees
+3.735004599268 radians = 214 degrees
+3.752457891788 radians = 215 degrees
+3.769911184308 radians = 216 degrees
+3.787364476828 radians = 217 degrees
+3.804817769348 radians = 218 degrees
+3.822271061868 radians = 219 degrees
+3.839724354388 radians = 220 degrees
+3.857177646907 radians = 221 degrees
+3.874630939427 radians = 222 degrees
+3.892084231947 radians = 223 degrees
+3.909537524467 radians = 224 degrees
+3.926990816987 radians = 225 degrees
+3.944444109507 radians = 226 degrees
+3.961897402027 radians = 227 degrees
+3.979350694547 radians = 228 degrees
+3.996803987067 radians = 229 degrees
+4.014257279587 radians = 230 degrees
+4.031710572107 radians = 231 degrees
+4.049163864627 radians = 232 degrees
+4.066617157147 radians = 233 degrees
+4.084070449667 radians = 234 degrees
+4.101523742187 radians = 235 degrees
+4.118977034707 radians = 236 degrees
+4.136430327227 radians = 237 degrees
+4.153883619746 radians = 238 degrees
+4.171336912266 radians = 239 degrees
+4.188790204786 radians = 240 degrees
+4.206243497306 radians = 241 degrees
+4.223696789826 radians = 242 degrees
+4.241150082346 radians = 243 degrees
+4.258603374866 radians = 244 degrees
+4.276056667386 radians = 245 degrees
+4.293509959906 radians = 246 degrees
+4.310963252426 radians = 247 degrees
+4.328416544946 radians = 248 degrees
+4.345869837466 radians = 249 degrees
+4.363323129986 radians = 250 degrees
+4.380776422506 radians = 251 degrees
+4.398229715026 radians = 252 degrees
+4.415683007546 radians = 253 degrees
+4.433136300066 radians = 254 degrees
+4.450589592586 radians = 255 degrees
+4.468042885105 radians = 256 degrees
+4.485496177625 radians = 257 degrees
+4.502949470145 radians = 258 degrees
+4.520402762665 radians = 259 degrees
+4.537856055185 radians = 260 degrees
+4.555309347705 radians = 261 degrees
+4.572762640225 radians = 262 degrees
+4.590215932745 radians = 263 degrees
+4.607669225265 radians = 264 degrees
+4.625122517785 radians = 265 degrees
+4.642575810305 radians = 266 degrees
+4.660029102825 radians = 267 degrees
+4.677482395345 radians = 268 degrees
+4.694935687865 radians = 269 degrees
+4.712388980385 radians = 270 degrees
+4.729842272905 radians = 271 degrees
+4.747295565425 radians = 272 degrees
+4.764748857944 radians = 273 degrees
+4.782202150464 radians = 274 degrees
+4.799655442984 radians = 275 degrees
+4.817108735504 radians = 276 degrees
+4.834562028024 radians = 277 degrees
+4.852015320544 radians = 278 degrees
+4.869468613064 radians = 279 degrees
+4.886921905584 radians = 280 degrees
+4.904375198104 radians = 281 degrees
+4.921828490624 radians = 282 degrees
+4.939281783144 radians = 283 degrees
+4.956735075664 radians = 284 degrees
+4.974188368184 radians = 285 degrees
+4.991641660704 radians = 286 degrees
+5.009094953224 radians = 287 degrees
+5.026548245744 radians = 288 degrees
+5.044001538264 radians = 289 degrees
+5.061454830784 radians = 290 degrees
+5.078908123303 radians = 291 degrees
+5.096361415823 radians = 292 degrees
+5.113814708343 radians = 293 degrees
+5.131268000863 radians = 294 degrees
+5.148721293383 radians = 295 degrees
+5.166174585903 radians = 296 degrees
+5.183627878423 radians = 297 degrees
+5.201081170943 radians = 298 degrees
+5.218534463463 radians = 299 degrees
+5.235987755983 radians = 300 degrees
+5.253441048503 radians = 301 degrees
+5.270894341023 radians = 302 degrees
+5.288347633543 radians = 303 degrees
+5.305800926063 radians = 304 degrees
+5.323254218583 radians = 305 degrees
+5.340707511103 radians = 306 degrees
+5.358160803623 radians = 307 degrees
+5.375614096142 radians = 308 degrees
+5.393067388662 radians = 309 degrees
+5.410520681182 radians = 310 degrees
+5.427973973702 radians = 311 degrees
+5.445427266222 radians = 312 degrees
+5.462880558742 radians = 313 degrees
+5.480333851262 radians = 314 degrees
+5.497787143782 radians = 315 degrees
+5.515240436302 radians = 316 degrees
+5.532693728822 radians = 317 degrees
+5.550147021342 radians = 318 degrees
+5.567600313862 radians = 319 degrees
+5.585053606382 radians = 320 degrees
+5.602506898902 radians = 321 degrees
+5.619960191422 radians = 322 degrees
+5.637413483942 radians = 323 degrees
+5.654866776462 radians = 324 degrees
+5.672320068982 radians = 325 degrees
+5.689773361501 radians = 326 degrees
+5.707226654021 radians = 327 degrees
+5.724679946541 radians = 328 degrees
+5.742133239061 radians = 329 degrees
+5.759586531581 radians = 330 degrees
+5.777039824101 radians = 331 degrees
+5.794493116621 radians = 332 degrees
+5.811946409141 radians = 333 degrees
+5.829399701661 radians = 334 degrees
+5.846852994181 radians = 335 degrees
+5.864306286701 radians = 336 degrees
+5.881759579221 radians = 337 degrees
+5.899212871741 radians = 338 degrees
+5.916666164261 radians = 339 degrees
+5.934119456781 radians = 340 degrees
+5.951572749301 radians = 341 degrees
+5.969026041821 radians = 342 degrees
+5.986479334341 radians = 343 degrees
+6.003932626860 radians = 344 degrees
+6.021385919380 radians = 345 degrees
+6.038839211900 radians = 346 degrees
+6.056292504420 radians = 347 degrees
+6.073745796940 radians = 348 degrees
+6.091199089460 radians = 349 degrees
+6.108652381980 radians = 350 degrees
+6.126105674500 radians = 351 degrees
+6.143558967020 radians = 352 degrees
+6.161012259540 radians = 353 degrees
+6.178465552060 radians = 354 degrees
+6.195918844580 radians = 355 degrees
+6.213372137100 radians = 356 degrees
+6.230825429620 radians = 357 degrees
+6.248278722140 radians = 358 degrees
+6.265732014660 radians = 359 degrees
+6.283185307180 radians = 360 degrees

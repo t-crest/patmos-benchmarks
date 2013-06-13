@@ -1,0 +1,3 @@
+-obj zvmem2.o zdps1.o
+-oper zvmem2 zdps1_l2
+-ps gs_dps1

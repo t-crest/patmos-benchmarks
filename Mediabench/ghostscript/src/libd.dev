@@ -1,0 +1,3 @@
+gdevabuf.o gdevddrw.o gdevdflt.o gdevnfwd.o
+gdevmem.o gdevm1.o gdevm2.o gdevm4.o gdevm8.o
+gdevm16.o gdevm24.o gdevm32.o gdevmpla.o

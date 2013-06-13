@@ -1,0 +1,17 @@
+This file contains any messages produced by compilers while
+running configure, to aid debugging if configure makes a mistake.
+
+/export/ramoth4/bishop/simplescalar/bin/ssbig-na-sstrix-gcc -E
+/export/ramoth4/bishop/simplescalar/bin/ssbig-na-sstrix-gcc -o conftest -O conftest.c
+/export/ramoth4/bishop/simplescalar/bin/ssbig-na-sstrix-gcc -c -O conftest.c
+/export/ramoth4/bishop/simplescalar/bin/ssbig-na-sstrix-gcc -E
+/export/ramoth4/bishop/simplescalar/bin/ssbig-na-sstrix-gcc -E
+/export/ramoth4/bishop/simplescalar/bin/ssbig-na-sstrix-gcc -E
+/export/ramoth4/bishop/simplescalar/bin/ssbig-na-sstrix-gcc -c -O conftest.c
+/export/ramoth4/bishop/simplescalar/bin/ssbig-na-sstrix-gcc -c -O conftest.c
+/export/ramoth4/bishop/simplescalar/bin/ssbig-na-sstrix-gcc -c -O conftest.c
+/export/ramoth4/bishop/simplescalar/bin/ssbig-na-sstrix-gcc -c -O conftest.c
+/export/ramoth4/bishop/simplescalar/bin/ssbig-na-sstrix-gcc -c -O conftest.c
+/export/ramoth4/bishop/simplescalar/bin/ssbig-na-sstrix-gcc -c -O conftest.c
+/export/ramoth4/bishop/simplescalar/bin/ssbig-na-sstrix-gcc -c -O conftest.c
+/export/ramoth4/bishop/simplescalar/bin/ssbig-na-sstrix-gcc -o conftest -O conftest.c

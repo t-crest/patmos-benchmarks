@@ -1,0 +1,2 @@
+-obj zchar2.o zfcmap.o zfont0.o
+-oper zfont0 zchar2 zfcmap

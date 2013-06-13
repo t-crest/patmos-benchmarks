@@ -1,0 +1,4 @@
+-obj -include psbase color dps2lib dps2read
+-include fdecode type1
+-include pdffonts psl2lib psl2read pdfread
+-emulator PDF

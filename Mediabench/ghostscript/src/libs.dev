@@ -1,0 +1,7 @@
+gsalloc.o gsbitops.o gsbittab.o
+gschar.o gscolor.o gscoord.o gsdevice.o gsdevmem.o
+gsdparam.o gsfont.o gsht.o gshtscr.o
+gsimage.o gsimpath.o gsinit.o gsiodev.o
+gsline.o gsmatrix.o gsmemory.o gsmisc.o
+gspaint.o gsparam.o gspath.o gsstate.o gsutil.o
+-init gscolor

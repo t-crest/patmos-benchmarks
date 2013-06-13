@@ -1,0 +1,3 @@
+-obj seexec.o zchar1.o zcharout.o zfont1.o zmisc1.o
+-oper zchar1 zfont1 zmisc1
+-ps gs_type1

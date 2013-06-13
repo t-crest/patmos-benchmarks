@@ -1,0 +1,6 @@
+
+set(TESTS_SRCDIR  ${CMAKE_CURRENT_SOURCE_DIR})
+set(TESTS_DATADIR ${CMAKE_CURRENT_SOURCE_DIR}/data)
+
+add_subdirectory(C)
+

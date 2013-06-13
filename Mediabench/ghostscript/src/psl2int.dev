@@ -1,0 +1,4 @@
+-obj iutil2.o zmisc2.o zusparam.o
+-include dps2int
+-oper zmisc2 zusparam
+-ps gs_lev2 gs_res

@@ -1,0 +1,1 @@
+-dev pnm -include page -obj gdevpbm.o

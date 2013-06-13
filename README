@@ -1,0 +1,43 @@
+
+
+
+                          PATMOS BENCHMARKS README
+
+
+This is a collection of benchmark programs to test/evaluate the Patmos
+processor -- although other processor configurations are supported as well.
+
+--------------------------------------------------------------------------------
+1. Requirements
+
+ - LLVM and Clang for either Sparc, PowerPc, or Patmos
+   http://www.llvm.org/
+
+ - Absint a3 tools (optional)
+   http://www.absint.com/a3/index.htm
+
+ - LLVM, Clang, and NewLib for Patmos (optional)
+   https://github.com/t-crest/patmos-llvm
+   https://github.com/t-crest/patmos-clang
+   https://github.com/t-crest/patmos-newlib
+
+--------------------------------------------------------------------------------
+2. Configure and build
+
+  mkdir build
+  cd build
+  cmake ..
+  make
+
+For a list of pre-defined compiler/processor toolchain configurations see the
+cmake directory (currently leon3-clang, mpc5554-cland, patmos-cland). To chose
+one of them use:
+
+  cmake .. -DCMAKE_TOOLCHAIN_FILE=../cmake/<processor>-clang-toolchain.cmake
+
+
+Additional search paths can be provided using the -DCMAKE_PROGRAM_PATH=<path>
+option.
+
+Have fun!
+

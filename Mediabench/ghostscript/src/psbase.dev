@@ -1,0 +1,22 @@
+-obj imainarg.o gsargs.o imain.o
+-obj gconfig.o gscdefs.o iconfig.o iccinit0.o
+-obj icontext.o idebug.o idict.o idparam.o
+-obj iinit.o interp.o iparam.o ireclaim.o
+-obj iscan.o iscannum.o istack.o iutil.o
+-obj scantab.o sfilter1.o sstring.o stream.o
+-obj zarith.o zarray.o zcontrol.o zdict.o
+-oper zarith zarray zcontrol zdict
+-obj zfile.o zfileio.o zfilter.o zfname.o zfproc.o
+-oper zfile zfileio zfilter zfproc
+-obj zgeneric.o ziodev.o zmath.o zmisc.o zpacked.o
+-oper zgeneric ziodev zmath zmisc zpacked
+-obj zrelbit.o zstack.o zstring.o zsysvm.o
+-oper zrelbit zstack zstring zsysvm
+-obj ztoken.o ztype.o zvmem.o
+-oper ztoken ztype zvmem
+-obj zchar.o zcolor.o zdevice.o zfont.o zfont2.o
+-oper zchar zcolor zdevice zfont zfont2
+-obj zgstate.o zht.o zimage.o zmatrix.o zpaint.o zpath.o
+-oper zgstate zht zimage zmatrix zpaint zpath
+-iodev stdin stdout stderr lineedit statementedit
+-include isupport rld rle sfile

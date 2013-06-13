@@ -1,0 +1,4 @@
+-obj ibnum.o zchar2.o
+-include dps2int
+-oper ireclaim_l2 zchar2_l2
+-ps gs_dps2

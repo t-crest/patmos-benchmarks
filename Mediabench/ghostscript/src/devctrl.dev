@@ -1,0 +1,4 @@
+-obj zdevice2.o ziodev2.o zmedia2.o zdevcal.o
+-oper zdevice2_l2 ziodev2_l2 zmedia2_l2
+-iodev null ram calendar
+-ps gs_setpd

@@ -1,0 +1,1 @@
+-dev pgnmraw -include page -obj gdevpbm.o

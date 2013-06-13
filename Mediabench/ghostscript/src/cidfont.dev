@@ -1,0 +1,4 @@
+-obj zcid.o
+-include psf1read psl2int type42
+-ps gs_cidfn
+-oper zcid

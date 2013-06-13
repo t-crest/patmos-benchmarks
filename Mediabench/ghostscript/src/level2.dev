@@ -1,0 +1,5 @@
+-obj -include cidfont cie cmapread compfont
+-include dct devctrl dpsand2 filter
+-include level1 pattern psl2lib psl2read
+-include sepr type42 xfilter
+-emulator PostScript PostScriptLevel2

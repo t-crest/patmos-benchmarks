@@ -1,0 +1,5 @@
+-dev pdfwrite -obj gdevpdf.o gdevpdfi.o gdevpdfm.o
+gdevpdfp.o gdevpdft.o gdevpsdf.o gdevpstr.o
+gsflip.o scantab.o sfilter2.o sstring.o
+-ps gs_pdfwr
+-include cmyklib cfe dcte lzwe rle vector

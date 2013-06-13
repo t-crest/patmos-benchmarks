@@ -1,0 +1,2 @@
+-obj gdevmrop.o gsrop.o gsroptab.o
+-init roplib

@@ -1,0 +1,2 @@
+-obj zupath.o ibnum.o
+-oper zupath_l2

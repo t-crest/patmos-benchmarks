@@ -1,0 +1,3 @@
+-obj zpath1.o
+-include path1lib
+-oper zpath1

@@ -1,0 +1,57 @@
+"abb" is in "cabbie" ["abbie"]
+"you" is in "your" ["your"]
+"not" is not in "It isn't here"
+"it" is in "But it is here" ["it is here"]
+"dad" is in "hodad" ["dad"]
+"yoo" is in "yoohoo" ["yoohoo"]
+"hoo" is in "yoohoo" ["hoo"]
+"oo" is in "yoohoo" ["oohoo"]
+"oh" is in "yoohoo" ["ohoo"]
+"xx" is not in "yoohoo"
+"xx" is in "xx" ["xx"]
+"x" is in "x" ["x"]
+"x" is not in "."
+"field" is in "In recent years, the field of photonic " ["field of photonic "]
+"new" is in "crystals has found new" ["new"]
+"row" is in "applications in the RF and microwave" ["rowave"]
+"regime" is in "regime. A new type of metallic" ["regime. A new type of metallic"]
+"boom" is not in "electromagnetic crystal has been"
+"that" is in "developed that is having a" ["that is having a"]
+"impact" is in "significant impact on the field of" ["impact on the field of"]
+"and" is not in "antennas. It consists of a"
+"zoom" is not in "conductive surface, covered with a"
+"texture" is in "special texture which alters its" ["texture which alters its"]
+"magnet" is in "electromagnetic properties. Made of solid" ["magnetic properties. Made of solid"]
+"doom" is not in "metal, the structure"
+"loom" is not in "conducts DC currents, but over a"
+"freq" is in "particular frequency range it does" ["frequency range it does"]
+"current" is in "not conduct AC currents. It does not" ["currents. It does not"]
+"phase" is in "reverse the phase of reflected" ["phase of reflected"]
+"images" is not in "waves, and the effective image currents"
+"appears" is not in "appear in-phase, rather than"
+"phase" is in "out-of-phase as they are on normal" ["phase as they are on normal"]
+"conductor" is in "conductors. Furthermore, surface" ["conductors. Furthermore, surface"]
+"wavez" is not in "waves do not propagate, and instead"
+"normal" is not in "radiate efficiently into free"
+"free" is not in "space. This new material, termed a"
+"termed" is not in "high-impedance surface, provides"
+"provide" is not in "a useful new ground plane for novel"
+"for" is not in "low-profile antennas and other"
+"and" is not in "electromagnetic structures."
+"struct" is not in "The recent protests about the Michigamua"
+"about" is not in "student organization have raised an"
+"have" is not in "important question as to the proper nature"
+"proper" is not in "and scope of University involvement"
+"involve" is not in "with student organizations. Accordingly"
+"describedly" is not in "the panel described in my Statement of"
+"thats" is not in "February 25, 2000 that is considering the"
+"spaces" is not in "question of privileged space also will"
+"circumstance" is in "consider under what circumstances and in" ["circumstances and in"]
+"the" is in "what ways the University, its" ["the University, its"]
+"member" is in "administrators and faculty members should" ["members should"]
+"such" is in "be associated with such organizations" ["such organizations"]
+"guide" is not in "and it will recommend guiding principles"
+"regard" is in "in this regard. The University's" ["regard. The University's"]
+"officers" is not in "Executive Officers and I will then decide"
+"implement" is in "whether and how to implement such" ["implement such"]
+"principalities" is not in "principles."

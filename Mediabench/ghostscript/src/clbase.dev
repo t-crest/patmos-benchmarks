@@ -1,0 +1,3 @@
+-obj gxclist.o gxclbits.o gxclpage.o
+-obj gxclread.o gxclrect.o stream.o
+-include clfile cfe cfd rle rld

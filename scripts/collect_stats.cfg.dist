@@ -1,0 +1,12 @@
+
+[dirs]
+# Build dir of the benchmarks repo
+builddir = ../build
+# Root dir for collected stats files
+statsdir = ../stats/out
+# Create subdir per date+time in stats dir?
+create_subdirs = false
+# Collect result CSV files into a directory
+csvdir = ../stats/csv
+# Create HTML results in the following directory
+htmldir = ../stats/html

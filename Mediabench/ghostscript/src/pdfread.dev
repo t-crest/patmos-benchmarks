@@ -1,0 +1,4 @@
+-obj -include fzlib
+-ps gs_pdf gs_l2img
+-ps pdf_base pdf_draw pdf_font pdf_main pdf_sec
+-ps pdf_2ps

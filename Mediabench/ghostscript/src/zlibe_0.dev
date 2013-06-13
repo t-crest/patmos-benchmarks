@@ -1,0 +1,2 @@
+-obj adler32.o deflate.o trees.o
+-include zlibc

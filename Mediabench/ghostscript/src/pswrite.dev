@@ -1,0 +1,3 @@
+-dev pswrite -obj gdevps.o gdevpsdf.o gdevpstr.o
+scantab.o sfilter2.o
+-include vector

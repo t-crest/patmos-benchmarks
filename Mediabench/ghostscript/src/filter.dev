@@ -1,0 +1,4 @@
+-obj -include fdecode
+-obj zfilter2.o
+-include cfe lzwe rle
+-oper zfilter2

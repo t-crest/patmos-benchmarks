@@ -1,0 +1,4 @@
+-obj zchar42.o zcharout.o zfont42.o
+-include ttflib
+-oper zchar42 zfont42
+-ps gs_typ42

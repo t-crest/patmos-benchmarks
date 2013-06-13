@@ -1,0 +1,2 @@
+-obj -include cmyklib psl2cs
+-obj gspcolor.o gxclip2.o gxpcmap.o

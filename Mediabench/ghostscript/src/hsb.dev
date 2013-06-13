@@ -1,0 +1,3 @@
+-obj zhsb.o
+-include hsblib
+-oper zhsb

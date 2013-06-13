@@ -1,0 +1,2 @@
+-dev pxlmono -obj gdevpx.o
+-include vector
