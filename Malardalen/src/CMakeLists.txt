@@ -24,13 +24,18 @@ set( SOURCES
   matmult.c
   minmax.c
   minver.c
+  ndes.c
   ns.c
   # nsichneu.c # exceed method cache size?
   qsort-exam.c
   qurt.c
+  recursion.c
   select.c
   sqrt.c
   statemate.c
+  # st.c # needs math library
+  ud.c
+  # whet.c # needs math library
   )
 set( SOURCES_NO_HW adpcm.c ludcmp.c nsichneu.c )
 set( PASIM_OPTIONS "")
