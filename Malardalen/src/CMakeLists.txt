@@ -51,7 +51,7 @@ foreach( SRC ${SOURCES} )
   if("${CMAKE_SYSTEM_NAME}" MATCHES "patmos")
     # On Patmos, compile for SPM, and run emulator tests
     set_target_properties( ${EXEC_NAME} PROPERTIES
-                            COMPILE_FLAGS "-O0 -fno-builtin -DSTACK_SIZE=1024")
+                            COMPILE_FLAGS "-DSTACK_SIZE=1024")
     set_target_properties( ${EXEC_NAME} PROPERTIES
                             LINK_FLAGS "-Xgold -T${PROJECT_SOURCE_DIR}/scripts/patmos-spm.t -mpatmos-method-cache-size=0x8000 -mpatmos-stack-base=0x3000 -mpatmos-shadow-stack-base=0x4000" )
     run_wcet(mrtc_platin-${EXEC_NAME}
