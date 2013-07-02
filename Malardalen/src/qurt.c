@@ -106,6 +106,8 @@ my_sqrt(double val)
 }
 
 
+volatile double r;
+
 int 
 main(void)
 {
@@ -129,7 +131,7 @@ main(void)
 	a[2] = 8.0;
 
 	qurt();
-
+	r = x1[0] + x1[1] + x2[0] + x2[1];
 	return 0;
 }
 

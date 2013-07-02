@@ -26,7 +26,7 @@ set( SOURCES
   minver.c
   ndes.c
   ns.c
-  # nsichneu.c # exceed method cache size?
+  nsichneu.c # exceed method cache size?
   qsort-exam.c
   qurt.c
   recursion.c

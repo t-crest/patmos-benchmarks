@@ -52,7 +52,7 @@ complex(int a, int b)
 		a = a + 2;
 		b = b - 10;
 	}
-	return 1;
+	return a-b;
 }
 
 int
@@ -67,6 +67,6 @@ main()
 #ifdef PRINT_RESULTS
         printf("janne_complex: answer=%d\n", answer);
 #endif
-        if (answer != 1) return 1;
+        if (answer != 4) return 1;
 	return 0;
 }

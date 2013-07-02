@@ -181,7 +181,7 @@ set(PLATIN_OPTIONS "" CACHE STRING "Additional command-line options passed to th
 if(PLATIN)
   macro (run_wcet name prog report timeout factor entry)
     set_property(DIRECTORY APPEND PROPERTY ADDITIONAL_MAKE_CLEAN_FILES ${report} ${report}.dir)
-    add_test(NAME ${name} COMMAND ${PLATIN} wcet --recorders "g:cil/0,f/0:b/0" --analysis-entry ${entry} --use-trace-facts  --binary ${prog} --outdir tmp --report ${report} --input ${prog}.pml)
+    add_test(NAME ${name} COMMAND ${PLATIN} wcet --recorders "g:cil/0,f/0:b/0" --analysis-entry ${entry} --use-trace-facts  --binary ${prog} --report ${report} --input ${prog}.pml)
     # add  --check ${factor} as soon as aiT is ready for the new patmos ISA
     set_tests_properties(${name} PROPERTIES TIMEOUT ${timeout})
     set_property(DIRECTORY APPEND PROPERTY ADDITIONAL_MAKE_CLEAN_FILES ${report})
