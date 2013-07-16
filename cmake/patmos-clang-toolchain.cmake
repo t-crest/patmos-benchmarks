@@ -135,6 +135,8 @@ else()
 endif()
 if(PATMOS_EMULATOR)
   set(ENABLE_TESTING true)
+else()
+  message(WARNING "patmos-emulator not found, testing with emulator is disabled.")
 endif()
 
 function (run_sim sim sim_options name prog in out ref)
@@ -167,7 +169,7 @@ macro (run_io name prog in out ref)
     run_sim(${PASIM_EXECUTABLE} "${SIM_ARGS}" "${name}" "${prog}" "${in}" "${out}" "${ref}")
     set_property(DIRECTORY APPEND PROPERTY ADDITIONAL_MAKE_CLEAN_FILES ${name}.stats)
   endif()
-  if(${name}-run-hw-test)
+  if(${name}-run-hw-test AND PATMOS_EMULATOR)
     set(EMU_ARGS ${PATMOS_EMULATOR_OPTIONS} -q)
     separate_arguments(EMU_ARGS)
     run_sim(${PATMOS_EMULATOR} "${EMU_ARGS}" "${name}_hw" ${prog} "${in}" "${out}" "${ref}")
@@ -179,20 +181,29 @@ endmacro(run_io)
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 # find platin
 
-find_program(PLATIN NAMES platin DOC "Path to platin tool.")
+set(PLATIN_ENABLE_WCET true CACHE BOOL "Enable WCET analysis during tests using Platin.")
+
+find_program(PLATIN_EXECUTABLE NAMES platin DOC "Path to platin tool.")
 
 set(PLATIN_OPTIONS "" CACHE STRING "Additional command-line options passed to the platin tool.")
 
-if(PLATIN)
-  macro (run_wcet name prog report timeout factor entry)
+if (PLATIN_ENABLE_WCET) 
+  if (NOT PLATIN_EXECUTABLE)
+    message(WARNING "platin not found, WCET analysis is disabled.")
+  endif()
+else()
+  message(WARNING "WCET analysis with platin manually disabled, will be skipped.")
+endif()
+
+macro (run_wcet name prog report timeout factor entry)
+  if (PLATIN_ENABLE_WCET AND PLATIN_EXECUTABLE)
     set_property(DIRECTORY APPEND PROPERTY ADDITIONAL_MAKE_CLEAN_FILES ${report} ${report}.dir)
-    add_test(NAME ${name} COMMAND ${PLATIN} wcet --recorders "g:cil/0,f/0:b/0" --analysis-entry ${entry} --use-trace-facts  --binary ${prog} --report ${report} --input ${prog}.pml)
+    # TODO check if A3_EXECUTABLE is set, use a3 specified by A3_EXECUTABLE; maybe throw a warning/error and skip this if not set.
+    add_test(NAME ${name} COMMAND ${PLATIN_EXECUTABLE} wcet --recorders "g:cil/0,f/0:b/0" --analysis-entry ${entry} --use-trace-facts  --binary ${prog} --report ${report} --input ${prog}.pml)
     # add  --check ${factor} as soon as aiT is ready for the new patmos ISA
     set_tests_properties(${name} PROPERTIES TIMEOUT ${timeout})
     set_property(DIRECTORY APPEND PROPERTY ADDITIONAL_MAKE_CLEAN_FILES ${report})
-  endmacro(run_wcet)
-else()
-  message(WARNING "platin not found - WCET analysis disabled")
-endif()
+  endif()
+endmacro(run_wcet)
 
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
