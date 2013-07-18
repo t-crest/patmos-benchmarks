@@ -141,7 +141,7 @@ endif()
 
 function (run_sim sim sim_options name prog in out ref)
   # Create symlinks to programs to make job_patmos.sh happy
-  string(REGEX REPLACE "^[a-zA-Z0-9]+-" "" _progname ${name})
+  string(REGEX REPLACE "^[a-zA-Z0-9]+-(.*)" "\\1" _progname ${name})
   file(TO_CMAKE_PATH ${CMAKE_CURRENT_BINARY_DIR}/${_progname} _namepath)
   file(TO_CMAKE_PATH ${prog} _progpath)
   if (NOT ${_namepath} STREQUAL ${_progpath})
