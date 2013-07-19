@@ -33,6 +33,23 @@ add_subdirectory(MiBench)
 add_subdirectory(Malardalen)
 add_subdirectory(tests)
 
+find_package(Subversion)
+if(SUBVERSION_FOUND)
+  # add gcc.torture-execute
+
+  # TODO: Update revision to be checked out every once in a while
+  set(GCC_C_TORTURE_REPO svn://gcc.gnu.org/svn/gcc/trunk/gcc/testsuite/gcc.c-torture)
+  set(GCC_C_TORTURE_REVISION 200887)
+
+  # we only want the "execute" part of the torture tests
+  set(GCC_C_TORTURE_EXECUTE_PATH ${CMAKE_CURRENT_BINARY_DIR}/gcc.c-torture/execute)
+  execute_process(COMMAND ${Subversion_SVN_EXECUTABLE}
+	checkout ${GCC_C_TORTURE_REPO}/execute -r ${GCC_C_TORTURE_REVISION}
+	${GCC_C_TORTURE_EXECUTE_PATH})
+
+  add_subdirectory(gcc.c-torture)
+endif()
+
 # add timing analysis sub-directory
 if(A3_EXECUTABLE)
   add_subdirectory(a3)
