@@ -1,6 +1,6 @@
 set( SOURCES
-  adpcm.c
   bs.c
+  adpcm.c
   bsort100.c
   cnt.c
   compress.c
@@ -62,7 +62,7 @@ foreach( SRC ${SOURCES} )
     run_wcet(mrtc_platin-${EXEC_NAME}
              ${CMAKE_CURRENT_BINARY_DIR}/${EXEC_NAME}
              ${CMAKE_CURRENT_BINARY_DIR}/${EXEC_NAME}-wcet.txt
-             200 3.0
+             360 1.2
              main)
   endif()
 endforeach(SRC)

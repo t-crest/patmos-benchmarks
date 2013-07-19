@@ -192,6 +192,7 @@ endmacro(run_io)
 # find platin
 
 set(PLATIN_ENABLE_WCET true CACHE BOOL "Enable WCET analysis during tests using Platin.")
+set(PLATIN_ENABLE_AIT true CACHE BOOL "Enable aiT-based WCET analysis during tests using Platin.")
 
 find_program(PLATIN_EXECUTABLE NAMES platin DOC "Path to platin tool.")
 
@@ -206,10 +207,17 @@ else()
 endif()
 
 macro (run_wcet name prog report timeout factor entry)
-  if (PLATIN_ENABLE_WCET AND PLATIN_EXECUTABLE)
+  if (PLATIN_ENABLE_WCET AND PLATIN_EXECUTABLE AND PASIM_EXECUTABLE)
     set_property(DIRECTORY APPEND PROPERTY ADDITIONAL_MAKE_CLEAN_FILES ${report} ${report}.dir)
-    # TODO check if A3_EXECUTABLE is set, use a3 specified by A3_EXECUTABLE; maybe throw a warning/error and skip this if not set.
-    add_test(NAME ${name} COMMAND ${PLATIN_EXECUTABLE} wcet --recorders "g:cil/0,f/0:b/0" --analysis-entry ${entry} --use-trace-facts  --binary ${prog} --report ${report} --input ${prog}.pml --objdump-command ${LLVM_OBJDUMP_EXECUTABLE} --pasim-command ${PASIM_EXECUTABLE})
+    if (A3_EXECUTABLE AND PLATIN_ENABLE_AIT)
+        add_test(NAME ${name} COMMAND ${PLATIN_EXECUTABLE} wcet --recorders "g:bcil" --analysis-entry ${entry} --a3-command ${A3_EXECUTABLE}
+                                                                --use-trace-facts  --binary ${prog} --report ${report} --input ${prog}.pml --check ${factor}
+                                                                --objdump-command ${LLVM_OBJDUMP_EXECUTABLE} --pasim-command ${PASIM_EXECUTABLE})
+    else()
+        add_test(NAME ${name} COMMAND ${PLATIN_EXECUTABLE} wcet --recorders "g:bcil" --analysis-entry ${entry} --disable-ait --enable-wca
+                                                                --use-trace-facts  --binary ${prog} --report ${report} --input ${prog}.pml --check ${factor}
+                                                                --objdump-command ${LLVM_OBJDUMP_EXECUTABLE} --pasim-command ${PASIM_EXECUTABLE})
+    endif()
     # add  --check ${factor} as soon as aiT is ready for the new patmos ISA
     set_tests_properties(${name} PROPERTIES TIMEOUT ${timeout})
     set_property(DIRECTORY APPEND PROPERTY ADDITIONAL_MAKE_CLEAN_FILES ${report})

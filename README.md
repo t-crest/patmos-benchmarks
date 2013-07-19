@@ -33,4 +33,10 @@ one of them use:
 Additional search paths can be provided using the -DCMAKE_PROGRAM_PATH=<path>
 option.
 
+List of CMake variables of interest:
+   CMAKE_TOOLCHAIN_FILE ... toolchain to use
+   ENABLE_TESTING       ... enable tests
+   PLATIN_ENABLE_WCET   ... enable WCET tests (currently patmos only)
+   PLATIN_ENABLE_AIT    ... enable WCET tests using absint's aiT tool (patmos only, requires a3)
+
 Have fun!
