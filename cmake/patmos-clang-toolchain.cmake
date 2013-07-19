@@ -114,6 +114,16 @@ endif()
 set(CMAKE_NM ${LLVM_NM_EXECUTABLE} CACHE FILEPATH "Archive inspector")
 
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+# find llvm-objdump
+find_program(LLVM_OBJDUMP_EXECUTABLE NAMES patmos-llvm-objdump llvm-objdump DOC "Path to the llvm-objdump tool.")
+
+if(NOT LLVM_OBJDUMP_EXECUTABLE)
+  message(FATAL_ERROR "llvm-objdump required for a Patmos build.")
+endif()
+
+set(CMAKE_OBJDUMP ${LLVM_OBJDUMP_EXECUTABLE} CACHE FILEPATH "Object dumper")
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 # find simulator & emulator
 
 find_program(PASIM_EXECUTABLE NAMES pasim DOC "Path to the Patmos simulator pasim.")
@@ -199,7 +209,7 @@ macro (run_wcet name prog report timeout factor entry)
   if (PLATIN_ENABLE_WCET AND PLATIN_EXECUTABLE)
     set_property(DIRECTORY APPEND PROPERTY ADDITIONAL_MAKE_CLEAN_FILES ${report} ${report}.dir)
     # TODO check if A3_EXECUTABLE is set, use a3 specified by A3_EXECUTABLE; maybe throw a warning/error and skip this if not set.
-    add_test(NAME ${name} COMMAND ${PLATIN_EXECUTABLE} wcet --recorders "g:cil/0,f/0:b/0" --analysis-entry ${entry} --use-trace-facts  --binary ${prog} --report ${report} --input ${prog}.pml)
+    add_test(NAME ${name} COMMAND ${PLATIN_EXECUTABLE} wcet --recorders "g:cil/0,f/0:b/0" --analysis-entry ${entry} --use-trace-facts  --binary ${prog} --report ${report} --input ${prog}.pml --objdump-command ${LLVM_OBJDUMP_EXECUTABLE} --pasim-command ${PASIM_EXECUTABLE})
     # add  --check ${factor} as soon as aiT is ready for the new patmos ISA
     set_tests_properties(${name} PROPERTIES TIMEOUT ${timeout})
     set_property(DIRECTORY APPEND PROPERTY ADDITIONAL_MAKE_CLEAN_FILES ${report})
