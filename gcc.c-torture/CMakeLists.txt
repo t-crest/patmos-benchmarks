@@ -7,6 +7,7 @@ set(SOURCES_FAIL_BUILD
   20010605-1
   20010724-1
   20020412-1
+  20020720-1
   20030501-1
   20040308-1
   20040423-1
@@ -29,8 +30,10 @@ set(SOURCES_FAIL_BUILD
   921017-1
   980608-1
   980709-1
+  990826-0
   align-nest
   bcp-1
+  float-floor
   nest-align-1
   nestfunc-7
   nest-stdar-1
@@ -120,8 +123,7 @@ foreach(SRC ${SOURCES})
 
 	# A little bit of optimization and calm down warnings
 	set(COMPILE_FLAGS "-O1 -Wno-implicit-function-declaration -Wno-implicit-int -Wno-return-type")
-	# Link against libm
-	set(LINK_FLAGS "-lm")
+	set(LINK_FLAGS "")
 
 	if("${CMAKE_SYSTEM_NAME}" MATCHES "patmos")
       # On Patmos, compile for SPM
