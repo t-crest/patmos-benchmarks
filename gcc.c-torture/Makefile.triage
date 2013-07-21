@@ -1,0 +1,143 @@
+# This is a patmos-specific Makefile script to classify errors in gcc's torture suite
+#
+# Usage:
+#   # adapt TCRESTPATH (for pasim, patmos-emulator, SPM linker script and FPGA download command)
+#   $ cd build/gcc.c-torture/execute
+#   $ make -f ../../../gcc.c-torture/Makefile.triage check | tee check.txt
+# Postprocess:
+#   bash <<EOF
+#     function filter() { grep -P "${1}" check.txt | cut -d' ' -f 1 | sed 's/.\///' | sort }
+#     filter '[^0]:.:.'   > FailHost.txt
+#     filter '0:%:.'      > FailBuildTarget.txt
+#     filter '0:[^0%]:.'  > FailRunSim.txt
+#     filter '0:0:[^0%]'  > FailRunChsl.txt
+#     filter '0:0:0'      > Pass.txt
+#     (for f in $(cat FailRunChsl.txt) ; do echo ENTRY $f ; patmos-emulator ../build/gcc.c-torture/execute/$f.elf -q -u ; done 2>&1) | \
+#     grep 'SPM exceed size' -B 1 | grep ENTRY | cut -d' ' -f 2 | sort > NoHwTest.txt
+#   EOF
+#
+# Targets:
+#  For each test case FILE.c, "make FILE.[x]check" does the following:
+#  * make FILE.{host,sim,chsl[,fpga]}.log
+#  * Actions:
+#    - host.log: build on host, run on hosts
+#    - sim.log:  build on target, run on pasim
+#    - chsl.log: build on target, run on patmos-emulator
+#    - fpga.log: build on target, run on FPGA
+#    - {host,targ}build.txt: build on {host,target}
+#  * Results: <host.log>:<sim.log>:<chsl.log>:<fpga.log>
+#    - % ... fail build
+#    - 0 ... success
+#    - n ... fail test with exit code <n>
+#
+
+TRIAGE_MAKEFILE=$(CURDIR)/$(word $(words $(MAKEFILE_LIST)),$(MAKEFILE_LIST))
+
+# Configuration
+TCRESTPATH=$(HOME)/tcrest
+TARGET_CLANG=patmos-clang
+HOST_CLANG=clang
+PATTERN=*.c
+COM_PORT?=/dev/ttyUSB0
+TIMEOUT=timeout -s TERM
+
+CFLAGS=-O2 -DSTACK_SIZE=1024 -DNO_TRAMPOLINES # -mpatmos-disable-vliw=false
+LDLIBS=
+TARGETFLAGS=-Xgold -T${TCRESTPATH}/patmos/chisel/spm.t \
+			-mpatmos-method-cache-size=0x8000 \
+			-mpatmos-stack-base=0x3000 -mpatmos-shadow-stack-base=0x4000
+
+SOURCES=$(wildcard ${PATTERN})
+ELFS   = $(patsubst %.c,%.elf,$(SOURCES))
+CHECKS = $(patsubst %.c,%.check,$(SOURCES))
+XCHECKS = $(patsubst %.c,%.xcheck,$(SOURCES))
+
+check: ${CHECKS}
+
+xcheck: ${XCHECKS}
+
+elf: ${ELFS}
+
+%.check:
+	@FILE=`dirname $@`/`basename $@ .check`; \
+	${MAKE} -f $(TRIAGE_MAKEFILE) -k $$FILE.host.log $$FILE.sim.log $$FILE.chsl.log; \
+	if [ ! -e $$FILE.host.log ]; then echo -n "%" > $$FILE.host.log; fi; \
+	if [ ! -e $$FILE.sim.log  ]; then echo -n "%" > $$FILE.sim.log;  fi; \
+	if [ ! -e $$FILE.chsl.log ]; then echo -n "%" > $$FILE.chsl.log; fi; \
+	RESULT=`cat $$FILE.host.log`:`cat $$FILE.sim.log`:`cat $$FILE.chsl.log`; \
+	echo $$FILE $$RESULT; \
+	case $$RESULT in \
+		%:%:%)     echo "FAIL MAKE";; \
+		%:0:0)     echo "FAIL MAKE HOST / PASS TARGET";; \
+		%:0:*)     echo "FAIL MAKE HOST / FAIL CHSL";; \
+		%:*:0)     echo "FAIL MAKE HOST / FAIL SIM";; \
+		%:*:*)     echo "FAIL MAKE HOST / FAIL TARGET";; \
+		0:%:%)     echo "FAIL MAKE TARGET / PASS HOST";; \
+		*:%:%)     echo "FAIL MAKE TARGET / FAIL HOST";; \
+		0:0:0)     echo "PASS";; \
+		0:0:*)     echo "FAIL CHSL";; \
+		0:*:0)     echo "FAIL SIM";; \
+		0:*:*)     echo "FAIL TARGET";; \
+		*:0:0)     echo "PASS TARGET";; \
+		*:*:0)     echo "PASS CHSL";; \
+		*:0:*)     echo "PASS SIM";; \
+		*:*:*)     echo "FAIL";; \
+		*)         echo "ERROR";; \
+	esac
+
+%.xcheck:
+	@FILE=`dirname $@`/`basename $@ .check`; \
+	${MAKE} -f $(TRIAGE_MAKEFILE) -k $$FILE.host.log $$FILE.sim.log $$FILE.chsl.log $$FILE.fpga.log; \
+	if [ ! -e $$FILE.host.log ]; then echo -n "%" > $$FILE.host.log; fi; \
+	if [ ! -e $$FILE.sim.log  ]; then echo -n "%" > $$FILE.sim.log;  fi; \
+	if [ ! -e $$FILE.chsl.log ]; then echo -n "%" > $$FILE.chsl.log; fi; \
+	if [ ! -e $$FILE.fpga.log ]; then echo -n "%" > $$FILE.fpga.log; fi; \
+	RESULT=`cat $$FILE.host.log`:`cat $$FILE.sim.log`:`cat $$FILE.chsl.log`:`cat $$FILE.fpga.log`; \
+	echo $$FILE $$RESULT; \
+	case $$RESULT in \
+		%:%:%:%)     echo "FAIL MAKE";; \
+		%:0:0:0)     echo "FAIL MAKE HOST / PASS TARGET";; \
+		%:0:0:*)     echo "FAIL MAKE HOST / FAIL FPGA";; \
+		%:0:*:0)     echo "FAIL MAKE HOST / FAIL CHSL";; \
+		%:*:0:0)     echo "FAIL MAKE HOST / FAIL SIM";; \
+		%:*:*:*)     echo "FAIL MAKE HOST / FAIL TARGET";; \
+		0:%:%:%)     echo "FAIL MAKE TARGET / PASS HOST";; \
+		*:%:%:%)     echo "FAIL MAKE TARGET / FAIL HOST";; \
+		0:0:0:0)     echo "PASS";; \
+		0:0:0:*)     echo "FAIL FPGA";; \
+		0:0:*:0)     echo "FAIL CHSL";; \
+		0:*:0:0)     echo "FAIL SIM";; \
+		0:*:*:*)     echo "FAIL TARGET";; \
+		*:0:0:0)     echo "PASS TARGET";; \
+		*:*:*:0)     echo "PASS FPGA";; \
+		*:*:0:*)     echo "PASS CHSL";; \
+		*:0:*:*)     echo "PASS SIM";; \
+		*:*:*:*)     echo "FAIL";; \
+		*)           echo "ERROR";; \
+	esac
+
+.PHONY: %.check
+
+%.host.log: %.exe
+	$(TIMEOUT) 60 ./$<; echo -n "$$?" > $@
+
+%.sim.log: %.elf
+	$(TIMEOUT) 600 ${TCRESTPATH}/patmos/bin/pasim -q -b $<; echo -n "$$?" > $@
+
+%.chsl.log: %.elf
+	$(TIMEOUT) 600 ${TCRESTPATH}/patmos/bin/emulator -q -u $<; echo -n "$$?" > $@
+
+%.fpga.log: %.elf
+	${MAKE} -C ${TCRESTPATH}/patmos config > /dev/null
+	$(TIMEOUT) 600 java -cp "${TCRESTPATH}/patmos/lib/*:${TCRESTPATH}/patmos/java/lib/*" patserdow.Main ${COM_PORT} $<; echo -n "$$?" > $@
+
+%.elf: %.c
+	$(TARGET_CLANG) ${CFLAGS} ${TARGETFLAGS} -o $@ $< ${LDLIBS} \
+	> `dirname $@`/`basename $@ .elf`.targbuild.log 2>&1
+
+%.exe: %.c
+	$(HOST_CLANG) ${CFLAGS} -o $@ $< ${LDLIBS} \
+	> `dirname $@`/`basename $@ .exe`.hostbuild.log 2>&1
+
+clean::
+	rm -f a.out *.log *.bc *.ll *.s *.o *.elf *.exe
