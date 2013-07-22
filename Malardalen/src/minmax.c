@@ -12,6 +12,7 @@ void            swap(int *a, int *b);
 int             min(int a, int b, int c);
 int             max(int a, int b, int c);
 
+__attribute__((noninline))
 void
 swap(int *a, int *b)
 {
@@ -44,12 +45,15 @@ max(int a, int b, int c)
 	return a;
 }
 
+volatile int xi = 10;
+volatile int yi = 2;
+volatile int zi = 1;
 int
 main(void)
 {
-	int             x = 10;
-	int             y = 2;
-	int             z = 1;
+	int             x = xi;
+	int             y = yi;
+	int             z = zi;
         int             r;
 	if (x <= y)
 		swap(&x, &y);
