@@ -33,8 +33,10 @@ add_subdirectory(MiBench)
 add_subdirectory(Malardalen)
 add_subdirectory(tests)
 
+set(ENABLE_CTORTURE true CACHE BOOL "Enable gcc.c-torture suite (long build time)")
+
 find_package(Subversion)
-if(SUBVERSION_FOUND)
+if(SUBVERSION_FOUND AND ENABLE_CTORTURE)
   # add gcc.torture-execute
 
   # TODO: Update revision to be checked out every once in a while

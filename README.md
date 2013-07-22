@@ -36,6 +36,7 @@ option.
 List of CMake variables of interest:
    CMAKE_TOOLCHAIN_FILE ... toolchain to use
    ENABLE_TESTING       ... enable tests
+   ENABLE_CTORTURE      ... enable gcc.c-torture (build time doubles)
    PLATIN_ENABLE_WCET   ... enable WCET tests (currently patmos only)
    PLATIN_ENABLE_AIT    ... enable WCET tests using absint's aiT tool (patmos only, requires a3)
 
