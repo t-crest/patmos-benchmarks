@@ -12,7 +12,7 @@ void            swap(int *a, int *b);
 int             min(int a, int b, int c);
 int             max(int a, int b, int c);
 
-__attribute__((noninline))
+__attribute__((noinline))
 void
 swap(int *a, int *b)
 {
