@@ -9,7 +9,6 @@
 931004-6
 931004-8
 980526-1
-990208-1
 990413-2
 built-in-setjmp
 frame-address
