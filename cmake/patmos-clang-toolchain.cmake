@@ -203,7 +203,7 @@ if (PLATIN_ENABLE_WCET)
     message(WARNING "platin not found, WCET analysis is disabled.")
   endif()
 else()
-  message(WARNING "WCET analysis with platin manually disabled, will be skipped.")
+  message("WCET analysis with platin manually disabled, will be skipped.")
 endif()
 
 macro (run_wcet name prog report timeout factor entry)
