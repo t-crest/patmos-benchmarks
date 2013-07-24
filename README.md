@@ -24,7 +24,7 @@ A collection of benchmarks and tests for the Patmos processor and compiler.
   make
 
 For a list of pre-defined compiler/processor toolchain configurations see the
-cmake directory (currently leon3-clang, mpc5554-cland, patmos-clang). To chose
+cmake directory (currently leon3-clang, mpc5554-clang, patmos-clang). To chose
 one of them use:
 
   cmake .. -DCMAKE_TOOLCHAIN_FILE=../cmake/<processor>-clang-toolchain.cmake
