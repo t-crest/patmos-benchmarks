@@ -33,6 +33,15 @@ add_subdirectory(MiBench)
 add_subdirectory(Malardalen)
 add_subdirectory(tests)
 
+# add non-free benchmarks
+if(EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/nonfree)
+  add_subdirectory(nonfree)
+else()
+  message("Omitting non-free benchmarks.")
+endif()
+
+
+
 set(ENABLE_CTORTURE true CACHE BOOL "Enable gcc.c-torture suite (long build time)")
 
 find_package(Subversion)
