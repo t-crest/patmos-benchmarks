@@ -4,7 +4,7 @@ abort:
   Xraise                <= 1 
   Xabort                <= 1
   X__call_exitprocs     <= 1
-  Xexit                 <= 1
+  Wexit                 <= 1
 }
 {};
 
