@@ -19,6 +19,7 @@ pr51581-2
 printf-1
 strncmp-1
 struct-ret-1
+va-arg-2
 va-arg-21
 va-arg-24
 va-arg-9
