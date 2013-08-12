@@ -14,9 +14,12 @@ fprintf-1
 memcpy-bi
 memset-2
 memset-3
+pr39501
 pr51581-1
 pr51581-2
 printf-1
+stdarg-1
+string-opt-5
 strncmp-1
 struct-ret-1
 va-arg-2
