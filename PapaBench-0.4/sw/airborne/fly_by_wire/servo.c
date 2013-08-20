@@ -170,8 +170,8 @@ void servo_set_one(uint8_t servo, uint16_t value_us) {
   servo_widths[servo] = ChopServo(CLOCK*value_us);
 }
 
-void 
-servo_transmit(void) {
+__attribute__((noinline))
+void servo_transmit(void) {
   uint8_t servo;
   uart_transmit((uint8_t)0); uart_transmit((uint8_t)0);
 

@@ -128,6 +128,10 @@
 
 #if _SFR_ASM_COMPAT
 
+#ifdef NO_AVR_PLATFORM
+#error "Not an AVR platform, _SFR_ASM_COMPAT flag not supported"
+#endif
+
 #ifndef __SFR_OFFSET
 /* Define as 0 before including this file for compatibility with old asm
    sources that don't subtract __SFR_OFFSET from symbolic I/O addresses.  */
@@ -156,12 +160,32 @@
 
 #else  /* !_SFR_ASM_COMPAT */
 
+#ifdef NO_AVR_PLATFORM
+
+#include <stdint.h>
+/* Memory for AVR IO accesses */
+struct _sim_avr_mem_t {
+  /* mimics ATMega 128 */
+  volatile uint8_t io[0x100];
+};
+#define EXTERNAL_AVR_MEM struct _sim_avr_mem_t _sim_avr_mem
+extern EXTERNAL_AVR_MEM;
+#define _SFR_MEM8(mem_addr) _MMIO_BYTE(_SFR_MEM_ADDR(_sim_avr_mem.io))
+#define _SFR_MEM16(mem_addr) _MMIO_WORD(_SFR_MEM_ADDR(_sim_avr_mem.io))
+#define _SFR_IO8(offs)  _MMIO_BYTE(_SFR_MEM_ADDR(_sim_avr_mem.io) + 0x20)
+#define _SFR_IO16(offs) _MMIO_WORD(_SFR_MEM_ADDR(_sim_avr_mem.io) + 0x20)
+#define _SFR_MEM_ADDR(sfr) ((uintptr_t) &(sfr))
+
+#else /* !NO_AVR_PLATFORM */
+
 #define _SFR_MEM8(mem_addr) _MMIO_BYTE(mem_addr)
 #define _SFR_MEM16(mem_addr) _MMIO_WORD(mem_addr)
 #define _SFR_IO8(io_addr) _MMIO_BYTE((io_addr) + 0x20)
 #define _SFR_IO16(io_addr) _MMIO_WORD((io_addr) + 0x20)
-
 #define _SFR_MEM_ADDR(sfr) ((uint16_t) &(sfr))
+
+#endif /* NO_AVR_PLATFORM */
+
 #define _SFR_IO_ADDR(sfr) (_SFR_MEM_ADDR(sfr) - 0x20)
 #define _SFR_IO_REG_P(sfr) (_SFR_MEM_ADDR(sfr) < 0x60)
 

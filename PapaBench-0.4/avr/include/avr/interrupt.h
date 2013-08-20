@@ -111,11 +111,11 @@ extern "C" {
 #if defined(EIMSK)
 #define __EICR EIMSK
 #endif
-#if defined(GIMSK)
-#define __EICR GIMSK
-#endif
+
 #if defined(GICR)
 #define __EICR GICR
+#elif defined(GIMSK)
+#define __EICR GIMSK
 //printf("--EICR=GICR");//FN 5-1-06
 #endif
 

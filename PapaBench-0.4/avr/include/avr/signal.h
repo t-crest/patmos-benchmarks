@@ -37,6 +37,14 @@
 
 /*@{*/
 
+#ifndef NO_AVR_PLATFORM
+#define SIGNAL_ATTRIBUTE signal
+#define INTERRUPT_ATTRIBUTE interrupt
+#else
+#define SIGNAL_ATTRIBUTE used
+#define INTERRUPT_ATTRIBUTE used
+#endif
+
 /** \def SIGNAL(signame)
     \ingroup avr_interrupts
 
@@ -48,11 +56,11 @@
 #ifdef __cplusplus
 #define SIGNAL(signame)					\
 extern "C" void signame(void);				\
-void signame (void) __attribute__ ((signal));		\
+void signame (void) __attribute__ ((SIGNAL_ATTRIBUTE));		\
 void signame (void)
 #else
 #define SIGNAL(signame)					\
-void signame (void) __attribute__ ((signal));		\
+void signame (void) __attribute__ ((SIGNAL_ATTRIBUTE));		\
 void signame (void)
 #endif
 
@@ -67,11 +75,11 @@ void signame (void)
 #ifdef __cplusplus
 #define INTERRUPT(signame)				\
 extern "C" void signame(void);				\
-void signame (void) __attribute__ ((interrupt));	\
+void signame (void) __attribute__ ((INTERRUPT_ATTRIBUTE));	\
 void signame (void)
 #else
 #define INTERRUPT(signame)				\
-void signame (void) __attribute__ ((interrupt));	\
+void signame (void) __attribute__ ((INTERRUPT_ATTRIBUTE));	\
 void signame (void)
 #endif
 

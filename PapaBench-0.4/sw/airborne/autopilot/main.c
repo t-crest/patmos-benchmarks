@@ -67,7 +67,7 @@ uint8_t vsupply;
 
 static uint8_t  mcu1_status, mcu1_ppm_cpt;
 
-static bool_t low_battery = FALSE;
+bool_t low_battery = FALSE;
 
 float slider_1_val, slider_2_val;
 
@@ -336,6 +336,7 @@ uint8_t inflight_calib_mode_update ( void ) {
 /** \fn inline void radio_control_task( void )
  *  \brief @@@@@ A FIXER @@@@@
  */
+__attribute__((noinline))
 void radio_control_task( void ) {
   bool_t calib_mode_changed;
   if (link_fbw_receive_valid) {
@@ -416,7 +417,7 @@ void course_run(void){
     desired_roll = nav_desired_roll;
   }  
 }
-
+__attribute__((noinline))
 void altitude_control_task(void)
 {
 	if (pprz_mode == PPRZ_MODE_AUTO2 || pprz_mode == PPRZ_MODE_HOME) {
@@ -424,6 +425,7 @@ void altitude_control_task(void)
       			altitude_pid_run();
 	}
 }
+__attribute__((noinline))
 void climb_control_task(void)
 {
    if (pprz_mode == PPRZ_MODE_AUTO2 || pprz_mode == PPRZ_MODE_HOME) 
@@ -467,6 +469,30 @@ void climb_control_task(void)
 	static uint8_t _20Hz   = 0;
 	static uint8_t _1Hz   = 0;
 #endif
+
+__attribute__((noinline))
+void navigation_task( void ) {
+    /*navigation_task */
+    navigation_update();
+    send_nav_values();
+    course_run();
+    /*end navigation*/
+}
+
+__attribute__((noinline))
+void reporting_task( void ) {
+	send_boot();
+	send_attitude();
+   	send_adc();
+	send_settings();
+	send_desired();
+	send_bat();
+	send_climb();
+	send_mode();
+	send_debug();
+	send_nav_ref();
+}
+
 void periodic_task( void ) {
   static uint8_t _10Hz   = 0;
   static uint8_t _4Hz   = 0;
@@ -527,11 +553,7 @@ void periodic_task( void ) {
 if (_4Hz == 0)
 {
     estimator_propagate_state();
-    /*navigation_task */
-    navigation_update();
-    send_nav_values();
-    course_run();
-    /*end navigation*/
+    navigation_task();
     altitude_control_task();
     climb_control_task();
 }
@@ -544,17 +566,7 @@ else if (_20Hz == 1)
     odd++;
     if (odd & 0x01)
     {
-	/*reporting_task()*/
-	send_boot();
-	send_attitude();
-   	send_adc();  
-	send_settings();
-	send_desired();
-	send_bat();
-	send_climb();
-	send_mode();
-	send_debug();
-	send_nav_ref();
+        reporting_task();
     }
 }
 else if(_20Hz == 2)
@@ -567,6 +579,7 @@ else
 //#endif
 }
 
+__attribute__((noinline))
 void stabilisation_task(void)
 {
     ir_update();
@@ -582,19 +595,28 @@ void stabilisation_task(void)
     to_fbw.channels[RADIO_GAIN1] = TRIM_PPRZ(MAX_PPRZ/0.75*(-estimator_phi));
 }
 
-/*void receive_gps_data_task(void)
+__attribute__((noinline))
+void receive_gps_data_task(void)
 {
 	parse_gps_msg();
       	gps_msg_received = FALSE;
       	if (gps_pos_available) 
 	{
-		use_gps_pos();
-		gps_pos_available = FALSE;
+          use_gps_pos();
+          gps_pos_available = FALSE;
       	}
-}*/
+}
+
 /** \fn void use_gps_pos( void )
  *  \brief use GPS
  */
+void use_gps_pos( void )
+{
+        send_gps_pos();
+        send_radIR();
+        send_takeOff();
+}
+
 /**Send by downlink the GPS and rad_of_ir messages with \a DOWNLINK_SEND_GPS
  * and \a DOWNLINK_SEND_RAD_OF_IR \n
  * If \a estimator_flight_time is null and \a estimator_hspeed_mod is greater

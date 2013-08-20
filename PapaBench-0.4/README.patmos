@@ -1,0 +1,21 @@
+Adapted PapaBench to be able to run and analyze it on Patmos.
+
+Change: Added compile-time flag -DNO_AVR_PLATFORM that accesses a volatile C object instead of
+        hardcoded memory addresses.
+Rational: This allows to run PapaBench on other platforms than AVR; the current
+          solution to this problem (access to a fixed memory address range, with configurable
+          offset) requires custom linker scripts for each platform
+
+Change: Added compile-time flag -DPAPABENCH_TEST, that executes each task
+        one or more times with different test data.
+Rational: Usually, both executables run in an infinite loop, which is not
+         suitable for testing or measurements in the simulator
+
+Change: Added compile-time flag -DUNROLL_FP_LOOPS, that gets rid of loops
+        that depend on floating-point values.
+Rational: This is necessary for testing, as otherwise those loops might not
+         (do not) terminate.
+
+Change: Added functions for missing tasks in autopilot (the corresponding functions where
+        described in the documentation, but missing in the source code)
+Rational: We want to be able to analyze these functions

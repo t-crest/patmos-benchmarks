@@ -27,10 +27,19 @@
 
 #include <inttypes.h>
 
+#ifdef UNROLL_FP_LOOPS
+#define NORM_RAD_ANGLE(x) { \
+    if (x > M_PI) x -= 2 * M_PI; \
+    if (x < -M_PI) x += 2 * M_PI; \
+  }
+
+#else
+/* Original PapaBench code; this loop may never terminate (for non-normalized angles) */
 #define NORM_RAD_ANGLE(x) { \
     while (x > M_PI) x -= 2 * M_PI; \
     while (x < -M_PI) x += 2 * M_PI; \
   }
+#endif
 
 extern float desired_roll;
 extern float max_roll;

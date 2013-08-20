@@ -34,7 +34,6 @@
 #include <avr/io.h>
 #include "link_autopilot.h"
 
-
 /*
  * Enable Timer1 (16-bit) running at Clk/1 for the global system
  * clock.  This will be used for computing the servo pulse widths,
@@ -50,11 +49,12 @@ timer_init( void )
   /* Timer1 @ Clk/1: System clock, ppm and servos pulses */
   TCCR1A		= 0x00;
   TCCR1B		= 0x01;
-  
+
   /* Timer2 @ Clk/1024: Periodic clock            */
   TCCR2		= 0x07;
 }
 
+extern volatile uint16_t _Sim_TCNT1, _Sim_TCNT2;
 
 /*
  * Retrieve the current time from the global clock in Timer1,
@@ -82,11 +82,18 @@ timer_now_non_atomic( void )
 static inline bool_t
 timer_periodic( void )
 {
+  /* timer simulation */
+  TCNT1 += 512;
+  TCNT2 += 1;
+  return (TCNT2 & 1);
+
+  /*
   if( !bit_is_set( TIFR, TOV2 ) )
     return FALSE;
-  
+
   TIFR = 1 << TOV2;
   return TRUE;
+  */
 }
 
 #endif

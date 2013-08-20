@@ -42,9 +42,80 @@
 	void fbw_schedule(void);
 #endif
 
+#ifdef EXTERNAL_AVR_MEM
+EXTERNAL_AVR_MEM; /* Memory for AVR I/O for non-AVR platforms */
+#endif
+
+#ifdef PAPABENCH_TEST
+
+extern bool_t low_battery;
+int main( void )
+{
+  uint8_t init_cpt;
+
+  /* init peripherals */
+  timer_init();
+  modem_init();
+  adc_init();
+#ifdef CTL_BRD_V1_1
+  adc_buf_channel(ADC_CHANNEL_BAT, &buf_bat);
+#endif
+  spi_init();
+  link_fbw_init();
+  gps_init();
+  nav_init();
+  ir_init();
+  estimator_init();
+  int m1,m2;
+  int b1,b2,b3;
+  for(m1 = 0; m1 < 5; m1++)
+    for(m2 = 0; m2 < 5; m2++) {
+      pprz_mode = m1;
+      vertical_mode = m2;
+      altitude_control_task();
+    }
+  for(m1 = 0; m1 < 5; m1++)
+    for(m2 = 0; m2 < 5; m2++)
+      for(b1 = 0; b1 < 2; b1++)
+        for(b2 = 0; b2 < 2; b2++)
+          for(b3 = 0; b3 < 2; b3++) {
+            pprz_mode = m1;
+            vertical_mode = m2;
+            low_battery = b1;
+            estimator_flight_time = b2;
+            launch = b3;
+            climb_control_task();
+          }
+  for(m1 = 0; m1 < 3; m1++) {
+    spi_cur_slave = m1;
+    link_fbw_send();
+  }
+  for(m1 = 0; m1 < 5; m1++)
+    for(m2 = 0; m2 < 5; m2++) {
+      pprz_mode = m1;
+      vertical_mode = m2;
+      navigation_task();
+    }
+
+  /* subtasks:
+  navigation_update();
+  send_nav_values();
+  course_run();
+  */
+
+  radio_control_task();
+  receive_gps_data_task();
+  reporting_task();
+  stabilisation_task();
+
+  return 0;
+}
+
+#else
 int main( void ) 
 {
   uint8_t init_cpt;
+
   /* init peripherals */
   timer_init(); 
   modem_init();
@@ -79,7 +150,7 @@ int main( void )
 #		if PAPABENCH_SINGLE
 			fbw_schedule();
 #		endif
-	}
+    }
     if (gps_msg_received) 
     {
 	/*receive_gps_data_task()*/
@@ -92,6 +163,7 @@ int main( void )
       link_fbw_receive_complete = FALSE;
       radio_control_task();
     }
-  } 
+  }
   return 0;
 }
+#endif

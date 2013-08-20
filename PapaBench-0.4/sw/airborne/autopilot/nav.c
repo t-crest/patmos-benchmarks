@@ -72,7 +72,14 @@ static void route_to(uint8_t last_wp, uint8_t wp);
 
 #define DegOfRad(x) ((x) / M_PI * 180.)
 #define RadOfDeg(x) ((x)/180. * M_PI)
+
+#ifdef UNROLL_FP_LOOPS
+#define NormCourse(x) { if (x < -360) x += 720; else if(x < 0) x+= 360; else if (x >= 720) x -= 720; else if (x>=360) x+= 360;}
+#else
+/* Original PapaBench code; this loop may never terminate (for non-normalized angles) */
 #define NormCourse(x) { while (x < 0) x += 360; while (x >= 360) x -= 360;}
+#endif
+
 
 static float qdr; /* Degrees from 0 to 360 */
 

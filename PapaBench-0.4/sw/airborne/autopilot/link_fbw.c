@@ -43,7 +43,7 @@ void link_fbw_init(void) {
   link_fbw_nb_err;
   link_fbw_receive_complete = FALSE;  
 }
-
+__attribute__((noinline))
 void link_fbw_send(void) {
   if (spi_cur_slave != SPI_NONE) {
     spi_nb_ovrn++;

@@ -120,4 +120,11 @@ void send_radIR(void);
 void send_takeOff(void);
 /*end receive_gps_data_task*/
 void stabilisation_task(void);
+
+void altitude_control_task(void);
+void climb_control_task(void);
+void navigation_task(void);
+void receive_gps_data_task(void);
+void reporting_task(void);
+
 #endif /* AUTOPILOT_H */

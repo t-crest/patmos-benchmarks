@@ -96,6 +96,7 @@ static void to_autopilot_from_last_radio (void) {
 #endif
 }
 
+__attribute__((noinline))
 void send_data_to_autopilot_task(void)
 {
    if ( !SpiIsSelected() && spi_was_interrupted ) 
@@ -114,9 +115,11 @@ void send_data_to_autopilot_task(void)
 	static uint8_t _20Hz;
 #endif
 
+void fbw_spi_init(void);
+
 void fbw_init(void) {
   uart_init_tx();
-  uart_print_string("FBW Booting $Id: main.c,v 1.3 2008/10/22 19:41:19 casse Exp $\n");
+  uart_print_string((uint8_t*)"FBW Booting $Id: main.c,v 1.3 2008/10/22 19:41:19 casse Exp $\n");
 
 #ifndef CTL_BRD_V1_1
   fbw_adc_init();
@@ -148,30 +151,94 @@ void fbw_schedule(void) {
 }
 
 #ifndef PAPABENCH_SINGLE
+
+#ifdef EXTERNAL_AVR_MEM
+EXTERNAL_AVR_MEM; /* Memory for AVR I/O for non-AVR platforms */
+#endif
+
+#ifdef PAPABENCH_TEST
+
 int main( void )
 {
-	fbw_init();
-  while( 1 ) 
+  static const int modes[] = { MODE_MANUAL, MODE_AUTO };
+  int m,b1,b2,b3;
+
+  fbw_init();
+  for(m = 0; m < 2; m++) {
+    /* T1: check_failsafe_task */
+    for(b1 = 0; b1 <= 1; b1++)
+      for(b2 = 0; b2 <= 2; b2++) {
+        mode = modes[m];
+        radio_ok = b1;
+        mega128_ok = b2;
+        check_failsafe_task();
+      }
+    /* T2: check_mega128_values_task */
+    for(b1 = 0; b1 <= 1; b1++)
+      for(b2 = 0; b2 <= 1; b2++)
+        for(b3 = 0; b3 <= 1; b3++) {
+          mode = modes[m];
+          SPI_PIN = b1 ? (SPI_PIN | _BV(SPI_SS_PIN)) : (SPI_PIN & (~_BV(SPI_SS_PIN)));
+          spi_was_interrupted = b2;
+          mega128_receive_valid = b3;
+          check_mega128_values_task();
+        }
+    /* T3: send_data_to_autopilot_task */
+    for(b1 = 0; b1 <= 1; b1++)
+      for(b2 = 0; b2 <= 1; b2++)
+        for(b3 = 0; b3 <= 1; b3++) {
+          mode = modes[m];
+          SPI_PIN = b1 ? (SPI_PIN | _BV(SPI_SS_PIN)) : (SPI_PIN & (~_BV(SPI_SS_PIN)));
+          spi_was_interrupted = b2;
+          last_radio_contains_avg_channels = b3;
+          send_data_to_autopilot_task();
+        }
+    /* T4: servo_transmit */
+    servo_transmit();
+    /* T5: test_ppm_task */
+    for(b1 = 0; b1 <= 1; b1++)
+      for(b2 = 0; b2 <= 1; b2++)
+        for(b3 = 0; b3 <= 1; b3++) {
+          mode = modes[m];
+          ppm_valid = b1;
+          last_radio_contains_avg_channels = b2;
+          radio_really_lost = b3;
+          test_ppm_task();
+        }
+  }
+}
+
+#else
+
+int main( void )
+{
+
+  fbw_init();
+  while (1)
   {
-	fbw_schedule();
-    if(timer_periodic()) 
+    fbw_schedule();
+    if(timer_periodic())
     {
       _1Hz++;
       _20Hz++;
-      if (_1Hz >= 60) 
+      if (_1Hz >= 60)
       {
 	_1Hz = 0;
       }
-      if (_20Hz >= 3) 
+      if (_20Hz >= 3)
       {
 	_20Hz = 0;
       }
     }
-  } 
+
+  }
   return 0;
 }
 #endif
 
+#endif
+
+__attribute__((noinline))
 void test_ppm_task(void)
 {
     if( ppm_valid ) 
@@ -204,6 +271,8 @@ void test_ppm_task(void)
       radio_really_lost = TRUE;
     }
 }
+
+__attribute__((noinline))
 void check_failsafe_task(void)
 {
     if ((mode == MODE_MANUAL && !radio_ok) ||
@@ -212,6 +281,8 @@ void check_failsafe_task(void)
       servo_set(failsafe);
     }
 }
+
+__attribute__((noinline))
 void check_mega128_values_task(void)
 {
      if ( !SpiIsSelected() && spi_was_interrupted ) 
