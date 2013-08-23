@@ -1,6 +1,6 @@
 
 
-set(simpletests jumptable printf printf_long smallarray stackarray static vaargs setjmp coop uart alloca iotest)
+set(simpletests jumptable printf printf_long smallarray stackarray static vaargs setjmp coop uart alloca iotest setcc)
 
 foreach(test ${simpletests})
     add_executable(${test} ${test}.c)
