@@ -69,19 +69,22 @@ F(4, int)
 #ifdef PRINT_RESULTS
 #include <stdio.h>
 #endif
-
-#define RUN_ALL(x) f0(x);f1(x);f2(x);f3(x);f4(x)
-#define RUN(x) RUN_ALL(x)
-static const int callsites = 8;
+#define CALLSITES 8
+#define DEF_RUN(X) __attribute__((noinline)) void run_f##X() { \
+                   f##X(0);f##X(1);f##X(5);f##X(4);f##X(3);f##X(2);f##X(7);f##X(6); }
+DEF_RUN(0)
+DEF_RUN(1)
+DEF_RUN(2)
+DEF_RUN(3)
+DEF_RUN(4)
 int main() {
-  RUN(0);
-  RUN(1);
-  RUN(2);
-  RUN(3);
-  RUN(4);
-  RUN(5);
-  RUN(6);
-  RUN(7);
+  run_f0();
+  /* Disabled; no loopbound from LLVM */
+  /* run_f1(); */
+  run_f2();
+  run_f3();
+  /* Disabled; no loopbound from LLVM */
+  /* run_f4(); */
 #ifdef PRINT_RESULTS
   int i;
   for(i = 0; i < TESTS; i++)

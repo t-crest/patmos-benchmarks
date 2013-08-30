@@ -1,15 +1,29 @@
 /* Test case for triangle loop bounds
    Set 3: deeply nested and independent middle loops */
 
-#define TESTS 2
+#define TESTS 4
 #include <stdint.h>
 volatile int outer[TESTS],middle[TESTS],inner[TESTS];
 #define F(n,T) __attribute__((noinline)) void f##n(T ub) { \
   const int X = n;
 
-/* Test 1: independent middle loop */
-F(0,uint16_t)
-  uint16_t i,j,k;
+/* Test 0: independent middle loop, constant loop bounds (no unrolling, please) */
+F(0,int)
+  int i,j,k;
+  for(i = 0; i < 17; i++) {
+    inner[X]++;
+    for(j = 1; j < 19; j++) {
+      middle[X]++;
+      for(k = 0; k < i; k++) {
+        inner[X]++;
+      }
+    }
+  }
+}
+
+/* Test 1: independent middle loop, symbolic loop bounds */
+F(1,int)
+  int i,j,k;
   for(i = 0; i < ub; i++) {
     inner[X]++;
     for(j = 0; j < ub; j++) {
@@ -21,9 +35,23 @@ F(0,uint16_t)
   }
 }
 
-/* Test 1: 3-level triangle loop */
-F(1,uint16_t)
-  uint16_t i,j,k;
+/* Test 2: 3-level triangle loop, constant loop bound */
+F(2,int)
+  int i,j,k;
+  for(i = 0; i < 17; i++) {
+    inner[X]++;
+    for(j = 0; j < i; j++) {
+      middle[X]++;
+      for(k = 0; k < j; k++) {
+        inner[X]++;
+      }
+    }
+  }
+}
+
+/* Test 3: 3-level triangle loop, symbolic loop bound */
+F(3,int)
+  int i,j,k;
   for(i = 0; i < ub; i++) {
     inner[X]++;
     for(j = 0; j < i; j++) {
@@ -38,17 +66,18 @@ F(1,uint16_t)
 #ifdef PRINT_RESULTS
 #include <stdio.h>
 #endif
-#define RUN(x) f0(x);f1(x)
-static const int callsites = 8;
+#define CALLSITES 8
+#define DEF_RUN(X) __attribute__((noinline)) void run_f##X() { \
+                   f##X(0);f##X(1);f##X(5);f##X(4);f##X(3);f##X(2);f##X(7);f##X(6); }
+DEF_RUN(0)
+DEF_RUN(1)
+DEF_RUN(2)
+DEF_RUN(3)
 int main() {
-  RUN(0);
-  RUN(1);
-  RUN(2);
-  RUN(3);
-  RUN(4);
-  RUN(5);
-  RUN(6);
-  RUN(7);
+  run_f0();
+  run_f1();
+  run_f2();
+  run_f3();
 #ifdef PRINT_RESULTS
   int i;
   for(i = 0; i < TESTS; i++)
