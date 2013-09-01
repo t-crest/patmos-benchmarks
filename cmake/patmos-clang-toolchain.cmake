@@ -225,3 +225,36 @@ macro (run_wcet name prog report timeout factor entry)
 endmacro(run_wcet)
 
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+# stack cache analysis (and pml export) test
+
+set(ENABLE_STACK_CACHE_ANALYSIS_TESTING true CACHE BOOL "Enable tests for LLVM-based SC analysis")
+
+find_program(ILP_SOLVER NAMES glpsol DOC "Path to GLPK solver.")
+
+if (ENABLE_STACK_CACHE_ANALYSIS_TESTING)
+  if (NOT ILP_SOLVER)
+    message(WARNING "no ILP solver found, SCA analysis tests disabled.")
+  endif()
+  if (NOT PLATIN_EXECUTABLE)
+    message(WARNING "platin not found, SCA analysis tests disabled.")
+  endif()
+else()
+  message("LLVM-based SC analysis tests will be skipped.")
+endif()
+
+macro (set_sca_options target bounds_file)
+  if (ENABLE_STACK_CACHE_ANALYSIS_TESTING AND ILP_SOLVER)
+    # enables SCA analysis when building target
+    set_target_properties(${target} PROPERTIES LINK_FLAGS "-mpatmos-enable-stack-cache-analysis -mpatmos-ilp-solver=${PROJECT_SOURCE_DIR}/scripts/solve_ilp_glpk.sh -mpatmos-stack-cache-size=512 -mpatmos-stack-cache-analysis-bounds=${bounds_file}")
+  endif()
+endmacro(set_sca_options)
+
+macro (make_ais name prog pml)
+  if (ENABLE_STACK_CACHE_ANALYSIS_TESTING AND ILP_SOLVER AND PLATIN_EXECUTABLE)
+
+    add_test(NAME ${name}-sym COMMAND ${PLATIN_EXECUTABLE} extract-symbols -i ${pml} -o ${prog}.addr.pml ${prog})
+    add_test(NAME ${name}-ais COMMAND ${PLATIN_EXECUTABLE} pml2ais --ais ${prog}.ais ${prog}.addr.pml)
+
+    set_property(DIRECTORY APPEND PROPERTY ADDITIONAL_MAKE_CLEAN_FILES ${prog}.addr.pml ${prog}.ais)
+  endif()
+endmacro(make_ais)
