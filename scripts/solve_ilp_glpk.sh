@@ -7,7 +7,7 @@
 
 # glpk has an issue with the constraint name 'en:' (thinks it's end), so we
 # mangle the constraint names in the .lp file first
-sed --in-place -e 's/\(.*\):/glp.\1:/' $1
+sed -i -e 's/\(.*\):/glp.\1:/' $1
 
 GLPSOL=`glpsol --lp $1`;
 
