@@ -38,6 +38,29 @@ set(CMAKE_CXX_COMPILE_OBJECT "<CMAKE_CXX_COMPILER> -target ${TRIPLE} -fno-builti
 set(CMAKE_C_LINK_EXECUTABLE  "${PATMOS_GOLD_ENV}<CMAKE_C_COMPILER> -target ${TRIPLE} -fno-builtin <FLAGS> <CMAKE_C_LINK_FLAGS> <LINK_FLAGS> <OBJECTS> -o <TARGET> -mpreemit-bitcode=<TARGET>.bc -mserialize=<TARGET>.pml <LINK_LIBRARIES>")
 set(CMAKE_FORCE_C_OUTPUT_EXTENSION ".bc" FORCE)
 
+
+# RTEMS linking support
+if(${TRIPLE} MATCHES "patmos-unknown-rtems")
+  message("=====")
+  message("RTEMS based build... (EXPERIMENTAL)")
+  message("=====")
+
+  # XXX should this be set?
+  SET(CMAKE_SYSTEM_NAME rtems)
+
+  if(NOT (IS_DIRECTORY ${RTEMS_LIBPATH}))
+    message(FATAL_ERROR "path to RTEMS libs missing")
+  endif()
+
+  # custom link command
+  set(CMAKE_C_LINK_EXECUTABLE  "<CMAKE_C_COMPILER> -target ${TRIPLE} -fno-builtin <FLAGS> <CMAKE_C_LINK_FLAGS> <LINK_FLAGS> <OBJECTS> -o <TARGET> -mpreemit-bitcode=<TARGET>.bc -mserialize=<TARGET>.pml ${RTEMS_LIBPATH}/start.o ${RTEMS_LIBPATH}/libsyms.ll -l=c <LINK_LIBRARIES> -nostartfiles -Xgold -Map -Xgold map.map -Xgold --script=${RTEMS_LIBPATH}/linkcmds -Xopt -disable-internalize")
+
+  # this does not work for the RTEMS libraries
+  #set(CMAKE_FIND_LIBRARY_PREFIXES "")
+  #set(CMAKE_FIND_LIBRARY_SUFFIXES .a)
+  #find_library(rtemscpu NAMES "rtemscpu" PATHS RTEMS_LIBPATH)
+endif()
+
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 # find llvm-config
 find_program(LLVM_CONFIG_EXECUTABLE NAMES patmos-llvm-config llvm-config DOC "Path to the llvm-config tool.")
