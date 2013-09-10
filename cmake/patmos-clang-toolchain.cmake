@@ -198,7 +198,7 @@ find_program(PLATIN_EXECUTABLE NAMES platin DOC "Path to platin tool.")
 
 set(PLATIN_OPTIONS "" CACHE STRING "Additional command-line options passed to the platin tool.")
 
-if (PLATIN_ENABLE_WCET) 
+if (PLATIN_ENABLE_WCET)
   if (NOT PLATIN_EXECUTABLE)
     message(WARNING "platin not found, WCET analysis is disabled.")
   endif()
@@ -206,22 +206,21 @@ else()
   message("WCET analysis with platin manually disabled, will be skipped.")
 endif()
 
+if (A3_EXECUTABLE AND PLATIN_ENABLE_AIT)
+  set(PLATIN_WCA_TOOL --a3-command ${A3_EXECUTABLE})
+else()
+  set(PLATIN_WCA_TOOL --disable-ait --enable-wca)
+endif()
+
 macro (run_wcet name prog report timeout factor entry)
-  if (PLATIN_ENABLE_WCET AND PLATIN_EXECUTABLE AND PASIM_EXECUTABLE)
-    set_property(DIRECTORY APPEND PROPERTY ADDITIONAL_MAKE_CLEAN_FILES ${report} ${report}.dir)
-    if (A3_EXECUTABLE AND PLATIN_ENABLE_AIT)
-        add_test(NAME ${name} COMMAND ${PLATIN_EXECUTABLE} wcet --recorders "g:bcil" --analysis-entry ${entry} --a3-command ${A3_EXECUTABLE}
-                                                                --use-trace-facts  --binary ${prog} --report ${report} --input ${prog}.pml --check ${factor}
-                                                                --objdump-command ${LLVM_OBJDUMP_EXECUTABLE} --pasim-command ${PASIM_EXECUTABLE})
-    else()
-        add_test(NAME ${name} COMMAND ${PLATIN_EXECUTABLE} wcet --recorders "g:bcil" --analysis-entry ${entry} --disable-ait --enable-wca
-                                                                --use-trace-facts  --binary ${prog} --report ${report} --input ${prog}.pml --check ${factor}
-                                                                --objdump-command ${LLVM_OBJDUMP_EXECUTABLE} --pasim-command ${PASIM_EXECUTABLE})
-    endif()
-    # add  --check ${factor} as soon as aiT is ready for the new patmos ISA
-    set_tests_properties(${name} PROPERTIES TIMEOUT ${timeout})
-    set_property(DIRECTORY APPEND PROPERTY ADDITIONAL_MAKE_CLEAN_FILES ${report})
-  endif()
+  set_property(DIRECTORY APPEND PROPERTY ADDITIONAL_MAKE_CLEAN_FILES ${report} ${report}.dir)
+  add_test(NAME ${name} COMMAND ${PLATIN_EXECUTABLE} wcet --recorders "g:bcil" --analysis-entry ${entry}
+                                                          --use-trace-facts  --binary ${prog} --report ${report} --input ${PLATIN_CONFIG}
+                                                          --input ${prog}.pml --check ${factor}
+                                                          --objdump-command ${LLVM_OBJDUMP_EXECUTABLE} --pasim-command ${PASIM_EXECUTABLE}
+                                                          ${PLATIN_WCA_TOOL} ${PLATIN_OPTIONS})
+  set_tests_properties(${name} PROPERTIES TIMEOUT ${timeout})
+  set_property(DIRECTORY APPEND PROPERTY ADDITIONAL_MAKE_CLEAN_FILES ${report})
 endmacro(run_wcet)
 
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #

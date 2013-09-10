@@ -9,7 +9,7 @@ set( SOURCES
   duff.c
   edn.c
   expint.c
-  fac.c
+  fac.c # recursiv
   fdct.c
   fft1.c
   fibcall.c
@@ -29,7 +29,7 @@ set( SOURCES
   nsichneu.c # exceed method cache size?
   qsort-exam.c
   qurt.c
-  recursion.c
+  recursion.c # recursive
   select.c
   sqrt.c
   statemate.c
@@ -37,8 +37,10 @@ set( SOURCES
   ud.c
   # whet.c # needs math library
   )
-set( SOURCES_NO_HW adpcm.c ludcmp.c nsichneu.c )
-set( PASIM_OPTIONS "")
+set( SOURCES_NO_HW adpcm.c ludcmp.c nsichneu.c ) # exceed SPM size
+set( SOURCES_NO_WCET fac.c recursion.c ) # recursion
+set( PASIM_OPTIONS "" )
+set( PLATIN_CONFIG ${CMAKE_CURRENT_SOURCE_DIR}/config.pml )
 
 # executable for each .c file
 foreach( SRC ${SOURCES} )
@@ -46,24 +48,28 @@ foreach( SRC ${SOURCES} )
 
   add_executable( ${EXEC_NAME} ${SRC} )
 
-  list(FIND SOURCES_NO_HW ${SRC} ENABLE_HW)
-  if(${ENABLE_HW} EQUAL -1)
+  list(FIND SOURCES_NO_HW ${SRC} DISABLE_HW)
+  if(${DISABLE_HW} EQUAL -1)
     set(mrtc-${EXEC_NAME}-run-hw-test true)
   endif()
 
   run_io(mrtc-${EXEC_NAME} ${CMAKE_CURRENT_BINARY_DIR}/${EXEC_NAME} "" "" "")
 
   if("${CMAKE_SYSTEM_NAME}" MATCHES "patmos")
-    # On Patmos, compile for SPM, and run emulator tests
-    set_target_properties( ${EXEC_NAME} PROPERTIES
-                            COMPILE_FLAGS "-DSTACK_SIZE=1024")
-    set_target_properties( ${EXEC_NAME} PROPERTIES
-                            LINK_FLAGS "-Xgold -T${PROJECT_SOURCE_DIR}/scripts/patmos-spm.t -mpatmos-method-cache-size=0x800 -mpatmos-stack-base=0x3000 -mpatmos-shadow-stack-base=0x4000" )
-    run_wcet(mrtc_platin-${EXEC_NAME}
-             ${CMAKE_CURRENT_BINARY_DIR}/${EXEC_NAME}
-             ${CMAKE_CURRENT_BINARY_DIR}/${EXEC_NAME}-wcet.txt
-             360 1.2
-             main)
+     # On Patmos, compile for SPM, and run emulator tests
+     set_target_properties( ${EXEC_NAME} PROPERTIES
+                             COMPILE_FLAGS "-DSTACK_SIZE=1024")
+     set_target_properties( ${EXEC_NAME} PROPERTIES
+                             LINK_FLAGS "-Xgold -T${PROJECT_SOURCE_DIR}/scripts/patmos-spm.t -mpatmos-method-cache-size=0x800 -mpatmos-stack-base=0x3000 -mpatmos-shadow-stack-base=0x4000" )
+     list(FIND SOURCES_NO_WCET ${SRC} DISABLE_WCA)
+     if(${DISABLE_WCA} EQUAL -1)
+        run_wcet(mrtc_platin-${EXEC_NAME}
+                 ${CMAKE_CURRENT_BINARY_DIR}/${EXEC_NAME}
+                 ${CMAKE_CURRENT_BINARY_DIR}/${EXEC_NAME}-wcet.txt
+                 360
+                 1.5
+                 main)
+     endif()
   endif()
 endforeach(SRC)
 
