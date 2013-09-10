@@ -1,6 +1,5 @@
 /* Test case for triangle loop bounds
    Set 3: deeply nested and independent middle loops */
-
 #define TESTS 4
 #include <stdint.h>
 volatile int outer[TESTS],middle[TESTS],inner[TESTS];

@@ -1,8 +1,8 @@
 /* Test case for triangle loop bounds
    Set 1: simple constant loops and triangle loops with constant loop bound for outer loop */
-
 #define TESTS 5
 #include <stdint.h>
+
 volatile int outer[TESTS],middle[TESTS],inner[TESTS];
 #define F(n,T) __attribute__((noinline)) void f##n(T ub) { \
   const int X = n;

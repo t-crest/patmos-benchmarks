@@ -1,0 +1,4 @@
+[0] outer: 0, middle: 2448, inner: 19720
+[1] outer: 0, middle: 140, inner: 350
+[2] outer: 0, middle: 1088, inner: 5576
+[3] outer: 0, middle: 56, inner: 98

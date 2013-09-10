@@ -1,0 +1,5 @@
+[0] outer: 36, middle: 0, inner: 0
+[1] outer: 0, middle: 0, inner: 0
+[2] outer: 36, middle: 0, inner: 56
+[3] outer: 36, middle: 0, inner: 10
+[4] outer: 0, middle: 0, inner: 0

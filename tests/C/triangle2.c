@@ -1,6 +1,5 @@
 /* Test case for triangle loop bounds
    Set 2: simple symbolic bounds depending on the only argument; triangle loops depnding on a symbolic outer loop bound */
-
 #define TESTS 5
 #include <stdint.h>
 volatile int outer[TESTS],middle[TESTS],inner[TESTS];
