@@ -23,8 +23,8 @@ void myvprint(const char *s, ...) {
     double d = va_arg(argp, double);
     int *p = (int*)&d;
 
-    printf("d: %f %X %X\n", d, *(p++), *p);
-
+    printf("d: %f %X %X\n", d, *p, *(p+1));
+    p++;
     va_end(argp);
 }
 
