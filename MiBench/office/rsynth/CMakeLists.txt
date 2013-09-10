@@ -26,8 +26,6 @@ run_io(mibench-rsynth_tiny ${CMAKE_CURRENT_BINARY_DIR}/say
 #        small_output.au
 #        ${CMAKE_CURRENT_SOURCE_DIR}/ref_small.au)
 
-if("${CMAKE_SYSTEM_NAME}" MATCHES "patmos")
-    set_sca_options(say ${CMAKE_CURRENT_SOURCE_DIR}/../../recursion.lp)
-    make_ais(sca_platin-say ${CMAKE_CURRENT_BINARY_DIR}/say ${CMAKE_CURRENT_BINARY_DIR}/say.pml)
-endif()
+set_sca_options(say ${CMAKE_CURRENT_SOURCE_DIR}/../../recursion.lp)
+make_ais(sca_platin-say ${CMAKE_CURRENT_BINARY_DIR}/say ${CMAKE_CURRENT_BINARY_DIR}/say.pml)
 

@@ -38,6 +38,29 @@ set(CMAKE_CXX_COMPILE_OBJECT "<CMAKE_CXX_COMPILER> -target ${TRIPLE} -fno-builti
 set(CMAKE_C_LINK_EXECUTABLE  "${PATMOS_GOLD_ENV}<CMAKE_C_COMPILER> -target ${TRIPLE} -fno-builtin <FLAGS> <CMAKE_C_LINK_FLAGS> <LINK_FLAGS> <OBJECTS> -o <TARGET> -mpreemit-bitcode=<TARGET>.bc -mserialize=<TARGET>.pml <LINK_LIBRARIES>")
 set(CMAKE_FORCE_C_OUTPUT_EXTENSION ".bc" FORCE)
 
+
+# RTEMS linking support
+if(${TRIPLE} MATCHES "patmos-unknown-rtems")
+  message("=====")
+  message("RTEMS based build... (EXPERIMENTAL)")
+  message("=====")
+
+  # XXX should this be set?
+  SET(CMAKE_SYSTEM_NAME rtems)
+
+  if(NOT (IS_DIRECTORY ${RTEMS_LIBPATH}))
+    message(FATAL_ERROR "path to RTEMS libs missing")
+  endif()
+
+  # custom link command
+  set(CMAKE_C_LINK_EXECUTABLE  "<CMAKE_C_COMPILER> -target ${TRIPLE} -fno-builtin <FLAGS> <CMAKE_C_LINK_FLAGS> <LINK_FLAGS> <OBJECTS> -o <TARGET> -mpreemit-bitcode=<TARGET>.bc -mserialize=<TARGET>.pml ${RTEMS_LIBPATH}/start.o ${RTEMS_LIBPATH}/libsyms.ll -l=c <LINK_LIBRARIES> -nostartfiles -Xgold -Map -Xgold map.map -Xgold --script=${RTEMS_LIBPATH}/linkcmds -Xopt -disable-internalize")
+
+  # this does not work for the RTEMS libraries
+  #set(CMAKE_FIND_LIBRARY_PREFIXES "")
+  #set(CMAKE_FIND_LIBRARY_SUFFIXES .a)
+  #find_library(rtemscpu NAMES "rtemscpu" PATHS RTEMS_LIBPATH)
+endif()
+
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 # find llvm-config
 find_program(LLVM_CONFIG_EXECUTABLE NAMES patmos-llvm-config llvm-config DOC "Path to the llvm-config tool.")
@@ -241,15 +264,24 @@ else()
   message("LLVM-based SC analysis tests will be skipped.")
 endif()
 
+# bounds file can be empty ("")
 macro (set_sca_options target bounds_file)
-  if (ENABLE_STACK_CACHE_ANALYSIS_TESTING AND ILP_SOLVER)
+  if (ENABLE_STACK_CACHE_ANALYSIS_TESTING AND ILP_SOLVER AND "${CMAKE_SYSTEM_NAME}" MATCHES "patmos")
     # enables SCA analysis when building target
-    set_target_properties(${target} PROPERTIES LINK_FLAGS "-mpatmos-enable-stack-cache-analysis -mpatmos-ilp-solver=${PROJECT_SOURCE_DIR}/scripts/solve_ilp_glpk.sh -mpatmos-stack-cache-size=512 -mpatmos-stack-cache-analysis-bounds=${bounds_file}")
+    get_target_property(existing_link_flags ${target} LINK_FLAGS)
+    if(${existing_link_flags})
+      message(FATAL_ERROR "set_sca_options about to reset linker flags")
+    endif()
+    set(props "-mpatmos-enable-stack-cache-analysis -mpatmos-ilp-solver=${PROJECT_SOURCE_DIR}/scripts/solve_ilp_glpk.sh -mpatmos-stack-cache-size=256")
+    if (NOT "${bounds_file}" STREQUAL "")
+      set(props "${props} -mpatmos-stack-cache-analysis-bounds=${bounds_file}")
+    endif()
+    set_target_properties(${target} PROPERTIES LINK_FLAGS "${props}")
   endif()
 endmacro(set_sca_options)
 
 macro (make_ais name prog pml)
-  if (ENABLE_STACK_CACHE_ANALYSIS_TESTING AND ILP_SOLVER AND PLATIN_EXECUTABLE)
+  if (ENABLE_STACK_CACHE_ANALYSIS_TESTING AND ILP_SOLVER AND PLATIN_EXECUTABLE AND "${CMAKE_SYSTEM_NAME}" MATCHES "patmos")
 
     add_test(NAME ${name}-sym COMMAND ${PLATIN_EXECUTABLE} extract-symbols -i ${pml} -o ${prog}.addr.pml ${prog})
     add_test(NAME ${name}-ais COMMAND ${PLATIN_EXECUTABLE} pml2ais --ais ${prog}.ais ${prog}.addr.pml)

@@ -26,6 +26,19 @@ if(NOT A3_EXECUTABLE)
   message(WARNING "a3 not found (${CMAKE_SYSTEM_PROCESSOR}).")
 endif()
 
+# RTEMS based build (EXPERIMENTAL)
+if(${TRIPLE} MATCHES "patmos-unknown-rtems")
+  # add RTEMS include path
+  include_directories(${RTEMS_LIBPATH}/include)
+
+  # add RTEMS default libs (linking with -L .. -l.. does not work)
+  add_library(rtemscpu STATIC IMPORTED)
+  add_library(rtemsbsp STATIC IMPORTED)
+  set_property(TARGET rtemscpu PROPERTY IMPORTED_LOCATION ${RTEMS_LIBPATH}/librtemscpu.a)
+  set_property(TARGET rtemsbsp PROPERTY IMPORTED_LOCATION ${RTEMS_LIBPATH}/librtemsbsp.a)
+  link_libraries(rtemscpu rtemsbsp)
+endif()
+
 # add benchmark sub-directories
 add_subdirectory(PapaBench-0.4)
 add_subdirectory(Mediabench)
