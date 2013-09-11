@@ -229,6 +229,9 @@ else()
   message("WCET analysis with platin manually disabled, will be skipped.")
 endif()
 
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+# WCET Analysis (via platin)
+
 if (A3_EXECUTABLE AND PLATIN_ENABLE_AIT)
   set(PLATIN_WCA_TOOL --a3-command ${A3_EXECUTABLE})
 else()
@@ -237,11 +240,13 @@ endif()
 
 macro (run_wcet name prog report timeout factor entry)
   set_property(DIRECTORY APPEND PROPERTY ADDITIONAL_MAKE_CLEAN_FILES ${report} ${report}.dir)
-  add_test(NAME ${name} COMMAND ${PLATIN_EXECUTABLE} wcet --recorders "g:bcil" --analysis-entry ${entry}
-                                                          --use-trace-facts  --binary ${prog} --report ${report} --input ${PLATIN_CONFIG}
-                                                          --input ${prog}.pml --check ${factor}
+  add_test(NAME ${name} COMMAND ${PLATIN_EXECUTABLE} wcet ${PLATIN_WCA_TOOL} ${PLATIN_OPTIONS}
+                                                          --recorders "g:bcil" --analysis-entry ${entry}
+                                                          --use-trace-facts  --binary ${prog} --report ${report}
+                                                          --input ${PLATIN_CONFIG} --input ${prog}.pml
+                                                          --check ${factor}
                                                           --objdump-command ${LLVM_OBJDUMP_EXECUTABLE} --pasim-command ${PASIM_EXECUTABLE}
-                                                          ${PLATIN_WCA_TOOL} ${PLATIN_OPTIONS})
+                                                          )
   set_tests_properties(${name} PROPERTIES TIMEOUT ${timeout})
   set_property(DIRECTORY APPEND PROPERTY ADDITIONAL_MAKE_CLEAN_FILES ${report})
 endmacro(run_wcet)
@@ -283,7 +288,7 @@ endmacro(set_sca_options)
 macro (make_ais name prog pml)
   if (ENABLE_STACK_CACHE_ANALYSIS_TESTING AND ILP_SOLVER AND PLATIN_EXECUTABLE AND "${CMAKE_SYSTEM_NAME}" MATCHES "patmos")
 
-    add_test(NAME ${name}-sym COMMAND ${PLATIN_EXECUTABLE} extract-symbols -i ${pml} -o ${prog}.addr.pml ${prog})
+    add_test(NAME ${name}-sym COMMAND ${PLATIN_EXECUTABLE} extract-symbols --objdump-command ${LLVM_OBJDUMP_EXECUTABLE} -i ${pml} -o ${prog}.addr.pml ${prog})
     add_test(NAME ${name}-ais COMMAND ${PLATIN_EXECUTABLE} pml2ais --ais ${prog}.ais ${prog}.addr.pml)
 
     set_property(DIRECTORY APPEND PROPERTY ADDITIONAL_MAKE_CLEAN_FILES ${prog}.addr.pml ${prog}.ais)
