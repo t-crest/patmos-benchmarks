@@ -40,7 +40,7 @@ set( SOURCES
 set( SOURCES_NO_HW adpcm.c ludcmp.c nsichneu.c ) # exceed SPM size
 set( SOURCES_NO_WCET fac.c recursion.c ) # recursion
 set( PASIM_OPTIONS "" )
-set( PLATIN_CONFIG ${CMAKE_CURRENT_SOURCE_DIR}/config.pml )
+set( PLATIN_CONFIG ${PROJECT_SOURCE_DIR}/scripts/patmos-config-local.pml )
 
 # executable for each .c file
 foreach( SRC ${SOURCES} )
