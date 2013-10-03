@@ -206,7 +206,7 @@ macro (run_io name prog in out ref)
     set(EMU_ARGS ${PATMOS_EMULATOR_OPTIONS} -q)
     separate_arguments(EMU_ARGS)
     run_sim(${PATMOS_EMULATOR} "${EMU_ARGS}" "${name}_hw" ${prog} "${in}" "${out}" "${ref}")
-    set_tests_properties(${name}_hw PROPERTIES TIMEOUT 120)
+    set_tests_properties(${name}_hw PROPERTIES TIMEOUT 180)
   endif()
 endmacro(run_io)
 

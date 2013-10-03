@@ -1,7 +1,7 @@
 # This is a patmos-specific Makefile script to classify errors in gcc's torture suite
 #
 # Usage:
-#   # adapt TCRESTPATH (for pasim, patmos-emulator, SPM linker script and FPGA download command)
+#   # adapt TCRESTPATH (for pasim, patmos-emulator, linker script and FPGA download command)
 #   $ cd build/gcc.c-torture/execute
 #   $ make -f ../../../gcc.c-torture/Makefile.triage check | tee check.txt
 # Postprocess:
@@ -43,9 +43,9 @@ TIMEOUT=timeout -s TERM
 
 CFLAGS=-O2 -DSTACK_SIZE=1024 -DNO_TRAMPOLINES # -mpatmos-disable-vliw=false
 LDLIBS=
-TARGETFLAGS=-Xgold -T${TCRESTPATH}/patmos/chisel/spm.t \
+TARGETFLAGS=-Xgold -T${TCRESTPATH}/patmos/chisel/ram.t \
 			-mpatmos-method-cache-size=0x800 \
-			-mpatmos-stack-base=0x3000 -mpatmos-shadow-stack-base=0x4000
+			-mpatmos-stack-base=0x1f0000 -mpatmos-shadow-stack-base=0x200000
 
 SOURCES=$(wildcard ${PATTERN})
 ELFS   = $(patsubst %.c,%.elf,$(SOURCES))

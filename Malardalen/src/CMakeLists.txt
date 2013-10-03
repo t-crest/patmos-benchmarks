@@ -37,7 +37,7 @@ set( SOURCES
   ud.c
   # whet.c # needs math library
   )
-set( SOURCES_NO_HW adpcm.c ludcmp.c nsichneu.c ) # exceed SPM size
+set( SOURCES_NO_HW ) # exceed memory size
 set( SOURCES_NO_WCET fac.c recursion.c ) # recursion
 set( PASIM_OPTIONS "" )
 set( PLATIN_CONFIG ${PROJECT_SOURCE_DIR}/scripts/patmos-config-local.pml )
@@ -56,11 +56,11 @@ foreach( SRC ${SOURCES} )
   run_io(mrtc-${EXEC_NAME} ${CMAKE_CURRENT_BINARY_DIR}/${EXEC_NAME} "" "" "")
 
   if("${CMAKE_SYSTEM_NAME}" MATCHES "patmos")
-     # On Patmos, compile for SPM, and run emulator tests
+     # On Patmos, compile for RAM, and run emulator tests
      set_target_properties( ${EXEC_NAME} PROPERTIES
                              COMPILE_FLAGS "-DSTACK_SIZE=1024")
      set_target_properties( ${EXEC_NAME} PROPERTIES
-                             LINK_FLAGS "-Xgold -T${PROJECT_SOURCE_DIR}/scripts/patmos-spm.t -mpatmos-method-cache-size=0x800 -mpatmos-stack-base=0x3000 -mpatmos-shadow-stack-base=0x4000" )
+                             LINK_FLAGS "-Xgold -T${PROJECT_SOURCE_DIR}/scripts/patmos-ram.t -mpatmos-method-cache-size=0x800 -mpatmos-stack-base=0x1f0000 -mpatmos-shadow-stack-base=0x200000" )
      list(FIND SOURCES_NO_WCET ${SRC} DISABLE_WCA)
      if(${DISABLE_WCA} EQUAL -1)
         run_wcet(mrtc_platin-${EXEC_NAME}
