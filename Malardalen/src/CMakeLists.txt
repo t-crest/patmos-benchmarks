@@ -55,7 +55,7 @@ foreach( SRC ${SOURCES} )
 
   run_io(mrtc-${EXEC_NAME} ${CMAKE_CURRENT_BINARY_DIR}/${EXEC_NAME} "" "" "")
 
-  if("${CMAKE_SYSTEM_NAME}" MATCHES "patmos")
+  if("${CMAKE_SYSTEM_NAME}" MATCHES "patmos" AND PATMOS_EMULATOR)
      # On Patmos, compile for RAM, and run emulator tests
      set_target_properties( ${EXEC_NAME} PROPERTIES
                              COMPILE_FLAGS "-DSTACK_SIZE=1024")

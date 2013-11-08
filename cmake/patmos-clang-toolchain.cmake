@@ -149,13 +149,17 @@ set(CMAKE_OBJDUMP ${LLVM_OBJDUMP_EXECUTABLE} CACHE FILEPATH "Object dumper")
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 # find simulator & emulator
 
+set(ENABLE_EMULATOR true CACHE BOOL "Enable testing with Patmos HW emulator.")
+
 find_program(PASIM_EXECUTABLE NAMES pasim DOC "Path to the Patmos simulator pasim.")
 set(PASIM_OPTIONS "-M fifo -m 2k" CACHE STRING "Additional command-line options passed to the Patmos simulator.")
 separate_arguments(PASIM_OPTIONS)
 
-find_program(PATMOS_EMULATOR NAMES patmos-emulator DOC "Path to the Chisel-based patmos emulator.")
-set(PATMOS_EMULATOR_OPTIONS "" CACHE STRING "Additional command-line options passed to the Chisel-based patmos emulator.")
-separate_arguments(PATMOS_EMULATOR_OPTIONS)
+if (ENABLE_EMULATOR)
+  find_program(PATMOS_EMULATOR NAMES patmos-emulator DOC "Path to the Chisel-based patmos emulator.")
+  set(PATMOS_EMULATOR_OPTIONS "" CACHE STRING "Additional command-line options passed to the Chisel-based patmos emulator.")
+  separate_arguments(PATMOS_EMULATOR_OPTIONS)
+endif()
 
 if(PASIM_EXECUTABLE)
   set(ENABLE_TESTING true)
