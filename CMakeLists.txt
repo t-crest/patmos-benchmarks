@@ -56,6 +56,8 @@ endif()
 
 
 set(ENABLE_CTORTURE true CACHE BOOL "Enable gcc.c-torture suite (long build time)")
+set(GCC_C_TORTURE_EXECUTE_PATH ${CMAKE_CURRENT_BINARY_DIR}/gcc.c-torture/execute CACHE FILEPATH 
+    "Path to the gcc.c_torture/execute checkout.")
 
 find_package(Subversion)
 if(SUBVERSION_FOUND AND ENABLE_CTORTURE)
@@ -66,7 +68,6 @@ if(SUBVERSION_FOUND AND ENABLE_CTORTURE)
   set(GCC_C_TORTURE_REVISION 200887)
 
   # we only want the "execute" part of the torture tests
-  set(GCC_C_TORTURE_EXECUTE_PATH ${CMAKE_CURRENT_BINARY_DIR}/gcc.c-torture/execute)
   execute_process(COMMAND ${Subversion_SVN_EXECUTABLE}
 	checkout ${GCC_C_TORTURE_REPO}/execute -r ${GCC_C_TORTURE_REVISION}
 	${GCC_C_TORTURE_EXECUTE_PATH})
