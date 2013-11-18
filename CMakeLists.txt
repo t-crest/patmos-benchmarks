@@ -39,12 +39,20 @@ if(${TRIPLE} MATCHES "patmos-unknown-rtems")
   link_libraries(rtemscpu rtemsbsp)
 endif()
 
+set(ENABLE_C_TESTS true CACHE BOOL "Enable custom C tests")
+set(ENABLE_MEDIABENCH true CACHE BOOL "Enable Mediabench tests)")
+
 # add benchmark sub-directories
 add_subdirectory(PapaBench-0.4)
-add_subdirectory(Mediabench)
 add_subdirectory(MiBench)
 add_subdirectory(Malardalen)
-add_subdirectory(tests)
+
+if(ENABLE_MEDIABENCH)
+  add_subdirectory(Mediabench)
+endif()
+if(ENABLE_C_TESTS)
+  add_subdirectory(tests)
+endif()
 
 # add non-free benchmarks
 if(EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/nonfree)
