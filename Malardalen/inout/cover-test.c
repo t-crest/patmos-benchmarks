@@ -1,10 +1,10 @@
 /* MDH WCET BENCHMARK SUITE.
- * Benchmark: bs
- * File: bs-test.c
- * Version: 1.4
+ * Benchmark: cover
+ * File: cover-test.c
+ * Version: 1.0
  */
 /* Compilation
- *   $(CC) $(DEFS) -o bs.bin bs-test.c bs.o
+ *   $(CC) $(DEFS) -o cover.bin cover-test.c cover.o
  * DEFS
  *   TEST_PRINT_RESULTS     ... write test result to stdout
  *   TEST_PRINT_VERSION     ... print version of benchmark
@@ -15,7 +15,7 @@
 #include <stdio.h>
 static void print_version()
 {
-    puts("bs v1.4");
+    puts("cover v1.0");
 }
 #endif /* TEST_PRINT_VERSION */
 
@@ -44,16 +44,15 @@ static int process_result(int in, int out, int ref)
   return CHECK(out,ref);
 }
 
-extern int binary_search(int key);
+/* external declarations */
+int test_main(int cnt);
 
-/**
- * A single test case.
- */
-static int tests_in[]  = { 0, 8, 5, 18, 21 };
-static int tests_ref[] = { -1, 900, 200, 10, -1 };
+/* test cases */
+static int tests_in[]  = { 9, 13, 27, 42, 512 };
+static int tests_ref[] = { 189, 193, 207, 222, 692 };
 static int test_case(int in, int ref)
 {
-  return process_result(in, binary_search(in), ref);
+  return process_result(in, test_main(in), ref);
 }
 
 int main(int argc, char **argv)

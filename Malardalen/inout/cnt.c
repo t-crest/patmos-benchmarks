@@ -30,6 +30,7 @@ matrix          Array;
 int             Postotal, Negtotal, Poscnt, Negcnt;
 
 /* The main function */
+__attribute__((noinline))
 int 
 main_test(int in_seed)
 {
@@ -41,24 +42,12 @@ main_test(int in_seed)
 }
 
 
+__attribute__((noinline))
 int 
 Test(matrix Array)
 {
-	long            StartTime, StopTime;
-	float           TotalTime;
-
 	Initialize(Array);
-	StartTime = 1000.0;	/* ttime(); */
 	Sum(Array);
-	StopTime = 1500.0;	/* ttime(); */
-
-	TotalTime = (StopTime - StartTime) / 1000.0;
-
-	/* printf("    - Size of array is %d\n", MAXSIZE); */
-	/* printf("    - Num pos was %d and Sum was %d\n", Poscnt, Postotal); */
-	/* printf("    - Num neg was %d and Sum was %d\n", Negcnt, Negtotal); */
-	/* printf("    - Num neg was %d\n", Negcnt); */
-	/* printf("    - Total sum time is %3.3f seconds\n\n", TotalTime); */
 	return 0;
 }
 
@@ -130,10 +119,10 @@ This function returns in milliseconds the amount of compiler time
  }
 */
 
-/* Generates random integers between 0 and 8095 */
+/* Generates random integers between -8095 and 8095 */
 int 
 RandomInteger(void)
 {
-	Seed = ((Seed * 133) + 81) % 8095;
-	return Seed;
+	Seed = (((Seed * 133) + 81) % 16190);
+	return Seed - 8095;
 }

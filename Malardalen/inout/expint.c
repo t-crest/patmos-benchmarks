@@ -18,13 +18,11 @@
 long int        foo(long int x);
 long int        expint(int n, long int x);
 
-int 
-main(void)
+/* with  expint(50,21) as argument, runs the short path */
+/* in expint.   expint(50,1)  gives the longest execution time */
+int  test_main(long int x)
 {
-	expint(50, 1);
-	/* with  expint(50,21) as argument, runs the short path */
-	/* in expint.   expint(50,1)  gives the longest execution time */
-	return 0;
+	return expint(50, x) & 1023;
 }
 
 long int 

@@ -623,17 +623,11 @@ swi10(int c)
 	return c;
 }
 
-int 
-main()
+int
+test_main(int cnt)
 {
-	volatile int    cnt = 0;
-
 	cnt = swi10(cnt);
 	cnt = swi50(cnt);
 	cnt = swi120(cnt);
-
-	/* printf("cnt: %d\n", cnt); */
-
 	return cnt;
-
 }

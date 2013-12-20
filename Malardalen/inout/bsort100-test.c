@@ -1,21 +1,21 @@
 /* MDH WCET BENCHMARK SUITE.
- * Benchmark: bs
- * File: bs-test.c
- * Version: 1.4
+ * Benchmark: bsort100
+ * File: bsort100-test.c
+ * Version: 1.0
  */
 /* Compilation
- *   $(CC) $(DEFS) -o bs.bin bs-test.c bs.o
+ *   $(CC) $(DEFS) -o bsort100.bin bsort100-test.c bsort100.o
  * DEFS
  *   TEST_PRINT_RESULTS     ... write test result to stdout
  *   TEST_PRINT_VERSION     ... print version of benchmark
  *   TEST_NO_RUNTIME_CHECK  ... do not check test result at runtime
  */
-
+#include <stdint.h>
 #ifdef TEST_PRINT_VERSION
 #include <stdio.h>
 static void print_version()
 {
-    puts("bs v1.4");
+    puts("bsort100 v1.0");
 }
 #endif /* TEST_PRINT_VERSION */
 
@@ -44,16 +44,30 @@ static int process_result(int in, int out, int ref)
   return CHECK(out,ref);
 }
 
-extern int binary_search(int key);
+/* external declarations */
+#define NUM_ELEMS 100
+extern int Array[NUM_ELEMS+1];
+int main_test(int init_factor);
+void  BubbleSort(int Array[]);
 
-/**
- * A single test case.
- */
-static int tests_in[]  = { 0, 8, 5, 18, 21 };
-static int tests_ref[] = { -1, 900, 200, 10, -1 };
+/* problem specific result extraction */
+static int read_result(int _) {
+  uint16_t checksum = 0;
+  int i;
+
+  for(i = 0; i < NUM_ELEMS+1; i++) {
+    checksum = checksum * 31 + Array[i];
+  }
+  return checksum ;
+}
+
+
+/* test cases */
+static int tests_in[]  = { 1,-1,312,842 };
+static int tests_ref[] = {9266, 4466, 44032, 12864};
 static int test_case(int in, int ref)
 {
-  return process_result(in, binary_search(in), ref);
+  return process_result(in, read_result(main_test(in)), ref);
 }
 
 int main(int argc, char **argv)

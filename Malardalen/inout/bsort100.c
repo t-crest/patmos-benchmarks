@@ -37,67 +37,37 @@
 #define MAXDIM   (NUMELEMS+1)
 
 int             Array[MAXDIM], Seed;
-int             factor;
 void            BubbleSort(int Array[]);
-void            Initialize(int Array[]);
+void            Initialize(int Array[], int init_factor);
 
+
+__attribute__((noinline))
 int 
-main(void)
+main_test(int init_factor)
 {
-/*
-   long  StartTime, StopTime;
-   float TotalTime;
-*/
-
-#ifndef WCSIM
-	printf("\n *** BUBBLE SORT BENCHMARK TEST ***\n\n");
-	printf("RESULTS OF TEST:\n\n");
-#endif
-
-	Initialize(Array);
-	/* StartTime = ttime (); */
-	BubbleSort(Array);
-	/* StopTime = ttime(); */
-	/* TotalTime = (StopTime - StartTime) / 1000.0; */
-#ifndef WCSIM
-	printf("     - Number of elements sorted is %d\n", NUMELEMS);
-	printf("     - Total time sorting is %3.3f seconds\n\n", TotalTime);
-#endif
-	return 0;
+  Initialize(Array, init_factor);
+  BubbleSort(Array);
+  return 0;
 }
 
 
-/*
-   int ttime()
-   This function returns in milliseconds the amount of compiler time
-   used prior to it being called.
-
-{
-   struct tms buffer;
-   int utime;
-
-   times(&buffer);  not implemented
-   utime = (buffer.tms_utime / 60.0) * 1000.0;
-   return(utime);
-}
-*/
-
-void Initialize(int Array[])
+void Initialize(int Array[], int init_factor)
 /*
  * Initializes given array with randomly generated integers.
  */
 {
    int  Index, fact;
+   int mult, sgn;
+   if(init_factor < 0) {
+     sgn = -1;
+     mult = -init_factor;
+   } else {
+     sgn = 1;
+     mult = init_factor;
+   }
 
-#ifdef WORSTCASE
-   factor = -1;
-#else
-   factor = 1;
-#endif
-
-fact = factor;
-for (Index = 1; Index <= NUMELEMS; Index ++) {
-    Array[Index] = Index * fact/* * KNOWN_VALUE*/;
+   for (Index = 1; Index <= NUMELEMS; Index ++) {
+     Array[Index] = ((Index * mult) % NUMELEMS) * sgn;
   }
 }
 

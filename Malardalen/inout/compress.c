@@ -19,35 +19,12 @@
                   Indented program.
  */
 
-/* #define DO_TRACING */
-
-#ifdef DO_TRACING		/* ON PC */
-
-#include <stdio.h>
-#define TRACE(x) trace((x))
-#undef TEST			/* finished testing! */
-
-/*
-void trace(char *s)
-{
-    printf("%s\n",s);
-}
-*/
-
-#else				/* ON TARGET */
-
-#define TRACE(x)
-#undef TEST
-
-#endif
-
-
 #define BUFFERSIZE	50
 #define IN_COUNT        BUFFERSIZE
 
-#define HSIZE	257		/* 95% occupancy */
-#define BITS 16
-#define INIT_BITS 9		/* initial number of bits/code */
+#define HSIZE	691		/* 95% occupancy */
+#define BITS    9
+#define INIT_BITS 8		/* initial number of bits/code */
 
 
 
@@ -80,9 +57,9 @@ void trace(char *s)
 
 /* For SPEC95 use, PBITS and BITS automatically set to 16.
 	Jeff Reilyy, 1/15/95				*/
-#define PBITS	16
-#define BITS 16
-#define HSIZE	257		/* 95% occupancy was 69001 */
+#define PBITS	9
+#define BITS    9
+#define HSIZE	691		/* 95% occupancy was 69001 */
 
 
 /*
@@ -190,7 +167,7 @@ char            buf[BITS];
 
 
 /*----------------------------------------- Prototypes */
-void            initbuffer(void);
+void            initbuffer(int seed);
 void            compress(void);
 void            cl_hash(count_int hsize);	/* reset code table */
 unsigned int    getbyte(void);
@@ -198,13 +175,14 @@ void            putbyte(char c);
 void            cl_block(void);
 void            output(code_int code);
 void            writebytes(char *buf, int n);
+long int        bytes_out;	/* length of compressed output */
 
 int 
-main(void)
+test_main(int seed)
 {
 	int             count = IN_COUNT;
 
-	initbuffer();
+	initbuffer(seed);
 
 	/* if(maxbits < INIT_BITS) maxbits = INIT_BITS; */
 	/*
@@ -221,16 +199,15 @@ main(void)
 
 	compress();
 
-	return (0);
+	return free_ent + bytes_out;
 
 }
 
 
 
 void 
-initbuffer(void)
+initbuffer(int seed)
 {
-	int             seed = 1;
 	int             i;
 	int             tabort;
 
@@ -239,7 +216,7 @@ initbuffer(void)
 		tabort = i;
 		seed = ((seed * 133) + 81) % 8095;
 
-		orig_text_buffer[i] = seed % 256;
+		orig_text_buffer[i] = 'a' + (seed % 8);
 	}
 }
 
