@@ -54,7 +54,9 @@ typedef unsigned char uchar;
 #define LOBYTE(x) ((uchar)((x) & 0xFF))
 #define HIBYTE(x) ((uchar)((x) >> 8))
 
-unsigned char   lin[256] = "asdffeagewaHAFEFaeDsFEawFdsFaefaeerdjgp";
+#define INPUT_SIZE 256
+
+unsigned char   lin[INPUT_SIZE] = "asdffeagewaHAFEFaeDsFEawFdsFaefaeerdjgp";
 
 unsigned short  icrc1(unsigned short crc, unsigned char onech);
 unsigned short 
@@ -81,8 +83,8 @@ icrc(unsigned short crc, unsigned long len,
      short jinit, int jrev)
 {
 	unsigned short  icrc1(unsigned short crc, unsigned char onech);
-	static unsigned short icrctb[256], init = 0;
-	static uchar    rchr[256];
+	static unsigned short icrctb[INPUT_SIZE], init = 0;
+	static uchar    rchr[INPUT_SIZE];
 	unsigned short  tmp1, tmp2, j, cword = crc;
 	static uchar    it[16] = {0, 8, 4, 12, 2, 10, 6, 14, 1, 9, 5, 13, 3, 11, 7, 15};
 
@@ -116,19 +118,30 @@ icrc(unsigned short crc, unsigned long len,
 	return (tmp2);
 }
 
+void init_buffer(int seed)
+{
+  int             i;
+  int             tabort;
+  
+  for (i = 0; i < INPUT_SIZE; i++) {
+    seed = ((seed * 133) + 81) % 8095;
+    lin[i] = seed;
+  }
+}
+
 
 int 
-main(void)
+main_test(int seed)
 {
 
 	unsigned short  i1, i2;
 	unsigned long   n;
-
+	init_buffer(seed);
 	n = 40;
 	lin[n + 1] = 0;
 	i1 = icrc(0, n, (short) 0, 1);
 	lin[n + 1] = HIBYTE(i1);
 	lin[n + 2] = LOBYTE(i1);
 	i2 = icrc(i1, n + 2, (short) 0, 1);
-	return 0;
+	return i1+i2;
 }

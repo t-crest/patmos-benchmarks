@@ -54,16 +54,18 @@ void            fdct(short int *blk, int lx);
 
 int             out;
 
+#define BLOCKSIZE 64 
+
 /* Image block to be transformed: */
-short int       block[64] =
-{99, 104, 109, 113, 115, 115, 55, 55,
-	104, 111, 113, 116, 119, 56, 56, 56,
-	110, 115, 120, 119, 118, 56, 56, 56,
-	119, 121, 122, 120, 120, 59, 59, 59,
-	119, 120, 121, 122, 122, 55, 55, 55,
-	121, 121, 121, 121, 60, 57, 57, 57,
-	122, 122, 61, 63, 62, 57, 57, 57,
-	62, 62, 61, 61, 63, 58, 58, 58,
+short int       block[BLOCKSIZE] =
+  {99, 104, 109, 113, 115, 115, 55, 55,
+   104, 111, 113, 116, 119, 56, 56, 56,
+   110, 115, 120, 119, 118, 56, 56, 56,
+   119, 121, 122, 120, 120, 59, 59, 59,
+   119, 120, 121, 122, 122, 55, 55, 55,
+   121, 121, 121, 121, 60, 57, 57, 57,
+   122, 122, 61, 63, 62, 57, 57, 57,
+   62, 62, 61, 61, 63, 58, 58, 58,
 };
 
 /* Fast Discrete Cosine Transform */
@@ -236,20 +238,24 @@ fdct(short int *blk, int lx)
 		block++;
 	}
 }
-
-int main()
+void
+init_block(int in_seed)
 {
-#ifdef IO
 	int             i;
-#endif
+	int seed = in_seed;
+	for (i = 0; i < BLOCKSIZE; i++) {
+	  /* Generates random integers between 0 and 8095 */
+	  seed = ((seed * 133) + 81) % 8095;
+	  unsigned short r = seed % 256;
+	  if(in_seed == 0) r = 0;
+	  block[i] = (block[i] + r) % 256;
+	}
+}
 
-	fdct(block, 8);		/* 8x8 Blocks, DC precision value = 0,
+int main_test(seed)
+{
+  init_block(seed);
+  fdct(block, 8);		/* 8x8 Blocks, DC precision value = 0,
 				 * Quantization coefficient (mquant) = 64 */
-
-#ifdef IO
-	for (i = 0; i < 64; i += 2)
-		printf("block[%2d] -> %8d . block[%2d] -> %8d\n", i, block[i], i + 1, block[i + 1]);
-#endif
-
-	return block[0];
+  return block[0];
 }

@@ -178,7 +178,7 @@ void            writebytes(char *buf, int n);
 long int        bytes_out;	/* length of compressed output */
 
 int 
-test_main(int seed)
+main_test(int seed)
 {
 	int             count = IN_COUNT;
 

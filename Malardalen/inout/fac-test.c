@@ -44,17 +44,17 @@ static int process_result(int in, int out, int ref)
   return CHECK(out,ref);
 }
 
-extern int fac_sum(int n);
+extern int main_test(int n, int limit);
 
 /**
  * A single test case.
  */
-static limit_n     = 7;
-static tests_in[]  = { 5, 7 };
-static tests_ref[] = { 154, 5914 };
+static int limit_n     = 7;
+static int tests_in[]  = { 5, 7 };
+static int tests_ref[] = { 154, 5914 };
 static int test_case(int in, int ref)
 {
-  return process_result(in, fac_sum(in), ref);
+  return process_result(in, main_test(in,limit_n), ref);
 }
 
 int main(int argc, char **argv)

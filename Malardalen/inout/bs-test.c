@@ -44,7 +44,8 @@ static int process_result(int in, int out, int ref)
   return CHECK(out,ref);
 }
 
-extern int binary_search(int key);
+extern int main_test(int x);
+
 
 /**
  * A single test case.
@@ -53,7 +54,7 @@ static int tests_in[]  = { 0, 8, 5, 18, 21 };
 static int tests_ref[] = { -1, 900, 200, 10, -1 };
 static int test_case(int in, int ref)
 {
-  return process_result(in, binary_search(in), ref);
+  return process_result(in, main_test(in), ref);
 }
 
 int main(int argc, char **argv)

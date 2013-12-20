@@ -1,10 +1,10 @@
 /* MDH WCET BENCHMARK SUITE.
- * Benchmark: compress
- * File: compress-test.c
+ * Benchmark: fdct
+ * File: fdct-test.c
  * Version: 1.0
  */
 /* Compilation
- *   $(CC) $(DEFS) -o compress.bin compress-test.c compress.o
+ *   $(CC) $(DEFS) -o fdct.bin fdct-test.c fdct.o
  * DEFS
  *   TEST_PRINT_RESULTS     ... write test result to stdout
  *   TEST_PRINT_VERSION     ... print version of benchmark
@@ -15,7 +15,7 @@
 #include <stdio.h>
 static void print_version()
 {
-    puts("compress v1.0");
+    puts("fdct v1.0");
 }
 #endif /* TEST_PRINT_VERSION */
 
@@ -48,8 +48,9 @@ static int process_result(int in, int out, int ref)
 int main_test(int seed);
 
 /* test cases */
-static int tests_in[]  = { 23, 56, 913, 214, 113, 45 };
-static int tests_ref[] = { 299, 298, 298, 300, 301, 301 };
+static int tests_in[]  = { 0, 12, 57, 113 };
+static int tests_ref[] = { 699, 1019, 835, 737 };
+
 static int test_case(int in, int ref)
 {
   return process_result(in, main_test(in), ref);

@@ -45,14 +45,14 @@ static int process_result(int in, int out, int ref)
 }
 
 /* external declarations */
-int test_main(long int x);
+int main_test(long int x);
 
 /* test cases */
 static int tests_in[]  = {1,21,7,13,15,16,4,3};
 static int tests_ref[] = {811,256,768,256,768,0,0,768};
 static int test_case(int in, int ref)
 {
-  return process_result(in, test_main(in), ref);
+  return process_result(in, main_test(in), ref);
 }
 
 int main(int argc, char **argv)

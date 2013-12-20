@@ -47,8 +47,7 @@ static int process_result(int in, int out, int ref)
 /* external declarations */
 #define NUM_ELEMS 100
 extern int Array[NUM_ELEMS+1];
-int main_test(int init_factor);
-void  BubbleSort(int Array[]);
+extern int main_test(int init_factor);
 
 /* problem specific result extraction */
 static int read_result(int _) {

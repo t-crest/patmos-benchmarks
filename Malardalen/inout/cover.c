@@ -624,7 +624,7 @@ swi10(int c)
 }
 
 int
-test_main(int cnt)
+main_test(int cnt)
 {
 	cnt = swi10(cnt);
 	cnt = swi50(cnt);

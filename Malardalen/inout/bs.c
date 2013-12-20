@@ -113,3 +113,9 @@ binary_search(int x)
 #endif
 	return fvalue;
 }
+
+int 
+main_test(int x)
+{
+  return binary_search(x);
+}

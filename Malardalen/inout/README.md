@@ -10,8 +10,17 @@ for each benchmark kernel.
 
 ## Notes
 
-cover: control flow does not depend on input at all
-edn:   control flow does not depend on input at all
+The following benchmarks are not suitable for the multi-path variants:
+
+cover: control flow does not depend on input at all [adapted anyway]
+duff:  control flow depends on array size only [not adapated]
+edn:   control flow does not depend on input at all [not adapated]
+fdct:  control flow dow not depend on input [adapted anyway]
+
+Missing Benchmarks (little value?):
+
+fft1: floating point
+fibcall: ...
 
 ## Bug Fixes
 

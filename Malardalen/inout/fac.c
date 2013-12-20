@@ -26,3 +26,9 @@ fac_sum(int n)
 		s += fac(i);
 	return s;
 }
+int
+main_test(int n, int maxn)
+{
+  if(n > maxn) return -1;
+  return fac_sum(n);
+}
