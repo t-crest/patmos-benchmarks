@@ -294,6 +294,7 @@ macro (make_ais name prog pml)
 
     add_test(NAME ${name}-sym COMMAND ${PLATIN_EXECUTABLE} extract-symbols --objdump-command ${LLVM_OBJDUMP_EXECUTABLE} -i ${pml} -o ${prog}.addr.pml ${prog})
     add_test(NAME ${name}-ais COMMAND ${PLATIN_EXECUTABLE} pml2ais --ais ${prog}.ais ${prog}.addr.pml)
+    set_tests_properties(${name}-ais PROPERTIES DEPENDS ${name}-sym)
 
     set_property(DIRECTORY APPEND PROPERTY ADDITIONAL_MAKE_CLEAN_FILES ${prog}.addr.pml ${prog}.ais)
   endif()
