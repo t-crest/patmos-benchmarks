@@ -66,7 +66,7 @@ foreach( SRC ${SOURCES} )
                  ${CMAKE_CURRENT_BINARY_DIR}/${EXEC_NAME}
                  ${CMAKE_CURRENT_BINARY_DIR}/${EXEC_NAME}-wcet.txt
                  360
-                 1.5
+                 1.6
                  main)
      endif()
   endif()
