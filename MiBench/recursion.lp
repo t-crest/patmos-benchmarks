@@ -4,7 +4,9 @@ abort:
   Xraise                <= 1 
   Xabort                <= 1
   X__call_exitprocs     <= 1
-  Wexit                 <= 1
+  WXexit                <= 1
+  WX__init              <= 1
+  WX__fini              <= 1
 }
 {};
 
