@@ -202,7 +202,7 @@ endfunction (run_sim)
 
 macro (run_io name prog in out ref)
   if(PASIM_EXECUTABLE)
-    set(SIM_ARGS ${PASIM_OPTIONS} -o ${name}.stats)
+    set(SIM_ARGS ${PASIM_OPTIONS} -V -o ${name}.stats)
     run_sim(${PASIM_EXECUTABLE} "${SIM_ARGS}" "${name}" "${prog}" "${in}" "${out}" "${ref}")
     set_property(DIRECTORY APPEND PROPERTY ADDITIONAL_MAKE_CLEAN_FILES ${name}.stats)
   endif()
