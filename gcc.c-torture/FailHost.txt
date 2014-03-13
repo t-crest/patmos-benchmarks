@@ -27,6 +27,7 @@
 920728-1
 921017-1
 930526-1
+961223-1
 970217-1
 980608-1
 980709-1
@@ -41,6 +42,7 @@ builtin-constant
 eeprof-1
 float-floor
 fprintf-chk-1
+loop-2c
 nest-align-1
 nestfunc-7
 nest-stdar-1
@@ -63,6 +65,7 @@ pr47237
 pr51447
 pr55750
 printf-chk-1
+restrict-1
 scal-to-vec1
 scal-to-vec2
 scal-to-vec3
