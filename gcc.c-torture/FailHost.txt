@@ -75,3 +75,4 @@ va-arg-8
 va-arg-pack-1
 vfprintf-chk-1
 vprintf-chk-1
+unroll-1
