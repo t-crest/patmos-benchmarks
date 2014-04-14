@@ -1,4 +1,4 @@
-file(GLOB SOURCES "${GCC_C_TORTURE_EXECUTE_PATH}/*.c")
+file(GLOB SOURCES "${GCC_C_TORTURE_EXECUTE_PATH}/*.c" "${GCC_C_TORTURE_EXECUTE_PATH}/ieee/*.c")
 
 # Sources that fail on host
 # TODO: Update when changing compiler version
@@ -14,7 +14,15 @@ file(STRINGS NoHwTest.txt SOURCES_NO_HW_TEST)
 # executable for each .c file
 foreach(SRC ${SOURCES})
 
-  get_filename_component(EXEC_NAME ${SRC} NAME_WE)
+  get_filename_component(SRCPATH ${SRC} PATH)
+  get_filename_component(SRCNAME ${SRC} NAME_WE)
+
+  if (${SRCPATH} STREQUAL ${GCC_C_TORTURE_EXECUTE_PATH})
+    set(EXEC_NAME "${SRCNAME}")
+  else()
+    get_filename_component(SRCDIR ${SRCPATH} NAME_WE)
+    set(EXEC_NAME "${SRCDIR}_${SRCNAME}")
+  endif()
 
   list(FIND SOURCES_FAIL_HOST ${EXEC_NAME} FAIL_BUILD)
   list(FIND SOURCES_FAIL_BUILDTARGET ${EXEC_NAME} FAIL_BUILDTARGET)
@@ -31,7 +39,7 @@ foreach(SRC ${SOURCES})
       "${CMAKE_CURRENT_BINARY_DIR}/${EXEC_NAME}" "" "" "")
 
     # A little bit of optimization and calm down warnings
-    set(COMPILE_FLAGS "-O1 -Wno-implicit-function-declaration -Wno-implicit-int -Wno-return-type -fbuiltin")
+    set(COMPILE_FLAGS "-O1 -Wno-implicit-int -Wno-return-type -fbuiltin")
     set(LINK_FLAGS "")
 
     # On Patmos, compile for RAM if HW test is enabled
@@ -48,6 +56,8 @@ foreach(SRC ${SOURCES})
 	  "${COMPILE_FLAGS} ${TARGET_COMPILE_FLAGS}")
 	set_target_properties(${EXEC_NAME} PROPERTIES LINK_FLAGS
 	  "${LINK_FLAGS} ${TARGET_LINK_FLAGS}")
+
+    TARGET_LINK_LIBRARIES(${EXEC_NAME} "m")
 
   endif()
 

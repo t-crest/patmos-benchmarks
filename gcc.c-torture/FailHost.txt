@@ -76,3 +76,4 @@ va-arg-pack-1
 vfprintf-chk-1
 vprintf-chk-1
 unroll-1
+ieee_builtin-nan-1
