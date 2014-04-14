@@ -1,1 +1,5 @@
-add_subdirectory(src)
+if(${TACLE_BENCH})
+	add_subdirectory(tacle)
+else()
+	add_subdirectory(src)
+endif()

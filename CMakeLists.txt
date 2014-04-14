@@ -19,6 +19,8 @@ if("${CMAKE_SYSTEM_NAME}" MATCHES "patmos")
   set(IS_BIGENDIAN true)
 endif()
 
+set(TACLE_BENCH false CACHE BOOL "Use TACLe version of benchmarks when available (transitional).")
+
 # check for the a3 tool.
 message(STATUS "Checking for a3 (${CMAKE_SYSTEM_PROCESSOR}).")
 find_program(A3_EXECUTABLE NAMES a3${CMAKE_SYSTEM_PROCESSOR} a3${CMAKE_SYSTEM_NAME} DOC "Path to the a3 WCET analysis tool.")
