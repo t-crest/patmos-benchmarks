@@ -7,6 +7,15 @@
 *	    input dependent						*
 ************************************************************************/
 
+/*
+ * Changes: 
+ * AJ 2014/04/15: Merged patmos/bench changes (PRINT_RESULTS, return check)
+ */
+
+#ifdef PRINT_RESULTS
+#include <stdio.h>
+#endif
+
 #define N 100
 #define ORDER 50
 
@@ -300,6 +309,13 @@ int main( void )
 
   jpegdct( a, b );
   
-  
+#ifdef PRINT_RESULTS
+  printf("edn: iir1/output[100] = %ld\n", output[100]);
+  printf("edn: codebook = %d\n", e[0]);
+  printf("edn: jpegdct/a[100] = %d\n", a[100]);
+#endif
+  if(output[100] != 1968) return 1;
+  if(e[0] != -441886230) return 1;
+  if(a[100] != 511) return 1;
   return 0;
 }

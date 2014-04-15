@@ -5,6 +5,14 @@
  *
  */
 
+/* Changes:
+ * AJ 2014/04/15: Merged patmos/bench changes (PRINT_RESULTS, return check)
+ */
+
+#ifdef PRINT_RESULTS
+#include <stdio.h>
+#endif
+
 /* Remove the following #define for actual WCET analyses! */
 /*
 #define PROFILING
@@ -189,10 +197,18 @@ void fir_filter_int(long* in,long* out,long in_len, long* coef,long coef_len,
  *--------------------------------------------------*/
 int main( void )
 {
+#ifdef PRINT_RESULTS
+  int i;
+#endif
   long  output[OUTSIZE];
 
   fir_filter_int(in_data,output,10,fir_int,35,285);
-
+#ifdef PRINT_RESULTS
+  for(i = 0; i < 10; i++) {
+    printf("fir: output[%d] = %ld\n",i,output[i]);
+  }
+#endif
+  if(output[6] != 135) return 1;
   return 0;
 }
 

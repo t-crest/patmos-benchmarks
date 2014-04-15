@@ -4,8 +4,15 @@
    Comments: A loop containing varying number of switch case that increment the
    return value. The main function contains volatile variables avoiding
    compiler optimizations.
-*/   
+*/
 
+/* Changes:
+ * AJ 2014/04/15: Merged patmos/bench changes (PRINT_RESULTS, return check)
+ */
+
+#ifdef PRINT_RESULTS
+#include <stdio.h>
+#endif
 
 /* 120 switch cases traversed */
 int swi120( int c )
@@ -249,5 +256,9 @@ int main( void )
 
   cnt=swi120(cnt);
 
-  return cnt;
+#ifdef PRINT_RESULTS
+  printf("cnt: %d\n", cnt);
+#endif
+  if(cnt != 180) return 1;
+  return 0;
 }

@@ -1,7 +1,12 @@
-/* MDH WCET BENCHMARK SUITE. File version $Id: fac.c,v 1.5 2011-01-10 14:46:54 falk Exp $ */
 /*
- * Changes: CS 2006/05/19: Changed loop bound from constant to variable.
+ * Changes:
+ * AJ 2014/04/15: Merged patmos/bench changes (PRINT_RESULTS, return check)
+ * CS 2006/05/19: Changed loop bound from constant to variable.
  */
+
+#ifdef PRINT_RESULTS
+#include <stdio.h>
+#endif
 
 int fac (int n)
 {
@@ -26,6 +31,10 @@ int main (void)
       _Pragma( "flowrestriction 1*fac <= 6*recursivecall" );
   }
 
-  return (s);
+#ifdef PRINT_RESULTS
+  printf("fac: s = %d\n", s);
+#endif
+  if (s != 154) return (1);
+  return (0);
 }
 

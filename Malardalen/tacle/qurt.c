@@ -42,6 +42,10 @@
 /*                                                                       */
 /*************************************************************************/
 
+/* Changes:
+ * AJ 2014/04/15: Merged patmos/bench changes (ext var r depends on result)
+ */
+
 /*
 ** Benchmark Suite for Real-Time Applications, by Sung-Soo Lim
 **     
@@ -96,6 +100,7 @@ float sqrt(float val)
   return (x);
 }
 
+volatile float r;
 
 int main()
 {
@@ -121,6 +126,7 @@ int main()
   a[2] =  8.0f;
 
   qurt();
+  r = x1[0] + x1[1] + x2[0] + x2[1];
   return 0;
 }
 

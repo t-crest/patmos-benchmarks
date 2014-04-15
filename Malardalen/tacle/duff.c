@@ -14,6 +14,13 @@
  *
  *----------------------------------------------------------------------*/
 
+ /*
+  * AJ 2014/04/15: Merged patmos/bench changes (PRINT_RESULTS, return check)
+  */
+#ifdef PRINT_RESULTS
+#include <stdio.h>
+#endif
+
 #define ARRAYSIZE  100
 #define INVOCATION_COUNT 43	/* exec time depends on this one! */
 
@@ -69,6 +76,13 @@ int main( void )
   initialize( source, ARRAYSIZE );
   duffcopy( source, target, INVOCATION_COUNT );
 
+#ifdef PRINT_RESULTS
+  int i;
+  for (i=0;i<INVOCATION_COUNT;i++) {
+    printf("duff: %d -> %d\n",source[i],target[i]);
+  }
+#endif
+  if(target[INVOCATION_COUNT-1] != source[INVOCATION_COUNT-1]) return 1;
   return 0;
 }
 

@@ -4,6 +4,10 @@
  * COMMENTS: Both self-recursion and mutual recursion are used
  */
 
+/* Changes:
+ * AJ 2014/04/15: Merged patmos/bench changes (return check)
+ */ 
+
 int fib( int i )
 {
   if( i==0 )
@@ -24,5 +28,6 @@ int main( void )
   int In = fib( 10 );
   _Pragma( "marker recursivecall" )
   _Pragma( "flowrestriction 1*fib <= 177*recursivecall" );
-  return blocker;
+  if(In != 89) return 1;
+  return 0;
 }

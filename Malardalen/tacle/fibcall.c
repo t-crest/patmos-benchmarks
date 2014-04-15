@@ -37,6 +37,15 @@
 /*                                                                       */
 /*************************************************************************/
 
+/* Changes:
+ * AJ 2014/04/15: Merged patmos/bench changes (PRINT_RESULTS, return check)
+ */
+
+#ifdef PRINT_RESULTS
+#include <stdio.h>
+#endif
+
+int             fib(int n);
 
 int fib( int n )
 {
@@ -62,8 +71,11 @@ int main( void )
   int a;
 
   a = 30;
-  fib( a );
-
-  return a;
+  int r = fib(a);
+#ifdef PRINT_RESULTS
+  printf("fib: r=%d\n", r);
+#endif
+  if(r != 832040) return 1;
+  return 0;
 }
 

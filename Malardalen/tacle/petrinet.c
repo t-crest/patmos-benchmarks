@@ -23,6 +23,14 @@
 *
 ***************************************************************************/
 
+/* Changes:
+ * AJ 2014/04/15: Merged patmos/bench changes (PRINT_RESULTS, return check)
+ */
+
+#ifdef PRINT_RESULTS
+#include <stdio.h>
+#endif
+
 /* Remove the following #define for actual WCET analyses! */
 /*
 #define PROFILING
@@ -876,5 +884,9 @@ int main( void )
 
   dummy_i = 77;
 
-  return dummy_i;
+#ifdef PRINT_RESULTS
+  printf("nsichneu: %d, %d, %d\n", P1_is_marked, P2_is_marked, P3_is_marked);
+#endif
+  if(P1_is_marked + P2_is_marked + P3_is_marked != 8) return (1);
+  return (0);
 }

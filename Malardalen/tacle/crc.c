@@ -40,8 +40,13 @@
 /*                                                                       */
 /*                                                                       */
 /*************************************************************************/
+/* Changes:
+ * AJ 2014/04/15: Merged patmos/bench changes (PRINT_RESULTS, return check)
+ */
 
-
+#ifdef PRINT_RESULTS
+#include <stdio.h>
+#endif
 
 typedef unsigned char uchar;
 #define LOBYTE(x) ((uchar)((x) & 0xFF))
@@ -130,6 +135,10 @@ int main( void )
   
   i2=icrc( i1, n+2, (short)0, 1 );
   
+#ifdef PRINT_RESULTS
+  printf("crc: i1,i2=%d,%d\n",i1,i2);
+#endif
+  if(i1+i2 != 54027) return 1;
   return 0;
 }
 

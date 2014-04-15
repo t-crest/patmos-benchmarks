@@ -35,6 +35,14 @@
  *
  *----------------------------------------------------------------------*/
 
+/* Changes:
+ * AJ 2014/04/15: Merged patmos/bench changes (PRINT_RESULTS, return check)
+ */
+
+#ifdef PRINT_RESULTS
+#include <stdio.h>
+#endif
+
 int complex( int a, int b )
 {
   #ifdef PROFILING
@@ -96,7 +104,7 @@ int complex( int a, int b )
   printf( "b-loop: [%d, %d]\n", min_b, max_b );
   #endif
 
-  return 1;
+  return a-b;
 }
 
 
@@ -106,5 +114,9 @@ int main()
 
   answer = complex( a, b );
 
-  return answer;
+#ifdef PRINT_RESULTS
+  printf("janne_complex: answer=%d\n", answer);
+#endif
+  if (answer != 4) return 1;
+  return 0;
 }

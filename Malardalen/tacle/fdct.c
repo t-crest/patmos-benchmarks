@@ -22,6 +22,15 @@
  *                                                                                                         *  
  ***********************************************************************************************************/
 
+/*
+ * Changes:
+ * AJ 2014/04/15: Merged patmos/bench changes (PRINT_RESULTS, return check)
+ */
+
+#ifdef PRINT_RESULTS
+#include <stdio.h>
+#endif
+
 /* Cosine Transform Coefficients */
 
 #define W1 2841                 /* 2048*sqrt(2)*cos(1*pi/16) */
@@ -204,6 +213,10 @@ void fdct( short int *blk, int lx )
 
 int main( void )
 {
+#ifdef PRINT_RESULTS
+  int             i;
+#endif
+
   fdct (block, 8);  /* 8x8 Blocks, DC precision value = 0, Quantization
 		       coefficient (mquant) = 64 */
 
@@ -213,5 +226,10 @@ int main( void )
 //  }
 #endif  
 
-  return block[0];
+#ifdef PRINT_RESULTS
+  for (i = 0; i < 64; i += 2)
+    printf("fdct: block[%2d] -> %8d . block[%2d] -> %8d\n", i, block[i], i + 1, block[i + 1]);
+#endif
+  if(block[0] + block[63] != 703) return (1);
+  return (0);
 }

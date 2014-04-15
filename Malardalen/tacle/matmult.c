@@ -18,6 +18,13 @@
  *
  *----------------------------------------------------------------------*/
 
+/* Changes:
+ * AJ 2014/04/15: Merged patmos/bench changes (PRINT_RESULTS, return check)
+ */ 
+
+#ifdef PRINT_RESULTS
+#include <stdio.h>
+#endif
 
 /*
  * MATRIX MULTIPLICATION BENCHMARK PROGRAM:
@@ -36,17 +43,24 @@ matrix ArrayA, ArrayB, ResultArray;
 /* Forward function prototypes */
 void Multiply( matrix A, matrix B, matrix Res );
 void InitSeed( void );
-void Test( matrix A, matrix B, matrix Res );
+int Test( matrix A, matrix B, matrix Res );
 void Initialize( matrix Array );
 int RandomInteger( void );
 
 int main( void )
 {
-  InitSeed();
-  
-  Test(ArrayA, ArrayB, ResultArray);
-
-  return 0;
+	int r;
+	InitSeed();
+#ifdef  PRINT_RESULTS
+	printf("matmult:   *** MATRIX MULTIPLICATION BENCHMARK TEST ***\n");
+	printf("matmult: RESULTS OF THE TEST:\n");
+#endif
+	r = Test(ArrayA, ArrayB, ResultArray);
+#ifdef  PRINT_RESULTS
+	printf("matmult:    - First element of result is %d\n", r);
+#endif
+	if(r != 291018000) return 1;
+	return 0;
 }
 
 
@@ -64,7 +78,7 @@ void InitSeed( void )
 }
 
 
-void Test(matrix A, matrix B, matrix Res)
+int Test(matrix A, matrix B, matrix Res)
 /*
  * Runs a multiplication test on an array.  Calculates and prints the
  * time it takes to multiply the matrices.
@@ -75,6 +89,8 @@ void Test(matrix A, matrix B, matrix Res)
   Initialize( B );
 
   Multiply( A, B, Res );
+
+  return Res[0][0];
 }
 
 

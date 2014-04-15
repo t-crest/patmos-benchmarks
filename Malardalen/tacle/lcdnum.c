@@ -18,6 +18,13 @@
  *
  ***********************************************************************/
 
+/* Changes:
+ * AJ 2014/04/15: Merged patmos/bench changes (PRINT_RESULTS, return check)
+ */
+
+#ifdef PRINT_RESULTS
+#include <stdio.h>
+#endif
 
 unsigned char num_to_lcd( unsigned char a )
 {
@@ -78,6 +85,9 @@ int main( void )
     {
       a = a &0x0F;
       OUT = num_to_lcd(a);
+#ifdef PRINT_RESULTS
+    printf("lcdnum: OUT = %d\n", OUT);
+#endif
     }
   }
 

@@ -39,8 +39,15 @@
 /*                                                                       */
 /*                                                                       */
 /*************************************************************************/
+/* Changes:
+ * AJ 2014/04/14: Merged patmos/bench changes (PRINT_RESULTS, return value check),
+ *                made data[] initializer ansi C compliant.
+ */
 
 
+#ifdef PRINT_RESULTS
+#include <stdio.h>
+#endif
 
 struct DATA {
   int  key;
@@ -49,7 +56,7 @@ struct DATA {
 
 struct DATA data[15] = { {1, 100}, {5,200}, {6, 300}, {7, 700}, {8, 900},
                          {9, 250}, {10, 400}, {11, 600}, {12, 800}, {13, 1500},
-                         [10]={14, 1200}, {15, 110}, {16, 140}, {17, 133}, {18, 10} };
+                         {14, 1200}, {15, 110}, {16, 140}, {17, 133}, {18, 10} };
 
 int cnt1 = 0;
 
@@ -59,7 +66,13 @@ extern int binary_search( int );
 
 int main( void )
 {
-  return binary_search( 8 );
+	int r = binary_search(8);
+#ifdef PRINT_RESULTS
+        printf("binary_search: r=%d\n", r);
+#endif
+        if(r != 900) return (1);
+        if(cnt1 != 4) return (1);
+	return (0);
 }
 
 
@@ -90,6 +103,10 @@ int binary_search( int x )
     
     cnt1++;
   }
+
+#ifdef PRINT_RESULTS
+	printf("bs: Loop Count : %d\n", cnt1);
+#endif
   return fvalue;
 }
 

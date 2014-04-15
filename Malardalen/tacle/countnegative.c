@@ -6,6 +6,13 @@
    Comments:
    Nested loops, well-structured code.
 */
+/* Changes:
+ * AJ 2014/04/15: Merged patmos/bench changes (PRINT_RESULTS, return check)
+ */
+
+#ifdef PRINT_RESULTS
+#include <stdio.h>
+#endif
 
 #define MAXSIZE 20
 #define WORSTCASE 1
@@ -30,9 +37,12 @@ int Postotal, Negtotal, Poscnt, Negcnt;
 int main ( void )
 {
   InitSeed();
-  
-  Test( Array );
-  
+#ifdef PRINT_RESULTS
+  printf("cnt: \ncnt:   *** MATRIX SUM AND COUNT BENCHMARK TEST ***\ncnt:\n");
+  printf("cnt:RESULTS OF THE TEST:\n");
+#endif
+  int r = Test(Array);
+  if (r!=-1537870) return 1;
   return 0;
 }
 
@@ -43,7 +53,12 @@ int Test( matrix Array )
 
   Sum( Array );
 
-  return 0;
+#ifdef PRINT_RESULTS
+  printf("cnt:    - Size of array is %d\n", MAXSIZE);
+  printf("cnt:    - Num pos was %d and Sum was %d\n", Poscnt, Postotal);
+  printf("cnt:    - Num neg was %d and Sum was %d\n", Negcnt, Negtotal);
+#endif
+  return Negtotal-Postotal;
 }
 
 

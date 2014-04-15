@@ -50,10 +50,15 @@
 /*                                                                       */
 /*************************************************************************/
 
+/* Changes:
+ * AJ 2014/04/15: Merged patmos/bench changes (PRINT_RESULTS, return check)
+ */
 
-#ifdef DEBUG
-int cnt1, cnt2;
+#ifdef PRINT_RESULTS
+#include <stdio.h>
 #endif
+
+int             cnt1, cnt2;
 
 unsigned int a[11];
 
@@ -76,11 +81,13 @@ int main( void )
   #endif
   _Pragma("loopbound min 9 max 9")
   while(i <= 10){
+    cnt1++;
     #ifdef PROFILING
     iters_i++;
     #endif
     
     j = i;
+    cnt2 = 0;
     #ifdef PROFILING
     iters_a = 0;
     #endif
@@ -90,6 +97,7 @@ int main( void )
       #ifdef PROFILING
       iters_a++;
       #endif
+      cnt2++;
       temp = a[j];
       a[j] = a[j-1];
       a[j-1] = temp;
@@ -102,7 +110,9 @@ int main( void )
     if ( iters_a > max_a )
       max_a = iters_a;
     #endif
-    
+ #ifdef PRINT_RESULTS
+	printf("insertsort: Inner Loop Counts: %d\n", cnt2);
+#endif   
     i++;
   }
 
@@ -117,6 +127,12 @@ int main( void )
   printf( "i-loop: [%d, %d]\n", min_i, max_i );
   printf( "a-loop: [%d, %d]\n", min_a, max_a );
   #endif
-    
+
+#ifdef PRINT_RESULTS
+  printf("insertsort: Outer Loop : %d ,  Inner Loop : %d\n", cnt1, cnt2);
+  printf("insertsort: a[5]=%d\n",a[5]);
+#endif
+  if(cnt1 != 9 || cnt2 != 9) return 1;
+  if(a[5] != 6) return 1;  
   return 0;
 }

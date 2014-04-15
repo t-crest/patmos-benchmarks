@@ -5,6 +5,14 @@
  *
 */ 
 
+/* Changes:
+ * AJ 2014/04/15: Merged patmos/bench changes (PRINT_RESULTS, return check)
+ */
+
+#ifdef PRINT_RESULTS
+#include <stdio.h>
+#endif
+
 /* Remove the following #define for actual WCET analyses! */
 /*
 #define PROFILING
@@ -472,5 +480,10 @@ int main( void )
   printf( "cyfun::j3-loop: [%d, %d]\n", cyfun_min_j3, cyfun_max_j3 );
   #endif
 
+#ifdef PRINT_RESULTS
+  printf("%lu %lu\n", out.l, out.r);
+#endif
+  if(out.l != 2489587893LU) return 1;
+  if(out.r != 1806503748LU) return 1;
   return 0;
 }

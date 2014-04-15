@@ -13,6 +13,14 @@
  *
  ***********************************************************************/
 
+ /*
+  * Changes:
+  * AJ 2014/04/15: Merged patmos/bench changes (PRINT_RESULTS, return check)
+  */
+
+#ifdef PRINT_RESULTS
+#include <stdio.h>
+#endif
 
 /* Forward function prototypes */
 long int expint(int n, long int x);
@@ -20,9 +28,13 @@ long int expint(int n, long int x);
 
 int main( void )
 {
-  expint(50,1);
+  long int r = expint(50,1);
   /* with  expint(50,21) as argument, runs the short path
    in expint.   expint(50,1)  gives the longest execution time */
+#ifdef PRINT_RESULTS
+  printf("expint: r = %ld\n", r);
+#endif
+  if(r != 3883) return 1;
   return 0;
 }
 

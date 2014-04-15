@@ -48,6 +48,14 @@
 /*                                                                       */
 /*************************************************************************/
 
+/* Changes:
+ * AJ 2014/04/14: Merged patmos/bench changes (PRINT_RESULTS, return check)
+ */
+
+#ifdef PRINT_RESULTS
+#include <stdio.h>
+#endif
+
 /* common sampling rate for sound cards on IBM/PC */
 #define SAMPLE_RATE 11025
 
@@ -777,7 +785,7 @@ int main(void)
 
   /* read in amplitude and frequency for test data */
   j = 10;
-  f = 2000;  /* k rs men, anv nds inte */
+  f = 2000;  /* krs men, anvnds inte */
 
   /* 16 KHz sample rate */
   /* XXmain_0, MAX: 2 */
@@ -793,7 +801,14 @@ int main(void)
   for ( i = 0 ; i < IN_END ; i += 2 ) {
     compressed[i/2] = encode( test_data[i], test_data[i+1] );
   }
+
+#ifdef PRINT_RESULTS
+        /* print ih, il */
+        for(i = 0 ; i < IN_END/2 ; i++) printf("adpcm: %4d %2d %2d\n",
+                                               i,compressed[i] >> 6,compressed[i] & 63);
+#endif
  
-  return 0;
+  return !((compressed[0] >> 6) + (compressed[0] & 63) +
+           (compressed[1] >> 6) + (compressed[1] & 63)) == 70;
 }
 #endif
