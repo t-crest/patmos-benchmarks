@@ -20,7 +20,9 @@ int swi120( int c )
   int i;
   
   _Pragma("loopbound min 120 max 120")
+  __llvm_pcmarker(0);
   for ( i = 0; i < 120; i++ ) {
+    __llvm_pcmarker(1);
     switch ( i ) {
       case 0: c++; break;
       case 1: c++; break;
@@ -154,7 +156,9 @@ int swi50( int c )
   int i;
   
   _Pragma("loopbound min 50 max 50")
+  __llvm_pcmarker(2);
   for ( i = 0; i < 50; i++ ) {
+    __llvm_pcmarker(3);
     switch ( i ) {
       case 0: c++; break;
       case 1: c++; break;
@@ -228,7 +232,9 @@ int swi10( int c )
   int i;
   
   _Pragma("loopbound min 10 max 10")
+  __llvm_pcmarker(4);
   for ( i = 0; i < 10; i++ ) {
+    __llvm_pcmarker(5);
     switch ( i ) {
       case 0: c++; break;
       case 1: c++; break;

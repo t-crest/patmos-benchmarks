@@ -84,8 +84,10 @@ long int expint( int n, long int x )
     ans = nm1 != 0 ? 2 : 1000;
     fact=1;
     _Pragma("loopbound min 100 max 100")
+    __llvm_pcmarker(0);
     for (i=1;i<=100;i++)      /* MAXIT */
     {
+      __llvm_pcmarker(1);
       fact *= -x/i;
       if (i != nm1) {         /* depends on parameter n */
 	del = -fact/(i-nm1);

@@ -25,7 +25,9 @@ bool prime (uint n) {
   if (even (n))
       return (n == 2);
   _Pragma("loopbound min 73 max 357")
+  __llvm_pcmarker(0);
   for (i = 3; i * i <= n; i += 2) { 
+      __llvm_pcmarker(1);
       if (divides (i, n)) /* ai: loop here min 0 max 357 end; */
           return 0; 
   }

@@ -324,8 +324,10 @@ int my_sin( int rad )
 
   /* REALLY: while(my_fabs(diff) >= 0.00001) { */
   /* MAX: 1000 */
+  __llvm_pcmarker(4);
   _Pragma("loopbound min 849 max 2424")
   while ( my_fabs( diff ) >= 1 ) {
+    __llvm_pcmarker(5);
     diff = (diff * (-(rad*rad))) / ((2 * inc) * (2 * inc + 1));
     app = app + diff;
     inc++;
@@ -590,7 +592,9 @@ int quantl( int el, int detl )
   /* determine mil based on decision levels and detl gain */
   /* MAX: 30 */
   _Pragma("loopbound min 1 max 30")
+  __llvm_pcmarker(2);
   for ( mil = 0; mil < 30; mil++ ) {
+    __llvm_pcmarker(3);
     decis = (decis_levl[mil] * (long)detl) >> 15L;
     if ( wd <= decis )
       break;

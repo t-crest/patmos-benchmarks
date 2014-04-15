@@ -272,7 +272,10 @@ compress(void)
 	cl_hash((count_int) hsize_reg);	/* clear hash table */
 
 
+	// loopbound L2: max 49
+	__llvm_pcmarker(0);
 	while (InCnt > 0) {	/* apsim_loop 11 0 */
+		__llvm_pcmarker(1);
 		int             apsim_bound111 = 0;
 
 		c = getbyte();	/* decrements InCnt */
@@ -293,6 +296,8 @@ compress(void)
 		}
 probe:
 
+		// loopbound L2_L1: max 1
+		__llvm_pcmarker(2);
 		if ((i -= disp) < 0) {	/* apsim_loop 111 11 */
 			i += hsize_reg;
 		}
@@ -310,6 +315,8 @@ nomatch:
 			codetabof(i) = free_ent++;	/* apsim_unknown codetab */
 			htabof(i) = fcode;	/* apsim_unknown htab */
 		} else if (((count_int) in_count >= checkpoint) && (block_compress)) {
+			// flow fact: never executed
+			__llvm_pcmarker(3);
 			cl_block();
 		}
 	}

@@ -97,8 +97,10 @@ unsigned short icrc( unsigned short crc, unsigned long len,
     cword=rchr[HIBYTE(cword)] | rchr[LOBYTE(cword)] << 8;
 
     _Pragma("loopbound min 40 max 42")
+    __llvm_pcmarker(0);
     for ( j = 1; j <= len; j++ ) {
     
+    __llvm_pcmarker(1);
     if ( jrev < 0 ) {
       tmp1 = rchr[lin[j]]^ HIBYTE(cword);
     }
