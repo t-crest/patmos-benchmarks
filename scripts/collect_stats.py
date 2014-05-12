@@ -32,7 +32,7 @@ class StatsParser:
 	self.calls = { }
 	self.cycles = 0
 	# Regex for matching instruction stats
-	self.re_instr = re.compile("^ *(\w+): +(\d+) +(\d+) +(\d+) *(.*)$")
+	self.re_instr = re.compile("^ *(\w+): +(\d+) +(\d+) +(\d+) +(\d+) +(\d+) +(\d+) *(.*)$")
 	# Regex for matching method cache stats
 	self.re_mc = re.compile("^ *0x([0-9a-fA-F]+): +(\d+) +(\d+) +<.+:([0-9a-zA-Z_]+):.+> *$")
 	self._setName(filename)
@@ -53,7 +53,7 @@ class StatsParser:
 	    if line.startswith("Instruction Statistics:"): 
 		break
 	for line in f:
-	    if line.find("instruction:") >= 0:
+	    if line.find("operation:") >= 0:
 		continue
 	    m = self.re_instr.match(line)
 	    if m is None:
@@ -62,7 +62,10 @@ class StatsParser:
 	    if instr == "bubbles":
 		break
 	    
-	    self.instructions[instr] = int(m.group(2)), int(m.group(3)), int(m.group(4)), m.group(5).strip()
+	    fetched = int(m.group(2)) + int(m.group(5))
+	    retired = int(m.group(3)) + int(m.group(6))
+	    discard = int(m.group(4)) + int(m.group(7))
+	    self.instructions[instr] = fetched, retired, discard, m.group(8).strip()
 	
 	for line in f:
 	    if line.startswith("Method Cache Statistics:"):
@@ -93,7 +96,7 @@ class StatsParser:
 	try:
 	    return self.instructions[instruction]
 	except:
-	    return 0, 0, 0
+	    return 0, 0, 0, ""
 
     def getCalls(self, method):
 	try:
@@ -187,7 +190,8 @@ def writeStatsCSV(outfile, stats, comment):
     # write names of benchmarks as header, and collect total instruction count
     instrCnt = 0
     for stat in stats:
-	f.write("," + stat.getName())
+	if not stat.getName().startswith("torture"):
+	    f.write("," + stat.getName())
 	fetched, retired, discared, tmp = stat.getInstruction("all")
 	instrCnt = instrCnt + fetched
     f.write(",Total,Percent,\"Instruction Stats\"") 
@@ -213,7 +217,8 @@ def writeStatsCSV(outfile, stats, comment):
 	    fetched, retired, discarded, s = stat.getInstruction(instr)
 	    total = total + fetched
 	    totalStats = mergeInstrStats(totalStats, s)
-	    line = line + "," + str(fetched)
+	    if not stat.getName().startswith("torture"):
+		line = line + "," + str(fetched)
 
 	f.write(line)
 	f.write("," + str(total) + "," + "%.5f"%(float(total)/instrCnt))
@@ -222,9 +227,12 @@ def writeStatsCSV(outfile, stats, comment):
 
     f.write("\n")
 
+    # TODO define a filter function instead, use consistently
+    filtered_stats = [x for x in stats if not x.getName().startswith("torture")]
+
     # Write binary size
     f.write("\"Binary size (KiB)\"")
-    for stat in stats:
+    for stat in filtered_stats:
 	f.write(",")
 	filename = stat.getBinaryFilename()
 	if filename is None:
@@ -236,13 +244,13 @@ def writeStatsCSV(outfile, stats, comment):
 
     # Write total cycles
     f.write("Cycles")
-    for stat in stats:
+    for stat in filtered_stats:
 	f.write("," + str(stat.getCycles()))
     f.write("\n")
 
     # Write discarded instructions in %
     f.write("\"Discarded (%)\"")
-    for stat in stats:
+    for stat in filtered_stats:
 	fetched, retired, discarded, tmp = stat.getInstruction("all")
 	if fetched > 0:
 	    f.write("," + "%.5f"%(float(discarded)/fetched))
@@ -272,9 +280,10 @@ def writeStatsCSV(outfile, stats, comment):
     for method in methods:
 	f.write(method)
 	total = 0
-	for stat in stats: 
+	for stat in stats:
 	    hits, misses = stat.getCalls(method)
-	    f.write("," + str(hits+misses))
+	    if not stat.getName().startswith("torture"):
+		f.write("," + str(hits+misses))
 	    total += hits+misses
 	f.write(","+str(total))
 	f.write("\n")
