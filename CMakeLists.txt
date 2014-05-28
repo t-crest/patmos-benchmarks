@@ -7,6 +7,14 @@ cmake_minimum_required(VERSION 2.8)
 # we are only using C at the moment
 enable_language(C)
 
+# we override add_executable to collect a list of executables in the global property tgt_list_prop
+# and use it in setup_all_link_flags().
+# IMPORTANT: this overriding of a CMake builtin is fragile, DON'T move it to included scripts!
+function(add_executable TARGET)
+  set_property(GLOBAL APPEND PROPERTY tgt_list_prop ${TARGET})
+  _add_executable(${TARGET} ${ARGN})
+endfunction()
+
 # enable testing using ctest
 if(ENABLE_TESTING)
   # Target-dependent macros for testing:
@@ -90,4 +98,9 @@ endif()
 # add timing analysis sub-directory
 if(A3_EXECUTABLE)
   add_subdirectory(a3)
+endif()
+
+# this is how we set the LINK_FLAGS property with Patmos for all our executable targets
+if("${CMAKE_SYSTEM_NAME}" MATCHES "patmos")
+  setup_all_link_flags()
 endif()

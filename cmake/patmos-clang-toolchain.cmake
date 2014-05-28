@@ -1,5 +1,12 @@
 INCLUDE(CMakeForceCompiler)
 
+if(COMMAND cmake_policy)
+  # new cmake library link behavior
+  cmake_policy(SET CMP0003 NEW)
+  # old cmake variable scope behavior
+  cmake_policy(SET CMP0011 OLD)
+endif(COMMAND cmake_policy)
+
 # this one is important
 SET(CMAKE_SYSTEM_NAME patmos)
 SET(CMAKE_SYSTEM_PROCESSOR patmos)
@@ -32,12 +39,52 @@ CMAKE_FORCE_CXX_COMPILER(${CLANG_EXECUTABLE} GNU)
 # the clang triple, also used for installation
 set(TRIPLE "patmos-unknown-unknown-elf" CACHE STRING "Target triple to compile compiler-rt for.")
 
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+# use platin tool-config to configure clang/llvm and pasim
+set(CONFIG_PML    "scripts/patmos-config-sim.pml" CACHE STRING "PML target arch description file (default/pasim).")
+set(CONFIG_PML_HW "scripts/patmos-config-hw.pml"  CACHE STRING "PML target arch description file (hw/emulator).")
+find_program(PLATIN_EXECUTABLE NAMES platin DOC "Path to platin tool.")
+
+if (NOT PLATIN_EXECUTABLE)
+  message(WARNING "platin not found, but required to configure tools.")
+endif()
+
+# trigger reconfigure if config PML changes
+configure_file(${PROJECT_SOURCE_DIR}/${CONFIG_PML} ${CMAKE_CURRENT_BINARY_DIR}/config.pml.timestamp.txt)
+configure_file(${PROJECT_SOURCE_DIR}/${CONFIG_PML_HW} ${CMAKE_CURRENT_BINARY_DIR}/config.hw.pml.timestamp.txt)
+
+function(execute_platin_tool_config TOOL PML RESULTVAR)
+  execute_process(COMMAND ${PLATIN_EXECUTABLE} tool-config -t ${TOOL} -i ${PROJECT_SOURCE_DIR}/${PML}
+                  RESULT_VARIABLE ptc_ret
+                  OUTPUT_VARIABLE ptc_result)
+  if (NOT "${ptc_ret}" STREQUAL 0)
+    MESSAGE(FATAL_ERROR "Call to 'platin tool-config' failed with: ${ptc_ret}")
+  endif()
+
+  # any newline in the output (also at the end) would break the subsequent compiler calls
+  STRING(REGEX REPLACE "\n" " " ptc_result "${ptc_result}")
+  set(${RESULTVAR} ${ptc_result} PARENT_SCOPE)
+endfunction()
+
+function(get_target_config TGT PML)
+  get_target_property(config_prop ${TGT} BUILD_CONFIG)
+  if(${config_prop} STREQUAL "hw")
+    set(${PML} ${CONFIG_PML_HW} PARENT_SCOPE)
+  else()
+    set(${PML} ${CONFIG_PML} PARENT_SCOPE)
+  endif()
+endfunction()
+
+execute_platin_tool_config("clang"     ${CONFIG_PML}    CLANG_PATMOS_CONFIG)
+execute_platin_tool_config("clang"     ${CONFIG_PML_HW} CLANG_PATMOS_CONFIG_HW)
+execute_platin_tool_config("simulator" ${CONFIG_PML}    PASIM_CONFIG)
+execute_platin_tool_config("simulator" ${CONFIG_PML_HW} PASIM_CONFIG_HW)
+
 # set some compiler-related variables;
 set(CMAKE_C_COMPILE_OBJECT   "<CMAKE_C_COMPILER>   -target ${TRIPLE} -fno-builtin -emit-llvm <DEFINES> <FLAGS> -o <OBJECT> -c <SOURCE>")
 set(CMAKE_CXX_COMPILE_OBJECT "<CMAKE_CXX_COMPILER> -target ${TRIPLE} -fno-builtin -emit-llvm <DEFINES> <FLAGS> -o <OBJECT> -c <SOURCE>")
 set(CMAKE_C_LINK_EXECUTABLE  "${PATMOS_GOLD_ENV}<CMAKE_C_COMPILER> -target ${TRIPLE} -fno-builtin <FLAGS> <CMAKE_C_LINK_FLAGS> <LINK_FLAGS> <OBJECTS> -o <TARGET> -mpreemit-bitcode=<TARGET>.bc -mserialize=<TARGET>.pml -mpatmos-sca-serialize=<TARGET>.scml <LINK_LIBRARIES>")
 set(CMAKE_FORCE_C_OUTPUT_EXTENSION ".bc" FORCE)
-
 
 # RTEMS linking support
 if(${TRIPLE} MATCHES "patmos-unknown-rtems")
@@ -152,8 +199,8 @@ set(CMAKE_OBJDUMP ${LLVM_OBJDUMP_EXECUTABLE} CACHE FILEPATH "Object dumper")
 set(ENABLE_EMULATOR true CACHE BOOL "Enable testing with Patmos HW emulator.")
 
 find_program(PASIM_EXECUTABLE NAMES pasim DOC "Path to the Patmos simulator pasim.")
-set(PASIM_OPTIONS "-M fifo -m 2k" CACHE STRING "Additional command-line options passed to the Patmos simulator.")
-separate_arguments(PASIM_OPTIONS)
+set(PASIM_EXTRA_OPTIONS "" CACHE STRING "Additional command-line options passed to the Patmos simulator.")
+separate_arguments(PASIM_EXTRA_OPTIONS)
 
 if (ENABLE_EMULATOR)
   find_program(PATMOS_EMULATOR NAMES patmos-emulator DOC "Path to the Chisel-based patmos emulator.")
@@ -175,6 +222,39 @@ if(PATMOS_EMULATOR)
 else()
   message(WARNING "patmos-emulator not found, testing with emulator is disabled.")
 endif()
+
+# call this macro when a program should be built for emulator compatability
+macro (setup_build_for_emulator exec)
+  if(PATMOS_EMULATOR AND ENABLE_EMULATOR)
+    set_target_properties(${exec} PROPERTIES BUILD_CONFIG "hw")
+  endif()
+endmacro()
+
+# We need to append the mem/cache configuration to the LINK_FLAGS for the clang link call and cmake does not support
+# defaults for target properties. thus we depend on the list of executables we collect in our add_executable() overwrite
+# and do this at the very end.
+# If an executable should be linked for the emulator, it needs to set the BUILD_CONFIG target property accordingly.
+function (setup_all_link_flags)
+  get_property(tgt_list GLOBAL PROPERTY tgt_list_prop)
+  foreach(TGT ${tgt_list})
+    # append any existing link flags (these should NOT contain the hardware flags)
+    get_target_property(lf_prop ${TGT} LINK_FLAGS)
+    if (lf_prop)
+      set(existing_link_flags, ${lf_prop})
+    endif()
+
+    get_target_property(config_prop ${TGT} BUILD_CONFIG)
+    if(${config_prop} STREQUAL "hw")
+      # XXX base addresses not supported by PML yet
+      #set_target_properties(${TGT} PROPERTIES LINK_FLAGS "${existing_link_flags} ${CLANG_PATMOS_CONFIG_HW}")
+      set(HW_LINK_FLAGS "-mpatmos-method-cache-size=0x800 -mpatmos-stack-base=0x1f0000 -mpatmos-shadow-stack-base=0x200000")
+      set_target_properties(${TGT} PROPERTIES LINK_FLAGS "${existing_link_flags} ${HW_LINK_FLAGS}")
+    else()
+      set_target_properties(${TGT} PROPERTIES LINK_FLAGS "${existing_link_flags} ${CLANG_PATMOS_CONFIG}")
+    endif()
+  endforeach()
+endfunction (setup_all_link_flags)
+
 
 function (run_sim sim sim_options name prog in out ref)
   # Create symlinks to programs to make job_patmos.sh happy
@@ -202,7 +282,15 @@ endfunction (run_sim)
 
 macro (run_io name prog in out ref)
   if(PASIM_EXECUTABLE)
-    set(SIM_ARGS ${PASIM_OPTIONS} -V -o ${name}.stats)
+    get_filename_component(exec ${prog}  NAME_WE)
+    get_target_property(config_prop ${exec} BUILD_CONFIG)
+    if (${config_prop} STREQUAL "hw")
+      set(sim_config ${PASIM_CONFIG_HW})
+    else()
+      set(sim_config ${PASIM_CONFIG})
+    endif()
+    separate_arguments(sim_config)
+    set(SIM_ARGS ${sim_config} ${PASIM_EXTRA_OPTIONS} -V -o ${name}.stats)
     run_sim(${PASIM_EXECUTABLE} "${SIM_ARGS}" "${name}" "${prog}" "${in}" "${out}" "${ref}")
     set_property(DIRECTORY APPEND PROPERTY ADDITIONAL_MAKE_CLEAN_FILES ${name}.stats)
   endif()
@@ -216,25 +304,15 @@ endmacro(run_io)
 
 
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
-# find platin
-
+# WCET Analysis (via platin)
 set(PLATIN_ENABLE_WCET true CACHE BOOL "Enable WCET analysis during tests using Platin.")
 set(PLATIN_ENABLE_AIT true CACHE BOOL "Enable aiT-based WCET analysis during tests using Platin.")
 
-find_program(PLATIN_EXECUTABLE NAMES platin DOC "Path to platin tool.")
-
 set(PLATIN_OPTIONS "" CACHE STRING "Additional command-line options passed to the platin tool.")
 
-if (PLATIN_ENABLE_WCET)
-  if (NOT PLATIN_EXECUTABLE)
-    message(WARNING "platin not found, WCET analysis is disabled.")
-  endif()
-else()
+if (NOT PLATIN_ENABLE_WCET)
   message("WCET analysis with platin manually disabled, will be skipped.")
 endif()
-
-# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
-# WCET Analysis (via platin)
 
 if (A3_EXECUTABLE AND PLATIN_ENABLE_AIT)
   set(PLATIN_WCA_TOOL --a3-command ${A3_EXECUTABLE})
@@ -243,16 +321,20 @@ else()
 endif()
 
 macro (run_wcet name prog report timeout factor entry)
-  set_property(DIRECTORY APPEND PROPERTY ADDITIONAL_MAKE_CLEAN_FILES ${report} ${report}.dir)
-  add_test(NAME ${name} COMMAND ${PLATIN_EXECUTABLE} wcet ${PLATIN_WCA_TOOL} ${PLATIN_OPTIONS}
-                                                          --recorders "g:bcil" --analysis-entry ${entry}
-                                                          --use-trace-facts  --binary ${prog} --report ${report}
-                                                          --input ${PLATIN_CONFIG} --input ${prog}.pml
-                                                          --check ${factor}
-                                                          --objdump-command ${LLVM_OBJDUMP_EXECUTABLE} --pasim-command ${PASIM_EXECUTABLE}
-                                                          )
-  set_tests_properties(${name} PROPERTIES TIMEOUT ${timeout})
-  set_property(DIRECTORY APPEND PROPERTY ADDITIONAL_MAKE_CLEAN_FILES ${report})
+  if (PLATIN_ENABLE_WCET)
+    get_filename_component(exec ${prog}  NAME_WE)
+    set_property(DIRECTORY APPEND PROPERTY ADDITIONAL_MAKE_CLEAN_FILES ${report} ${report}.dir)
+    get_target_config(${exec} config_pml)
+    add_test(NAME ${name} COMMAND ${PLATIN_EXECUTABLE} wcet ${PLATIN_WCA_TOOL} ${PLATIN_OPTIONS}
+                                                            --recorders "g:bcil" --analysis-entry ${entry}
+                                                            --use-trace-facts  --binary ${prog} --report ${report}
+                                                            --input ${PROJECT_SOURCE_DIR}/${config_pml} --input ${prog}.pml
+                                                            --check ${factor}
+                                                            --objdump-command ${LLVM_OBJDUMP_EXECUTABLE} --pasim-command ${PASIM_EXECUTABLE}
+                                                            )
+    set_tests_properties(${name} PROPERTIES TIMEOUT ${timeout})
+    set_property(DIRECTORY APPEND PROPERTY ADDITIONAL_MAKE_CLEAN_FILES ${report})
+  endif()
 endmacro(run_wcet)
 
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
@@ -278,10 +360,10 @@ macro (set_sca_options target bounds_file)
   if (ENABLE_STACK_CACHE_ANALYSIS_TESTING AND ILP_SOLVER AND "${CMAKE_SYSTEM_NAME}" MATCHES "patmos")
     # enables SCA analysis when building target
     get_target_property(existing_link_flags ${target} LINK_FLAGS)
-    if(${existing_link_flags})
+    if(existing_link_flags)
       message(FATAL_ERROR "set_sca_options about to reset linker flags")
     endif()
-    set(props "-mpatmos-enable-stack-cache-analysis -mpatmos-ilp-solver=${PROJECT_SOURCE_DIR}/scripts/solve_ilp_glpk.sh -mpatmos-stack-cache-size=256")
+    set(props "-mpatmos-enable-stack-cache-analysis -mpatmos-ilp-solver=${PROJECT_SOURCE_DIR}/scripts/solve_ilp_glpk.sh")
     if (NOT "${bounds_file}" STREQUAL "")
       set(props "${props} -mpatmos-stack-cache-analysis-bounds=${bounds_file}")
     endif()

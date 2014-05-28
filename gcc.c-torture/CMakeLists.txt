@@ -33,6 +33,7 @@ foreach(SRC ${SOURCES})
     add_executable(${EXEC_NAME} ${SRC})
     if(${NO_HW_TEST} EQUAL -1)
         set(torture-${EXEC_NAME}-run-hw-test true)
+	setup_build_for_emulator(${EXEC_NAME})
     endif()
 
     run_io(torture-${EXEC_NAME}
@@ -40,22 +41,16 @@ foreach(SRC ${SOURCES})
 
     # A little bit of optimization and calm down warnings
     set(COMPILE_FLAGS "-O1 -Wno-implicit-int -Wno-return-type -fbuiltin")
-    set(LINK_FLAGS "")
 
     # On Patmos, compile for RAM if HW test is enabled
     if("${CMAKE_SYSTEM_NAME}" MATCHES "patmos")
       set(TARGET_COMPILE_FLAGS "-DSTACK_SIZE=1024 -DNO_TRAMPOLINES")
-      if (${NO_HW_TEST} EQUAL -1)
-          set(TARGET_LINK_FLAGS "-Xgold -T${PROJECT_SOURCE_DIR}/scripts/patmos-ram.t -mpatmos-method-cache-size=0x800 -mpatmos-stack-base=0x1f0000 -mpatmos-shadow-stack-base=0x200000")
-      else()
-          set(TARGET_LINK_FLAGS "-mpatmos-method-cache-size=0x800")
-      endif()
-	endif()
+      # XXX Why this?
+      #set(TARGET_LINK_FLAGS "-mpatmos-method-cache-size=0x800")
+    endif()
 
-	set_target_properties(${EXEC_NAME} PROPERTIES COMPILE_FLAGS
-	  "${COMPILE_FLAGS} ${TARGET_COMPILE_FLAGS}")
-	set_target_properties(${EXEC_NAME} PROPERTIES LINK_FLAGS
-	  "${LINK_FLAGS} ${TARGET_LINK_FLAGS}")
+    set_target_properties(${EXEC_NAME} PROPERTIES COMPILE_FLAGS
+      "${COMPILE_FLAGS} ${TARGET_COMPILE_FLAGS}")
 
     TARGET_LINK_LIBRARIES(${EXEC_NAME} "m")
 
