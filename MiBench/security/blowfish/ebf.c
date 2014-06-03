@@ -4,7 +4,7 @@
 // FB - make independent of command-line arguments
 volatile int __argc = 4;
 char * volatile __argv[] = {"bf", "e", NULL, NULL,
-                            "1234567890abcdeffedcba0987654321"};
+                            "1234567890abcdef"};
 
 int
 main(int argc, char *argv[])
