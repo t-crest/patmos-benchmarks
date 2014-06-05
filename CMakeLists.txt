@@ -54,6 +54,7 @@ set(ENABLE_C_TESTS true CACHE BOOL "Enable custom C tests")
 set(ENABLE_MEDIABENCH true CACHE BOOL "Enable Mediabench tests)")
 
 # add benchmark sub-directories
+add_subdirectory(Debie1-e)
 add_subdirectory(MiBench)
 add_subdirectory(Malardalen)
 if(ENABLE_PAPABENCH)

@@ -1,0 +1,8 @@
+Total checks done 20, failed 0
+Total checks done 868, failed 0
+Total checks done 1091, failed 0
+Total checks done 1215, failed 0
+Total checks done 1539, failed 0
+Total checks done 24598, failed 0
+Total checks done 24737, failed 0
+Total mailbox overflows 0
