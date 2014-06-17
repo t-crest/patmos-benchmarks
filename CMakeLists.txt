@@ -55,6 +55,7 @@ set(ENABLE_MEDIABENCH true CACHE BOOL "Enable Mediabench tests)")
 
 # add benchmark sub-directories
 add_subdirectory(Debie1-e)
+add_subdirectory(Heli)
 add_subdirectory(MiBench)
 add_subdirectory(Malardalen)
 if(ENABLE_PAPABENCH)
