@@ -43,6 +43,20 @@ set(TRIPLE "patmos-unknown-unknown-elf" CACHE STRING "Target triple to compile c
 # use platin tool-config to configure clang/llvm and pasim
 set(CONFIG_PML    "scripts/patmos-config-sim.pml" CACHE STRING "PML target arch description file (default/pasim).")
 set(CONFIG_PML_HW "scripts/patmos-config-hw.pml"  CACHE STRING "PML target arch description file (hw/emulator).")
+
+# support relative and absolute path to a .pml
+if (IS_ABSOLUTE ${CONFIG_PML})
+  set(CONFIG_PML_FILE ${CONFIG_PML})
+else()
+  set(CONFIG_PML_FILE "${PROJECT_SOURCE_DIR}/${CONFIG_PML}")
+endif()
+
+if (IS_ABSOLUTE ${CONFIG_PML_HW})
+  set(CONFIG_PML_HW_FILE ${CONFIG_PML_HW})
+else()
+  set(CONFIG_PML_HW_FILE "${PROJECT_SOURCE_DIR}/${CONFIG_PML_HW}")
+endif()
+
 find_program(PLATIN_EXECUTABLE NAMES platin DOC "Path to platin tool.")
 
 if (NOT PLATIN_EXECUTABLE)
@@ -50,11 +64,11 @@ if (NOT PLATIN_EXECUTABLE)
 endif()
 
 # trigger reconfigure if config PML changes
-configure_file(${PROJECT_SOURCE_DIR}/${CONFIG_PML} ${CMAKE_CURRENT_BINARY_DIR}/config.pml.timestamp.txt)
-configure_file(${PROJECT_SOURCE_DIR}/${CONFIG_PML_HW} ${CMAKE_CURRENT_BINARY_DIR}/config.hw.pml.timestamp.txt)
+configure_file(${CONFIG_PML_FILE} ${CMAKE_CURRENT_BINARY_DIR}/config.pml.timestamp.txt)
+configure_file(${CONFIG_PML_HW_FILE} ${CMAKE_CURRENT_BINARY_DIR}/config.hw.pml.timestamp.txt)
 
 function(execute_platin_tool_config TOOL PML RESULTVAR)
-  execute_process(COMMAND ${PLATIN_EXECUTABLE} tool-config -t ${TOOL} -i ${PROJECT_SOURCE_DIR}/${PML}
+  execute_process(COMMAND ${PLATIN_EXECUTABLE} tool-config -t ${TOOL} -i ${PML}
                   RESULT_VARIABLE ptc_ret
                   OUTPUT_VARIABLE ptc_result)
   if (NOT "${ptc_ret}" STREQUAL 0)
@@ -69,16 +83,16 @@ endfunction()
 function(get_target_config TGT PML)
   get_target_property(config_prop ${TGT} BUILD_CONFIG)
   if(${config_prop} STREQUAL "hw")
-    set(${PML} ${CONFIG_PML_HW} PARENT_SCOPE)
+    set(${PML} ${CONFIG_PML_HW_FILE} PARENT_SCOPE)
   else()
-    set(${PML} ${CONFIG_PML} PARENT_SCOPE)
+    set(${PML} ${CONFIG_PML_FILE} PARENT_SCOPE)
   endif()
 endfunction()
 
-execute_platin_tool_config("clang"     ${CONFIG_PML}    CLANG_PATMOS_CONFIG)
-execute_platin_tool_config("clang"     ${CONFIG_PML_HW} CLANG_PATMOS_CONFIG_HW)
-execute_platin_tool_config("simulator" ${CONFIG_PML}    PASIM_CONFIG)
-execute_platin_tool_config("simulator" ${CONFIG_PML_HW} PASIM_CONFIG_HW)
+execute_platin_tool_config("clang"     ${CONFIG_PML_FILE}    CLANG_PATMOS_CONFIG)
+execute_platin_tool_config("clang"     ${CONFIG_PML_HW_FILE} CLANG_PATMOS_CONFIG_HW)
+execute_platin_tool_config("simulator" ${CONFIG_PML_FILE}    PASIM_CONFIG)
+execute_platin_tool_config("simulator" ${CONFIG_PML_HW_FILE} PASIM_CONFIG_HW)
 
 # set some compiler-related variables;
 set(CMAKE_C_COMPILE_OBJECT   "<CMAKE_C_COMPILER>   -target ${TRIPLE} -fno-builtin -emit-llvm <DEFINES> <FLAGS> -o <OBJECT> -c <SOURCE>")
@@ -328,7 +342,7 @@ macro (run_wcet name prog report timeout factor entry)
     add_test(NAME ${name} COMMAND ${PLATIN_EXECUTABLE} wcet ${PLATIN_WCA_TOOL} ${PLATIN_OPTIONS}
                                                             --recorders "g:bcil" --analysis-entry ${entry}
                                                             --use-trace-facts  --binary ${prog} --report ${report}
-                                                            --input ${PROJECT_SOURCE_DIR}/${config_pml} --input ${prog}.pml
+                                                            --input ${config_pml} --input ${prog}.pml
                                                             --check ${factor}
                                                             --objdump-command ${LLVM_OBJDUMP_EXECUTABLE} --pasim-command ${PASIM_EXECUTABLE}
                                                             )
