@@ -1,0 +1,8 @@
+Changes:
+* Defining PATMOS_TEST enables a limited amount of trace output we use for
+  comparison with reference output during a functionality test.
+* When buildind for WCET analysis, prevent some inlining of analysis entries.
+* asm inline labels like,
+    __asm volatile (".debie1_3b_loop:");
+  are not compatible with compiler optimizations that duplicate code. They are
+  commented out for now.

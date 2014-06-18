@@ -134,7 +134,7 @@ void TM_InterruptService (void) INTERRUPT(TM_ISR_SOURCE) USED_REG_BANK(2)
 
    if (telemetry_pointer == (unsigned char *) &telemetry_data.time)
    {
-      __asm volatile (".debie1_2a_time:");
+      //__asm volatile (".debie1_2a_time:");
       COPY (telemetry_data.time, internal_time);
    }
 
@@ -142,7 +142,7 @@ void TM_InterruptService (void) INTERRUPT(TM_ISR_SOURCE) USED_REG_BANK(2)
    {
       /* There are bytes left to be sent to TM. */
 
-      __asm volatile (".debie1_2a_lt:");
+      //__asm volatile (".debie1_2a_lt:");
       tm_byte = *telemetry_pointer;
       WRITE_TM_MSB (tm_byte);
       read_memory_checksum ^= tm_byte;
@@ -158,7 +158,7 @@ void TM_InterruptService (void) INTERRUPT(TM_ISR_SOURCE) USED_REG_BANK(2)
    else if (TC_state == register_TM_e)
    /* Start to send TM data registers starting from the first ones */
    {
-      __asm volatile (".debie1_2c_tme:");
+      //__asm volatile (".debie1_2c_tme:");
       telemetry_pointer = (EXTERNAL unsigned char *)&telemetry_data;
       WRITE_TM_MSB (*telemetry_pointer);
       telemetry_pointer++;

@@ -414,14 +414,14 @@ void WaitMail (incoming_mail_t EXTERNAL *message) COMPACT_DATA REENTRANT_FUNC
 #endif
 
       mail_count[message -> mailbox_number] --;
-      __asm volatile (".debie4b_wmt:");
+      //__asm volatile (".debie4b_wmt:");
    }
    else
    {
       message -> wait_result      = TIMEOUT_OCCURRED;
       message -> execution_result = TIMEOUT_OCCURRED;
       *(message -> message)       = 0;
-      __asm volatile (".debie4b_wme:");
+      //__asm volatile (".debie4b_wme:");
    }
 }
 
@@ -1053,7 +1053,7 @@ void Start_Conversion (void)
    }
 
    ad_converting = 1;
-   __asm volatile (".debie1_3a_sc:");
+   //__asm volatile (".debie1_3a_sc:");
 }
 
 
@@ -1107,7 +1107,7 @@ unsigned char End_Of_ADC (void)
    }
    else
    {  /* Conversion still going on. */
-      __asm volatile (".debie1_3a_cc:");
+      //__asm volatile (".debie1_3a_cc:");
 
       /* Perhaps get a preemptive "hit": */
 
@@ -1402,7 +1402,7 @@ unsigned char V_Down (void)
 
    if (v_down_errors > 0)
    {
-      __asm volatile (".debie1_6a_vdown:");
+      //__asm volatile (".debie1_6a_vdown:");
       result = 0;  /* Bad. */
       v_down_errors --;
    }

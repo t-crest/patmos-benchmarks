@@ -27,6 +27,7 @@ if("${CMAKE_SYSTEM_NAME}" MATCHES "patmos")
   set(IS_BIGENDIAN true)
 endif()
 
+set(BUILD_WCET_ANALYSIS false CACHE BOOL "Compile for WCET analysis where applicable (eg. no printfs).")
 set(TACLE_BENCH false CACHE BOOL "Use TACLe version of benchmarks when available (transitional).")
 
 # check for the a3 tool.

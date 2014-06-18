@@ -112,7 +112,11 @@ extern void Boot (void);
 /* Task functions, for testing: */
 
 extern void InitHealthMonitoring (void);
+#ifdef NO_INLINE_ENTRY_POINTS
+extern void HandleHealthMonitoring (void) __attribute((noinline));
+#else
 extern void HandleHealthMonitoring (void);
+#endif
 
 #endif
 

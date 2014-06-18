@@ -32,8 +32,13 @@ run_io(debie1-harness ${CMAKE_CURRENT_BINARY_DIR}/debie1
   output.txt
   ${CMAKE_CURRENT_SOURCE_DIR}/ref.txt)
 
-# enable some printfs and exit main() for test comparison
-add_definitions(-DPATMOS_TEST)
+# depending whether we do WCET analysis or normal testing, disable inlining for
+# some functions or enable limited printfs and exit main() for test comparison
+if(${BUILD_WCET_ANALYSIS})
+  add_definitions(-DNO_INLINE_ENTRY_POINTS)
+else()
+  add_definitions(-DPATMOS_TEST)
+endif()
 
 target_link_libraries(debie1 debie1-target)
 

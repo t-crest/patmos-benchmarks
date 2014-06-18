@@ -250,7 +250,7 @@ void HandleHitTrigger (void)
          while (   conversion_try_count < ADC_MAX_TRIES
                 && END_OF_ADC != CONVERSION_ACTIVE )
          {
-           __asm volatile (".debie1_3b_loop:");
+           //__asm volatile (".debie1_3b_loop:");
             conversion_try_count++;
             /*Conversion try counter is increased. If this counter exeeds */
             /*the maximum number of conversion start tries the conversion */
@@ -273,7 +273,7 @@ void HandleHitTrigger (void)
          else
          {
             trigger |= HIT_ADC_ERROR;
-            __asm volatile (".debie1_3b_or:");
+            //__asm volatile (".debie1_3b_or:");
             /*Conversion has failed and an indication of this is stored in*/
             /*to 'trigger' variable by setting the Most Significant Bit   */
             /*(MSB) high. The AcquisitionTask will adjust its operation   */

@@ -2040,7 +2040,7 @@ void Read_AD_Channel (ADC_parameters_t EXTERNAL * ADC_parameters)
    while (tries_left > 0)
 
    {
-      __asm volatile (".debie6a_tries:");
+      //__asm volatile (".debie6a_tries:");
       confirm_hit_result = 0;
       /* Clear interrupt indicating flag.                                    */
 

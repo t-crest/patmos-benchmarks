@@ -167,8 +167,13 @@ extern void Set_TC_Error(void);
 
 /* Task functions, for testing: */
 
+#ifdef NO_INLINE_ENTRY_POINTS
+extern void TC_InterruptService (void)
+   INTERRUPT(TC_ISR_SOURCE) USED_REG_BANK(2) __attribute((noinline));
+#else
 extern void TC_InterruptService (void)
    INTERRUPT(TC_ISR_SOURCE) USED_REG_BANK(2);
+#endif
 extern void InitTelecommandTask (void);
 extern void HandleTelecommand (void);
 
