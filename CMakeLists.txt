@@ -69,6 +69,7 @@ add_subdirectory(TCAS)
 if(ENABLE_C_TESTS)
   add_subdirectory(tests)
 endif()
+add_subdirectory(WTC14-misc)
 
 # add non-free benchmarks
 if(EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/nonfree)
