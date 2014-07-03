@@ -1,10 +1,15 @@
 #include <stdio.h>
 #include <limits.h>
-#include <assert.h>
+//#include <assert.h>
+
+/* Patmos changes:
+   - do not analyze any assert()
+   - make nondet_int return a volatile value
+ */
 
 int nondet_int (void) 
 {
-  int nd;
+  volatile int nd;
   return nd;
 }
 

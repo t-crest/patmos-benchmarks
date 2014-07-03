@@ -1,15 +1,10 @@
 #include <stdio.h>
 #include <limits.h>
-//#include <assert.h>
-
-/* Patmos changes:
-   - do not analyze any assert()
-   - make nondet_int return a volatile value
- */
+#include <assert.h>
 
 int nondet_int (void) 
 {
-  volatile int nd;
+  int nd;
   return nd;
 }
 
@@ -57,9 +52,9 @@ int initialize()
   Cur_Vertical_Sep = 16684;
   Own_Tracked_Alt_Rate = 450 ;
 
-  //assert(Own_Tracked_Alt >= 0);
-  //assert(Other_Tracked_Alt >= 0);
-  //assert(Own_Tracked_Alt_Rate >= 0);
+  assert(Own_Tracked_Alt >= 0);
+  assert(Other_Tracked_Alt >= 0);
+  assert(Own_Tracked_Alt_Rate >= 0);
 
   Positive_RA_Alt_Thresh_0 = 16434;
   Positive_RA_Alt_Thresh_1 = 0;
@@ -137,9 +132,9 @@ int alt_sep_test()
 
   int alt_sep;
 
-  //assert(Own_Tracked_Alt >= 300);
-  //assert(Other_Tracked_Alt >= 300);
-  //assert(Own_Tracked_Alt_Rate >= 300);
+  assert(Own_Tracked_Alt >= 300);
+  assert(Other_Tracked_Alt >= 300);
+  assert(Own_Tracked_Alt_Rate >= 300);
 
   enabled = High_Confidence && (Own_Tracked_Alt_Rate <= 600 ) && (Cur_Vertical_Sep > 600 );
 
@@ -156,7 +151,6 @@ int alt_sep_test()
       if(need_upward_RA && need_downward_RA)
         {
           alt_sep = 0 ;
-          COSTS;
         }
       else
         if (need_upward_RA)

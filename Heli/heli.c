@@ -30,7 +30,7 @@ char heliState = GROUND;
 #define MARKS_PER_SEC 1600 
 int pwm_ticks = 0;          
 int marks = 0;
-int sec = 0;
+volatile int sec = 0;
 
 #define MAX_TAKEOFF_MOTOR_SPEED (95<<8)
 #define TAKEOFF_ROTOR_SPEED_INCR 16
@@ -113,7 +113,7 @@ void updatePWM(void){
 int main(void){ 
 
   // wait for button press on 1
-  while ( (PIND & PIN1) != 0) ;
+  //while ( (PIND & PIN1) != 0) ;
     
   calibrateGyro();
   calibrateArom();
@@ -126,9 +126,13 @@ int main(void){
   stabMotorSpeed3 = 0;
     
   sec = 0;
+  __llvm_pcmarker(31);
   while (1) {          
-    if ( (ADCSR & PIN6) == 0) // end of ADC conversion
+    __llvm_pcmarker(32);
+    if ( (ADCSR & PIN6) == 0) { // end of ADC conversion
       processSensorData();  
+      __llvm_pcmarker(33);
+    }
     runFlightPlan();
   }
 }  
@@ -220,6 +224,7 @@ void processSensorData(void){
 
     if (heliState == HOVER) {
 
+      __llvm_pcmarker(21);
       addSample(aromX,7,data_in);
       filtered_data = fixFilter(aromX,7); 
 	                               
@@ -262,6 +267,7 @@ void processSensorData(void){
                                                           
     if (heliState == HOVER){
       
+      __llvm_pcmarker(22);
       addSample(aromY, 7, data_in);
       filtered_data = fixFilter(aromY,7);
 	                               
@@ -301,6 +307,7 @@ void processSensorData(void){
                                                               
     if (heliState == HOVER){
 
+      __llvm_pcmarker(23);
       addSample(aromZ, 7, data_in);
       filtered_data = fixFilter(aromZ,8);
 	                               
@@ -334,11 +341,11 @@ void calibrateGyro(void) {
   ADCSR = 0b11000110;
   
   for (i=0; i<31; i++){
-    while ( (ADCSR & PIN6) != 0); 
+    //while ( (ADCSR & PIN6) != 0); 
     gyro[i] = ADCH;
     ADCSR |= PIN6;;   
   }
-  while ( (ADCSR & PIN6) != 0); 
+  //while ( (ADCSR & PIN6) != 0); 
   gyro[31] = ADCH;
 
   gyroCalibrate = fixFilter(gyro,5); 
@@ -354,11 +361,11 @@ void calibrateArom(void){
   ADCSR |= PIN6;
 
   for (i=0; i<127; i++){
-    while ( (ADCSR & PIN6) != 0) ; 
+    //while ( (ADCSR & PIN6) != 0) ; 
     aromX[i] = ADCH;
     ADCSR |= PIN6;   
   }
-  while ( (ADCSR & PIN6) != 0) ; 
+  //while ( (ADCSR & PIN6) != 0) ; 
   aromX[127] = ADCH;    
   aromCalibrate = fixFilter(aromX,7);
   aromXCalibrateThresholdLow = aromCalibrate;
@@ -368,11 +375,11 @@ void calibrateArom(void){
   ADCSR |= PIN6;   
     
   for (i=0; i<127; i++){
-    while ( (ADCSR & PIN6) != 0) ; 
+    //while ( (ADCSR & PIN6) != 0) ; 
     aromY[i] = ADCH;
     ADCSR |= PIN6;   
   }
-  while ( (ADCSR & PIN6) != 0) ;
+  //while ( (ADCSR & PIN6) != 0) ;
   aromY[127] = ADCH;
   aromCalibrate = fixFilter(aromY,7); 
   aromYCalibrateThresholdLow = aromCalibrate;
@@ -382,11 +389,11 @@ void calibrateArom(void){
   ADCSR |= PIN6;
   
   for (i=0; i<127; i++){
-    while ( (ADCSR & PIN6) != 0) ; 
+    //while ( (ADCSR & PIN6) != 0) ; 
     aromZ[i] = ADCH;
     ADCSR |= PIN6;   
   }
-  while ( (ADCSR & PIN6) != 0) ; 
+  //while ( (ADCSR & PIN6) != 0) ; 
   aromZ[127] = ADCH;
   aromCalibrate = fixFilter(aromZ,7);
   aromZCalibrateThresholdLow = aromCalibrate;
