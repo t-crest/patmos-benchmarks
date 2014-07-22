@@ -52,6 +52,7 @@ endif()
 
 set(ENABLE_PAPABENCH true CACHE BOOL "Enable Papabench tests)")
 set(ENABLE_C_TESTS true CACHE BOOL "Enable custom C tests")
+set(ENABLE_PLATIN_TESTS false CACHE BOOL "Enable tests aimed at platin")
 set(ENABLE_MEDIABENCH true CACHE BOOL "Enable Mediabench tests)")
 
 # add benchmark sub-directories
