@@ -59,7 +59,7 @@ foreach( SRC ${SOURCES} )
   if(${DISABLE_WCA} EQUAL -1)
     run_wcet(mrtc_platin-${EXEC_NAME}
              ${CMAKE_CURRENT_BINARY_DIR}/${EXEC_NAME}
-             ${CMAKE_CURRENT_BINARY_DIR}/${EXEC_NAME}-wcet.txt
+             ${CMAKE_CURRENT_BINARY_DIR}/mrtc-${EXEC_NAME}-wcet.txt
              360
              3
              main)
