@@ -26,6 +26,8 @@ fac_sum(int n)
 		s += fac(i);
 	return s;
 }
+
+__attribute__((noinline))
 int
 main_test(int n, int maxn)
 {

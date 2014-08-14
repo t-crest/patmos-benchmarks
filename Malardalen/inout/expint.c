@@ -20,7 +20,9 @@ long int        expint(int n, long int x);
 
 /* with  expint(50,21) as argument, runs the short path */
 /* in expint.   expint(50,1)  gives the longest execution time */
-int  main_test(long int x)
+__attribute__((noinline))
+int 
+main_test(long int x)
 {
 	return expint(50, x) & 1023;
 }

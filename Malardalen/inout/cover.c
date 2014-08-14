@@ -623,6 +623,7 @@ swi10(int c)
 	return c;
 }
 
+__attribute__((noinline))
 int
 main_test(int cnt)
 {

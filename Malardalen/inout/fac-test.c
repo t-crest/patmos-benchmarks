@@ -44,6 +44,7 @@ static int process_result(int in, int out, int ref)
   return CHECK(out,ref);
 }
 
+/* external declarations */
 extern int main_test(int n, int limit);
 
 /**

@@ -252,7 +252,9 @@ init_block(int in_seed)
 	}
 }
 
-int main_test(seed)
+__attribute__((noinline))
+int
+main_test(seed)
 {
   init_block(seed);
   fdct(block, 8);		/* 8x8 Blocks, DC precision value = 0,

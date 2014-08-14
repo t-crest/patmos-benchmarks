@@ -129,7 +129,7 @@ void init_buffer(int seed)
   }
 }
 
-
+__attribute__((noinline))
 int 
 main_test(int seed)
 {

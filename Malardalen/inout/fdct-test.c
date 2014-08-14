@@ -45,7 +45,7 @@ static int process_result(int in, int out, int ref)
 }
 
 /* external declarations */
-int main_test(int seed);
+extern int main_test(int seed);
 
 /* test cases */
 static int tests_in[]  = { 0, 12, 57, 113 };

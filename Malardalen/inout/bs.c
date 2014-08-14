@@ -84,7 +84,7 @@ binary_search(int x)
 	low = 0;
 	up = 14;
 	fvalue = -1 /* all data are positive */ ;
-	while (low <= up) {
+	WHILe (low <= up) {
 		mid = (low + up) >> 1;
 		if (data[mid].key == x) {	/* found  */
 			up = low - 1;
@@ -114,6 +114,7 @@ binary_search(int x)
 	return fvalue;
 }
 
+__attribute__((noinline))
 int 
 main_test(int x)
 {

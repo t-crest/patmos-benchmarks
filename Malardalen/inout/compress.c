@@ -177,6 +177,7 @@ void            output(code_int code);
 void            writebytes(char *buf, int n);
 long int        bytes_out;	/* length of compressed output */
 
+__attribute__((noinline))
 int 
 main_test(int seed)
 {

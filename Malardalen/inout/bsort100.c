@@ -42,7 +42,7 @@ void            Initialize(int Array[], int init_factor);
 
 
 __attribute__((noinline))
-int 
+int
 main_test(int init_factor)
 {
   Initialize(Array, init_factor);

@@ -3,21 +3,25 @@
 # Configuration
 TESTFLAGS=-DTEST_PRINT_RESULTS -DTEST_PRINT_VERSION
 CC=gcc
-CFLAGS=-g
+CFLAGS=-ggdb
 
-BENCHMARKS=bs cnt fac
+BENCHMARKS := bsort100 bs cnt compress cover crc expint fac fdct
 
-all: $(BENCHMARKS)
+BINARIES = $(BENCHMARKS:%=%.bin)
 
-fac: fac-test.c fac.o
+
+.PHONY: all clean patmos
+
+all: $(BINARIES)
+
+patmos: CC=patmos-clang
+patmos: CFLAGS=-g
+patmos: $(BINARIES)
+
+%.bin: %-test.c %.c
 	$(CC) $(CFLAGS) $(TESTFLAGS) -o $@ $^
-bs: bs-test.c bs.o
-	$(CC) $(CFLAGS) $(TESTFLAGS) -o $@ $^
-cnt: cnt-test.c cnt.o
-	$(CC) $(CFLAGS) $(TESTFLAGS) -o $@ $^
-
-%.o: %.c
-	$(CC) $(CFLAGS) -c -o $@ $^
 
 clean:
-	rm -f *.o $(BENCHMARKS)
+	rm -f $(BINARIES)
+
+

@@ -62,6 +62,7 @@ static int process_result(int in, result_t *out, result_t *ref)
   return CHECK(out,ref);
 }
 
+/* external declarations */
 extern int main_test(int in_seed);
 extern int Postotal, Negtotal, Poscnt, Negcnt;
 
