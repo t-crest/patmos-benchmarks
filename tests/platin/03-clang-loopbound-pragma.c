@@ -1,11 +1,8 @@
 int main(int argc, char **argv) {
 	int ret = 0;
 
-	_Pragma("platin(@1 - 10 @0 <= 0)");
-
-	__llvm_pcmarker(0);
+	_Pragma("loopbound min 42 max 42")
 	for (int i = 0; i < argc; ++i) {
-		__llvm_pcmarker(1);
 		ret++;
 	}
 
