@@ -38,7 +38,7 @@ float my_sqrtf(float val)
   flag = 0;
   if (val == 0 ) x = 0;
   else {
-    _Pragma("loopbound min 19 max 19");
+    _Pragma("loopbound min 19 max 19")
     for (i=1;i<20;i++)
       {
 	if (!flag) {
@@ -71,7 +71,7 @@ void Calc_Sum_Mean(float *Array, float *Sum,  float *Mean)
    int i;
 
    *Sum = 0;
-   _Pragma("loopbound min 1000 max 1000");
+   _Pragma("loopbound min 1000 max 1000")
    for (i = 0; i < MAX; i++) {
       *Sum += Array[i];
    }
@@ -91,7 +91,7 @@ void Calc_Var_Stddev(float *Array, float Mean, float *Var, float *Stddev)
    float diffs;
 
    diffs = 0.0f;
-   _Pragma("loopbound min 1000 max 1000");
+   _Pragma("loopbound min 1000 max 1000")
    for (i = 0; i < MAX; i++) {
       diffs += Square(Array[i] - Mean);
    }
@@ -107,7 +107,7 @@ void Calc_LinCorrCoef(float *ArrayA, float *ArrayB, float MeanA, float MeanB /*,
 
    numerator = 0.0f;
    Aterm = Bterm = 0.0f;
-   _Pragma("loopbound min 1000 max 1000");
+   _Pragma("loopbound min 1000 max 1000")
    for (i = 0; i < MAX; i++) {
       numerator += (ArrayA[i] - MeanA) * (ArrayB[i] - MeanB);
       Aterm += Square(ArrayA[i] - MeanA);
@@ -135,7 +135,7 @@ void Initialize(float *Array)
 {
   register int i;
 
-  _Pragma("loopbound min 1000 max 1000");
+  _Pragma("loopbound min 1000 max 1000")
   for (i=0; i < MAX; i++)
    Array [i] = i + RandomInteger ()/8095.0f;
 }

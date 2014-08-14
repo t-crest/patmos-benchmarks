@@ -64,7 +64,7 @@ float mysqrt(float val)
   if ( val == 0 ) {
     x = 0;
   } else {
-    _Pragma("loopbound min 19 max 19");
+    _Pragma("loopbound min 19 max 19")
     for ( i=1; i<20; i++ ) {
       if ( !flag ) {
         dx = ( val - ( x*x ) ) / ( 2.0f * x );
@@ -86,7 +86,7 @@ static float v[] = { 1.1f, 2.2f, 4.4f, 33.33f, 3.14159f, 12345.6789f };
 int main(void)
 {
   int i;
-  _Pragma("loopbound min 6 max 6");
+  _Pragma("loopbound min 6 max 6")
   for ( i = 0; i < ( sizeof( v ) / sizeof( float ) ); i++ ) {
     mysqrt(v[i]);
   }

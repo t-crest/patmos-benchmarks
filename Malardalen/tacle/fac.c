@@ -26,9 +26,9 @@ int main (void)
 
   _Pragma("loopbound min 6 max 6")
   for (i = 0;  i <= n; i++) {
-      _Pragma( "marker recursivecall" );
+      _Pragma( "marker recursivecall" )
       s += fac (i);
-      _Pragma( "flowrestriction 1*fac <= 6*recursivecall" );
+      _Pragma( "flowrestriction 1*fac <= 6*recursivecall" )
   }
 
 #ifdef PRINT_RESULTS

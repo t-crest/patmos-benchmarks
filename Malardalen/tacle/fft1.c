@@ -77,12 +77,12 @@ static float sin(float rad)
   float diff;
   int inc = 1;
 
-  _Pragma("loopbound min 0 max 0");
+  _Pragma("loopbound min 0 max 0")
   while (rad > 2*PI) {
     rad -= 2*PI;
   }
 
-  _Pragma("loopbound min 0 max 0");
+  _Pragma("loopbound min 0 max 0")
   while (rad < -2*PI) {
     rad += 2*PI;
   }
@@ -92,7 +92,7 @@ static float sin(float rad)
   app = app + diff;
   inc++;
 
-  _Pragma("loopbound min 0 max 8");
+  _Pragma("loopbound min 0 max 8")
   while(fabs(diff) >= 0.00001f) {
     diff = (diff * (-(rad*rad))) /
       ((2.0f * inc) * (2.0f * inc + 1.0f));
@@ -115,7 +115,7 @@ int main(void)
 {
   int  i, n = 8, flag, chkerr;
   /* ar  */
-  _Pragma("loopbound min 8 max 8");
+  _Pragma("loopbound min 8 max 8")
   for(i = 0; i < n; i++) {
     ar[i] = cos(2*M_PI*i/n);
   }
@@ -146,7 +146,7 @@ int fft1(int n, int flag)
   iter = 2.079442f/0.693147f;
   j = 1;
 
-  _Pragma("loopbound min 3 max 3");
+  _Pragma("loopbound min 3 max 3")
   for(i = 0; i < iter; i++) {
     j *= 2;
   }
@@ -157,20 +157,20 @@ int fft1(int n, int flag)
   sign = ((flag == 1) ? 1.0f : -1.0f);
   xp2 = n;
 
-  _Pragma("loopbound min 3 max 3");
+  _Pragma("loopbound min 3 max 3")
   for(it = 0; it < iter; it++)
   {
     xp = xp2;
     xp2 /= 2;
     w = PI / xp2;
-    _Pragma("loopbound min 1 max 4");
+    _Pragma("loopbound min 1 max 4")
     for(k = 0; k < xp2; k++)
     {
       arg = k * w;
       wr = cos(arg);
       wi = sign * sin(arg);
       i = k - xp;
-      _Pragma("loopbound min 1 max 4");
+      _Pragma("loopbound min 1 max 4")
       for(j = xp; j <= n; j += xp)
       {
         j1 = j + i;
@@ -193,7 +193,7 @@ int fft1(int n, int flag)
   j1 = n / 2;
   j2 = n - 1;
   j = 1;
-  _Pragma("loopbound min 7 max 7");
+  _Pragma("loopbound min 7 max 7")
   for(i = 1; i <= j2; i++)
   {
     if(i < j)
@@ -206,7 +206,7 @@ int fft1(int n, int flag)
       ai[i-1] = ti;
     }
     k = j1;
-    _Pragma("loopbound min 0 max 2");
+    _Pragma("loopbound min 0 max 2")
     while(k < j)
     {
       j -= k;
@@ -216,7 +216,7 @@ int fft1(int n, int flag)
   }
   if(flag == 0) return(0);
   w = n;
-  _Pragma("loopbound min 8 max 8");
+  _Pragma("loopbound min 8 max 8")
   for(i = 0; i < n; i++)
   {
     ar[i] /= w;

@@ -84,13 +84,13 @@ static float select(unsigned long k, unsigned long n)
       i=l+1;
       j=ir;
       a=arr[l];
-      _Pragma("loopbound min 0 max 1");
+      _Pragma("loopbound min 0 max 1")
       while (!flag2) {
         i++;
-	_Pragma("loopbound min 1 max 1");
+	_Pragma("loopbound min 1 max 1")
         while (arr[i] < a) i++;
         j--; 
-	_Pragma("loopbound min 16 max 16");
+	_Pragma("loopbound min 16 max 16")
         while (arr[j] > a) j--;
         if (j < i) flag2 = 1;
         if (!flag2) SWAP(arr[i],arr[j]);

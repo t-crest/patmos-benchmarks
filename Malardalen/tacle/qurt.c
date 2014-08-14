@@ -83,7 +83,9 @@ float sqrt(float val)
   flag = 0;
   if (val == 0 ) x = 0;
   else {
-    _Pragma("loopbound min 19 max 19");
+
+    //#pragma loopbound min 19 max 19
+    _Pragma("loopbound min 19 max 19")
     for (i=1;i<20;i++)
       {
 	if (!flag) {

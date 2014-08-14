@@ -91,7 +91,7 @@ static float sqrt(float val)
   flag = 0;
   if (val == 0 ) x = 0;
   else {
-    _Pragma("loopbound min 19 max 19");
+    _Pragma("loopbound min 19 max 19")
     for (i=1;i<20;i++)
       {
 	if (!flag) {
@@ -115,11 +115,11 @@ static float sin(float rad)
   float diff;
   int inc = 1;
 
-  _Pragma("loopbound min 0 max 10");
+  _Pragma("loopbound min 0 max 10")
   while (rad > 2*PI) {
 	rad -= 2*PI;
   }
-  _Pragma("loopbound min 0 max 0");
+  _Pragma("loopbound min 0 max 0")
   while (rad < -2*PI) {
     rad += 2*PI;
   }
@@ -128,7 +128,7 @@ static float sin(float rad)
       ((2.0f * inc) * (2.0f * inc + 1.0f));
     app = app + diff;
     inc++;
-  _Pragma("loopbound min 0 max 11");
+  _Pragma("loopbound min 0 max 11")
   while(fabs(diff) >= 0.00001f) {
     diff = (diff * (-(rad*rad))) /
       ((2.0f * inc) * (2.0f * inc + 1.0f));
@@ -158,7 +158,7 @@ static float gaussian()
             v1 *= rconst1;
             v2 *= rconst1;
             r = v1*v1 + v2*v2;
-        _Pragma("loopbound min 0 max 2");
+        _Pragma("loopbound min 0 max 2")
         while (r > 1.0f) {
             v1 = (float)rand() - rconst2;
             v2 = (float)rand() - rconst2;
@@ -194,7 +194,7 @@ int main()
     signal_amp = sqrt(2.0f);
     noise_amp = 0.2f * sqrt(12.0f);
     arg = 2.0f * PI / 20.0f;
-    _Pragma("loopbound min 201 max 201");
+    _Pragma("loopbound min 201 max 201")
     for(k = 0 ; k < N ; k++) {
         d[k] = signal_amp*sin(arg*k) + noise_amp*gaussian();
     }
@@ -203,7 +203,7 @@ int main()
     mu = 2.0f * mu/(L+1);
 
     x = 0.0f;
-    _Pragma("loopbound min 201 max 201");
+    _Pragma("loopbound min 201 max 201")
     for(k = 0 ; k < N ; k++) {
         lms(x,d[k],b,L,mu,0.01f);
 /* delay x one sample */
@@ -243,7 +243,7 @@ float lms(float x,float d,float *b,int l,
 #ifdef DEBUG
     printf("l=%d\n",l);
 #endif
-    _Pragma("loopbound min 20 max 20");
+    _Pragma("loopbound min 20 max 20")
     for(ll = 1 ; ll <= l ; ll++) {
         y=y+b[ll]*px[ll];
     }
@@ -255,12 +255,12 @@ float lms(float x,float d,float *b,int l,
     mu_e=mu*e/sigma;
 
 /* update coefficients */
-    _Pragma("loopbound min 21 max 21");
+    _Pragma("loopbound min 21 max 21")
     for(ll = 0 ; ll <= l ; ll++) {
         b[ll]=b[ll]+mu_e*px[ll];
     }
 /* update history */
-    _Pragma("loopbound min 20 max 20");
+    _Pragma("loopbound min 20 max 20")
     for(ll = l ; ll >= 1 ; ll--) {
         px[ll]=px[ll-1];
     }

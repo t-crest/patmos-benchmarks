@@ -27,7 +27,7 @@ int main( void )
   volatile int blocker;
   int In = fib( 10 );
   _Pragma( "marker recursivecall" )
-  _Pragma( "flowrestriction 1*fib <= 177*recursivecall" );
+  _Pragma( "flowrestriction 1*fib <= 177*recursivecall" )
   if(In != 89) return 1;
   return 0;
 }
