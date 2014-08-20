@@ -87,8 +87,8 @@ while(!feof(fp))
 	i=0;
 }
 
-close(fp);
-close(fp2);
+fclose(fp);
+fclose(fp2);
 
 exit(1);
 }
