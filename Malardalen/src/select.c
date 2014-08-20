@@ -45,6 +45,7 @@
 /*************************************************************************/
 
 /* Changes: Indented program. Return in main.
+ *          AJ: Don't access arr[20] at index 20, return something.
  */
 
 float           select(unsigned long k, unsigned long n);
@@ -116,7 +117,6 @@ select(unsigned long k, unsigned long n)
 int 
 main(void)
 {
-	select(10, 20);
-
-	return 0;
+	float r = select(10, 19);
+	return (r > 0.0f) ? 0 : 1;
 }

@@ -42,6 +42,10 @@
 /*                                                                       */
 /*                                                                       */
 /*************************************************************************/
+/*
+ * Changes:
+ * AJ 2014/08/20: Don't access arr[20] at index 20, return something.
+ */
 #define SWAP(a,b) temp=(a);(a)=(b);(b)=temp;
 
 
@@ -109,7 +113,7 @@ static float select(unsigned long k, unsigned long n)
 
 int main()
 {
-  select(10, 20);
-  return 0;
+  float r = select(10, 19);
+  return (r > 0.0f) ? 0 : 1;
 }
 
