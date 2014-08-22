@@ -1,0 +1,2 @@
+compressdata.c.disabled: This version of the benchmark does not call compress()
+  at all, disabled in favor of the previous compress.c from patmos-bench.
