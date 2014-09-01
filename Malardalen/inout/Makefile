@@ -7,20 +7,23 @@ CFLAGS=-ggdb
 
 BENCHMARKS := bsort100 bs cnt compress cover crc expint fac fdct
 
-BINARIES = $(BENCHMARKS:%=%.bin)
+HOST_BINARIES = $(BENCHMARKS:%=%.bin)
+PATMOS_BINARIES = $(BENCHMARKS:%=%.elf)
 
+BINARIES = $(HOST_BINARIES) $(PATMOS_BINARIES)
 
 .PHONY: all clean patmos
 
 all: $(BINARIES)
 
-patmos: CC=patmos-clang
-patmos: CFLAGS=-g
-patmos: $(BINARIES)
+%.elf: CC=patmos-clang
+%.elf: CFLAGS=-g
 
 %.bin: %-test.c %.c
 	$(CC) $(CFLAGS) $(TESTFLAGS) -o $@ $^
 
+%.elf: %-test.c %.c
+	$(CC) $(CFLAGS) $(TESTFLAGS) -o $@ $^
 clean:
 	rm -f $(BINARIES)
 
