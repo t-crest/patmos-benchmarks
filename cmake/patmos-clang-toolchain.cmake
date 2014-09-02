@@ -89,10 +89,10 @@ function(get_target_config TGT PML)
   endif()
 endfunction()
 
-execute_platin_tool_config("clang"     ${CONFIG_PML_FILE}    CLANG_PATMOS_CONFIG)
-execute_platin_tool_config("clang"     ${CONFIG_PML_HW_FILE} CLANG_PATMOS_CONFIG_HW)
-execute_platin_tool_config("simulator" ${CONFIG_PML_FILE}    PASIM_CONFIG)
-execute_platin_tool_config("simulator" ${CONFIG_PML_HW_FILE} PASIM_CONFIG_HW)
+execute_platin_tool_config("clang"  ${CONFIG_PML_FILE}    CLANG_PATMOS_CONFIG)
+execute_platin_tool_config("clang"  ${CONFIG_PML_HW_FILE} CLANG_PATMOS_CONFIG_HW)
+execute_platin_tool_config("pasim"  ${CONFIG_PML_FILE}    PASIM_CONFIG)
+execute_platin_tool_config("pasim"  ${CONFIG_PML_HW_FILE} PASIM_CONFIG_HW)
 
 # set some compiler-related variables;
 set(CMAKE_C_COMPILE_OBJECT   "<CMAKE_C_COMPILER>   -target ${TRIPLE} -fno-builtin -emit-llvm <DEFINES> <FLAGS> -o <OBJECT> -c <SOURCE>")
