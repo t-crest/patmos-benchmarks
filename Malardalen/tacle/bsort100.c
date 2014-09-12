@@ -73,8 +73,8 @@ int BubbleSort( int Array[] )
   int Sorted = FALSE;
   int Temp, LastIndex, Index, i;
 
-  _Pragma("loopbound min 99 max 99")
   __llvm_pcmarker(0);
+  _Pragma("loopbound min 99 max 99")
   for ( i = 1; i <= NUMELEMS-1; i++ ) {
     __llvm_pcmarker(1);
     Sorted = TRUE;

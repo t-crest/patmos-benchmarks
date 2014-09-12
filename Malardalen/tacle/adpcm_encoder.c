@@ -591,8 +591,8 @@ int quantl( int el, int detl )
 
   /* determine mil based on decision levels and detl gain */
   /* MAX: 30 */
-  _Pragma("loopbound min 1 max 30")
   __llvm_pcmarker(2);
+  _Pragma("loopbound min 1 max 30")
   for ( mil = 0; mil < 30; mil++ ) {
     __llvm_pcmarker(3);
     decis = (decis_levl[mil] * (long)detl) >> 15L;

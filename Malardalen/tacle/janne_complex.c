@@ -55,8 +55,8 @@ int complex( int a, int b )
   #ifdef PROFILING
   iters_a = 0;
   #endif
-  _Pragma("loopbound min 9 max 9")
   __llvm_pcmarker(0);
+  _Pragma("loopbound min 9 max 9")
   while ( a < 30 ) {
     __llvm_pcmarker(1);
     #ifdef PROFILING
@@ -66,8 +66,8 @@ int complex( int a, int b )
     #ifdef PROFILING
     iters_b = 0;
     #endif
-    _Pragma("loopbound min 0 max 9")
     __llvm_pcmarker(2);
+    _Pragma("loopbound min 0 max 9")
     while ( b < a ) {
       __llvm_pcmarker(3);
       #ifdef PROFILING

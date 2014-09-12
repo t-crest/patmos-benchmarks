@@ -86,8 +86,8 @@ int binary_search( int x )
   fvalue = -1;
 
 
-  _Pragma("loopbound min 4 max 4")
   __llvm_pcmarker(0);
+  _Pragma("loopbound min 4 max 4")
   while (low <= up) {
     __llvm_pcmarker(1);
     mid = (low + up) >> 1;

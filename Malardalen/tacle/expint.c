@@ -83,8 +83,8 @@ long int expint( int n, long int x )
        '2' path here: */
     ans = nm1 != 0 ? 2 : 1000;
     fact=1;
-    _Pragma("loopbound min 100 max 100")
     __llvm_pcmarker(0);
+    _Pragma("loopbound min 100 max 100")
     for (i=1;i<=100;i++)      /* MAXIT */
     {
       __llvm_pcmarker(1);

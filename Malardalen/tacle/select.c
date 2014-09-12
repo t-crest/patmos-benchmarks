@@ -65,7 +65,7 @@ static float select(unsigned long k, unsigned long n)
   l=1;
   ir=n;
   flag = flag2 = 0;
-  _Pragma("loopbound min 16 max 16"); 
+  _Pragma("loopbound min 16 max 16")
   while (!flag) {
     if (ir <= l+1) {
       if (ir == l+1) 
