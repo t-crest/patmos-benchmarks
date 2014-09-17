@@ -3,10 +3,10 @@
 #include <string.h>
 
 #define UNLIMIT
-#define MAXARRAY 60000 /* this number, if too large, will cause a seg. fault!! */
+#define MAXARRAY 16000 /* this number, if too large, will cause a seg. fault!! */
 
 struct myStringStruct {
-  char qstring[128];
+  char qstring[32];
 };
 
 int compare(const void *elem1, const void *elem2)
@@ -18,10 +18,11 @@ int compare(const void *elem1, const void *elem2)
   return (result < 0) ? 1 : ((result == 0) ? 0 : -1);
 }
 
+// SH: Put the data into the heap to avoid stack overflows on small boards.
+struct myStringStruct array[MAXARRAY];
 
 int
 main(int argc, char *argv[]) {
-  struct myStringStruct array[MAXARRAY];
   FILE *fp = stdin;
   int i,count=0;
 
