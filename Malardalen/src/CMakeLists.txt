@@ -6,7 +6,7 @@ set( SOURCES
   compress.c
   cover.c
   crc.c
-  duff.c
+  duff.c # non-natural loops with -O0
   edn.c
   expint.c
   fac.c # recursiv
@@ -38,7 +38,7 @@ set( SOURCES
   # whet.c # needs math library
   )
 set( SOURCES_NO_HW ) # exceed memory size
-set( SOURCES_NO_WCET fac.c recursion.c ) # recursion
+set( SOURCES_NO_WCET fac.c recursion.c duff.c) # recursion, non-natural loops
 
 # executable for each .c file
 foreach( SRC ${SOURCES} )
