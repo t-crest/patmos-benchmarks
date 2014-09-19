@@ -30,13 +30,6 @@ endif()
 set(BUILD_WCET_ANALYSIS false CACHE BOOL "Compile for WCET analysis where applicable (eg. no printfs).")
 set(TACLE_BENCH false CACHE BOOL "Use TACLe version of benchmarks when available (transitional).")
 
-# check for the a3 tool.
-message(STATUS "Checking for a3 (${CMAKE_SYSTEM_PROCESSOR}).")
-find_program(A3_EXECUTABLE NAMES a3${CMAKE_SYSTEM_PROCESSOR} a3${CMAKE_SYSTEM_NAME} DOC "Path to the a3 WCET analysis tool.")
-if(NOT A3_EXECUTABLE)
-  message(WARNING "a3 not found (${CMAKE_SYSTEM_PROCESSOR}).")
-endif()
-
 # RTEMS based build (EXPERIMENTAL)
 if(${TRIPLE} MATCHES "patmos-unknown-rtems")
   # add RTEMS include path

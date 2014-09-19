@@ -40,6 +40,11 @@ CMAKE_FORCE_CXX_COMPILER(${CLANG_EXECUTABLE} GNU)
 set(TRIPLE "patmos-unknown-unknown-elf" CACHE STRING "Target triple to compile compiler-rt for.")
 
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+#
+# TODO split the test/benchmark-related stuff into a separate file, get this file
+# back in sync with patmos-compiler-rt/cmake!
+#
+
 # use platin tool-config to configure clang/llvm and pasim
 set(CONFIG_PML    "scripts/patmos-config-sim.pml" CACHE STRING "PML target arch description file (default/pasim).")
 set(CONFIG_PML_HW "scripts/patmos-config-hw.pml"  CACHE STRING "PML target arch description file (hw/emulator).")
@@ -68,16 +73,20 @@ configure_file(${CONFIG_PML_FILE} ${CMAKE_CURRENT_BINARY_DIR}/config.pml.timesta
 configure_file(${CONFIG_PML_HW_FILE} ${CMAKE_CURRENT_BINARY_DIR}/config.hw.pml.timestamp.txt)
 
 function(execute_platin_tool_config TOOL PML RESULTVAR)
-  execute_process(COMMAND ${PLATIN_EXECUTABLE} tool-config -t ${TOOL} -i ${PML}
-                  RESULT_VARIABLE ptc_ret
-                  OUTPUT_VARIABLE ptc_result)
-  if (NOT "${ptc_ret}" STREQUAL 0)
-    MESSAGE(FATAL_ERROR "Call to 'platin tool-config' failed with: ${ptc_ret}")
-  endif()
+  if (EXISTS ${PML})
+    execute_process(COMMAND ${PLATIN_EXECUTABLE} tool-config -t ${TOOL} -i ${PML}
+		    RESULT_VARIABLE ptc_ret
+		    OUTPUT_VARIABLE ptc_result)
+    if (NOT "${ptc_ret}" STREQUAL 0)
+      MESSAGE(FATAL_ERROR "Call to 'platin tool-config' failed with: ${ptc_ret}")
+    endif()
 
-  # any newline in the output (also at the end) would break the subsequent compiler calls
-  STRING(REGEX REPLACE "\n" " " ptc_result "${ptc_result}")
-  set(${RESULTVAR} ${ptc_result} PARENT_SCOPE)
+    # any newline in the output (also at the end) would break the subsequent compiler calls
+    STRING(REGEX REPLACE "\n" " " ptc_result "${ptc_result}")
+    set(${RESULTVAR} ${ptc_result} PARENT_SCOPE)
+  else()
+    message(FATAL_ERROR "Tool configuration file ${PML} does not exist!")
+  endif()
 endfunction()
 
 function(get_target_config TGT PML)
@@ -234,7 +243,11 @@ endif()
 if(PATMOS_EMULATOR)
   set(ENABLE_TESTING true)
 else()
-  message(WARNING "patmos-emulator not found, testing with emulator is disabled.")
+  if(ENABLE_EMULATOR)
+    message(WARNING "patmos-emulator not found, testing with emulator is disabled.")
+  else()
+    message(STATUS "Testing with emulator is disabled.")
+  endif()
 endif()
 
 # call this macro when a program should be built for emulator compatability
@@ -329,6 +342,17 @@ if (NOT PLATIN_ENABLE_WCET)
   message("WCET analysis with platin manually disabled, will be skipped.")
 endif()
 
+# check for the a3 tool.
+if (PLATIN_ENABLE_WCET AND PLATIN_ENABLE_AIT)
+  message(STATUS "Checking for a3 (${CMAKE_SYSTEM_PROCESSOR}).")
+  find_program(A3_EXECUTABLE NAMES a3${CMAKE_SYSTEM_PROCESSOR} a3${CMAKE_SYSTEM_NAME} DOC "Path to the a3 WCET analysis tool.")
+  if(A3_EXECUTABLE)
+    message(STATUS "Using a3 executable ${A3_EXECUTABLE}.")
+  else()
+    message(WARNING "a3 not found (${CMAKE_SYSTEM_PROCESSOR}).")
+  endif()
+endif()
+
 if (A3_EXECUTABLE AND PLATIN_ENABLE_AIT)
   set(PLATIN_WCA_TOOL --a3-command ${A3_EXECUTABLE})
   if (PLATIN_ENABLE_WCA)
@@ -377,7 +401,7 @@ if (ENABLE_STACK_CACHE_ANALYSIS_TESTING)
     message(WARNING "platin not found, SCA analysis tests disabled.")
   endif()
 else()
-  message("LLVM-based SC analysis tests will be skipped.")
+  message(STATUS "LLVM-based SC analysis tests will be skipped.")
 endif()
 
 # bounds file can be empty ("")
