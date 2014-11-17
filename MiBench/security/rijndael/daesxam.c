@@ -247,7 +247,8 @@ char * volatile __argv[] = {"rijndael", NULL, NULL, "d",
 int main(int argc, char *argv[])
     // FB - make independent of command-line arguments
 {   FILE    *fin = stdin, *fout = stdout;
-    char    *cp, ch, key[32];
+    char    *cp, ch;
+    char    key[32] __attribute__((aligned(4)));
     int     i=0, by=0, key_len=0, err = 0;
     aes     ctx[1];
 
