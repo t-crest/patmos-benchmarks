@@ -1,0 +1,4 @@
+# these also fail to compile with clang (non-optimizing) on host
+20001121-1
+ieee_fp-cmp-7
+medce-1

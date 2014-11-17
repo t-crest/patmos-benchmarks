@@ -8,6 +8,9 @@ file(STRINGS FailHost.txt SOURCES_FAIL_HOST)
 # TODO: Try to get rid of the build errors
 file(STRINGS FailBuildTarget.txt SOURCES_FAIL_BUILDTARGET)
 
+# Sources that fail during a non-optimizing (-O0) build
+file(STRINGS FailO0.txt SOURCES_FAIL_NONOPT)
+
 # Sources that cannot be run on HW due to size constraints
 file(STRINGS NoHwTest.txt SOURCES_NO_HW_TEST)
 
@@ -28,7 +31,13 @@ foreach(SRC ${SOURCES})
   list(FIND SOURCES_FAIL_BUILDTARGET ${EXEC_NAME} FAIL_BUILDTARGET)
   list(FIND SOURCES_NO_HW_TEST ${EXEC_NAME} NO_HW_TEST)
 
-  if((${FAIL_BUILD} EQUAL -1) AND (${FAIL_BUILDTARGET} EQUAL -1))
+  if (CMAKE_BUILD_TYPE MATCHES Debug)
+    list(FIND SOURCES_FAIL_NONOPT ${EXEC_NAME} FAIL_NONOPT)
+  else()
+    set(FAIL_NONOPT -1)
+  endif()
+
+  if((${FAIL_BUILD} EQUAL -1) AND (${FAIL_BUILDTARGET} EQUAL -1) AND (${FAIL_NONOPT} EQUAL -1))
 
     add_executable(${EXEC_NAME} ${SRC})
     if(${NO_HW_TEST} EQUAL -1)
@@ -57,3 +66,7 @@ foreach(SRC ${SOURCES})
   endif()
 
 endforeach(SRC)
+
+if (CMAKE_BUILD_TYPE MATCHES Debug)
+  message("gcc.c-torture: assuming -O0 build, some tests will not be built")
+endif()
