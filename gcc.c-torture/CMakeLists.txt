@@ -49,7 +49,7 @@ foreach(SRC ${SOURCES})
       "${CMAKE_CURRENT_BINARY_DIR}/${EXEC_NAME}" "" "" "")
 
     # Calm down warnings
-    set(COMPILE_FLAGS "-Wno-implicit-int -Wno-return-type -fbuiltin")
+    set(COMPILE_FLAGS "-Wno-conversion -Wno-implicit-int -Wno-return-type -fbuiltin")
 
     # On Patmos, compile for RAM if HW test is enabled
     if("${CMAKE_SYSTEM_NAME}" MATCHES "patmos")
