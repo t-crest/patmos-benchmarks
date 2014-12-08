@@ -39,8 +39,8 @@ foreach(SRC ${SOURCES})
     run_io(torture-${EXEC_NAME}
       "${CMAKE_CURRENT_BINARY_DIR}/${EXEC_NAME}" "" "" "")
 
-    # A little bit of optimization and calm down warnings
-    set(COMPILE_FLAGS "-O1 -Wno-implicit-int -Wno-return-type -fbuiltin")
+    # Calm down warnings
+    set(COMPILE_FLAGS "-Wno-implicit-int -Wno-return-type -fbuiltin")
 
     # On Patmos, compile for RAM if HW test is enabled
     if("${CMAKE_SYSTEM_NAME}" MATCHES "patmos")
