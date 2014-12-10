@@ -17,7 +17,7 @@ SET(CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/cmake/)
 # By default we leave CMAKE_BUILD_TYPE uninitialized (ie. None), thus
 # CMAKE_C(XX)_FLAGS is being used. To build without optimizations (-O0), set
 # CMAKE_BUILD_TYPE to O0 now (Debug later). This sets the -O0 flags and tests
-that do not # support an -O0 build are disabled.
+# that do not support an -O0 build are disabled.
 set(CMAKE_C_FLAGS_O0 "-O0" CACHE STRING "transitional build type for -O0 testing.")
 # XXX this is a test, eventually not providing the -O level as in the Debug build type should do the trick
 
