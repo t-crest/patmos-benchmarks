@@ -31,7 +31,7 @@ foreach(SRC ${SOURCES})
   list(FIND SOURCES_FAIL_BUILDTARGET ${EXEC_NAME} FAIL_BUILDTARGET)
   list(FIND SOURCES_NO_HW_TEST ${EXEC_NAME} NO_HW_TEST)
 
-  if (CMAKE_BUILD_TYPE MATCHES Debug)
+  if (CMAKE_BUILD_TYPE MATCHES Debug|O0)
     list(FIND SOURCES_FAIL_NONOPT ${EXEC_NAME} FAIL_NONOPT)
   else()
     set(FAIL_NONOPT -1)
@@ -67,6 +67,6 @@ foreach(SRC ${SOURCES})
 
 endforeach(SRC)
 
-if (CMAKE_BUILD_TYPE MATCHES Debug)
+if (CMAKE_BUILD_TYPE MATCHES Debug|O0)
   message("gcc.c-torture: assuming -O0 build, some tests will not be built")
 endif()
