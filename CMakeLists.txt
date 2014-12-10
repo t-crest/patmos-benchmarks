@@ -27,6 +27,16 @@ if("${CMAKE_SYSTEM_NAME}" MATCHES "patmos")
   set(IS_BIGENDIAN true)
 endif()
 
+# Build type:
+# By default we leave CMAKE_BUILD_TYPE uninitialized (ie. None), thus
+# CMAKE_C(XX)_FLAGS is being used. To build without optimizations (-O0), set
+# CMAKE_BUILD_TYPE to Debug. This sets the -O0 flags and tests that do not
+# support an -O0 build are disabled.
+set(CMAKE_C_FLAGS_DEBUG "-O0")
+set(CMAKE_CXX_FLAGS_DEBUG "-O0")
+# XXX this is a test, eventually not providing an -O level should do the trick
+
+
 set(BUILD_WCET_ANALYSIS false CACHE BOOL "Compile for WCET analysis where applicable (eg. no printfs).")
 set(TACLE_BENCH false CACHE BOOL "Use TACLe version of benchmarks when available (transitional).")
 
