@@ -13,14 +13,6 @@ SET(CMAKE_SYSTEM_PROCESSOR patmos)
 
 SET(CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/cmake/)
 
-# Build type:
-# By default we leave CMAKE_BUILD_TYPE uninitialized (ie. None), thus
-# CMAKE_C(XX)_FLAGS is being used. To build without optimizations (-O0), set
-# CMAKE_BUILD_TYPE to O0 now (Debug later). This sets the -O0 flags and tests
-# that do not support an -O0 build are disabled.
-set(CMAKE_C_FLAGS_O0 "-O0" CACHE STRING "transitional build type for -O0 testing.")
-# XXX this is a test, eventually not providing the -O level as in the Debug build type should do the trick
-
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 # find clang for cross compiling
 find_program(CLANG_EXECUTABLE NAMES patmos-clang clang DOC "Path to the clang front-end.")
@@ -46,6 +38,27 @@ CMAKE_FORCE_CXX_COMPILER(${CLANG_EXECUTABLE} GNU)
 
 # the clang triple, also used for installation
 set(TRIPLE "patmos-unknown-unknown-elf" CACHE STRING "Target triple to compile compiler-rt for.")
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+# Build type
+#
+# By default we set the build type to PatRelease. To build without
+# optimizations (-O0), set CMAKE_BUILD_TYPE to O0 now (Debug later). This sets
+# the -O0 flags and tests that do not support an -O0 build are disabled.
+#
+# Build with custom flags:
+# When CMAKE_BUILD_TYPE is uninitialized (ie. -DCMAKE_BUILD_TYPE=), the
+# CMAKE_C(XX)_FLAGS will be used.
+#
+set(CMAKE_C_FLAGS_O0 "-O0" CACHE STRING "transitional build type for -O0 testing.")
+set(CMAKE_C_FLAGS_PATRELEASE "-O2" CACHE STRING "C flags for Patmos release build.")
+
+if (NOT CMAKE_BUILD_TYPE)
+  message(STATUS "No build type selected, defaulting to PatRelease")
+  set(CMAKE_BUILD_TYPE "PatRelease" CACHE STRING "Build type PatRelease by default" FORCE)
+else()
+  message(STATUS "Current build type: ${CMAKE_BUILD_TYPE}")
+endif()
 
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 #
