@@ -339,7 +339,7 @@ endmacro(run_io)
 
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 # WCET Analysis (via platin)
-set(PLATIN_ENABLE_WCET true CACHE BOOL "Enable WCET analysis during tests using Platin.")
+set(PLATIN_ENABLE_WCET false CACHE BOOL "Enable WCET analysis during tests using Platin.")
 set(PLATIN_ENABLE_AIT true CACHE BOOL "Enable aiT-based WCET analysis during tests using Platin.")
 set(PLATIN_ENABLE_WCA true CACHE BOOL "Enable platin WCA-based WCET analysis during tests using Platin.")
 
