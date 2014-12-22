@@ -47,7 +47,7 @@ set(TRIPLE "patmos-unknown-unknown-elf" CACHE STRING "Target triple to compile c
 # the -O0 flags and tests that do not support an -O0 build are disabled.
 #
 # Build with custom flags:
-# When CMAKE_BUILD_TYPE is uninitialized (ie. -DCMAKE_BUILD_TYPE=), the
+# When CMAKE_BUILD_TYPE is set to None (ie. -DCMAKE_BUILD_TYPE=None), only the
 # CMAKE_C(XX)_FLAGS will be used.
 #
 set(CMAKE_C_FLAGS_O0 "-O0" CACHE STRING "transitional build type for -O0 testing.")
