@@ -482,7 +482,7 @@ void HandleAcquisition (void)
          checksum_pointer = (EXTERNAL unsigned char *)event;
          event_checksum = 0;
 
-         #pragma loopbound min 26 max 26
+         #pragma loopbound min 27 max 27
          for (i = 1; i < sizeof(event_record_t); i++)
          {
             event_checksum ^= *checksum_pointer;
