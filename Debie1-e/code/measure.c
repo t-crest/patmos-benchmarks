@@ -84,6 +84,7 @@ void InitHitTriggerTask (void)
    ENABLE_HIT_TRIGGER;
 }
 
+__attribute__((noinline))
 void HandleHitTrigger (void)
 
 /* Purpose        : Wait for and handle one Hit Trigger interrupt            */
@@ -168,6 +169,7 @@ void HandleHitTrigger (void)
 
       conversion_try_count = 0;
 
+      #pragma loopbound min 0 max 25
       while (   conversion_try_count < ADC_MAX_TRIES
              && END_OF_ADC != CONVERSION_ACTIVE )
       {
@@ -231,6 +233,7 @@ void HandleHitTrigger (void)
       /* Delay of 100 microseconds (+ function call overhead). */
 
 
+      #pragma loopbound min 5 max 5
       for (i = 0; i < NUM_CH; i++)
       {
 
@@ -247,6 +250,7 @@ void HandleHitTrigger (void)
 
          conversion_try_count = 0;
 
+         #pragma loopbound min 0 max 25
          while (   conversion_try_count < ADC_MAX_TRIES
                 && END_OF_ADC != CONVERSION_ACTIVE )
          {
@@ -344,6 +348,7 @@ void InitAcquisitionTask (void)
 }
 
 
+__attribute__((noinline))
 void HandleAcquisition (void)
 
 /* Purpose        : Acquires the data for one hit event.                     */
@@ -477,6 +482,7 @@ void HandleAcquisition (void)
          checksum_pointer = (EXTERNAL unsigned char *)event;
          event_checksum = 0;
 
+         #pragma loopbound min 26 max 26
          for (i = 1; i < sizeof(event_record_t); i++)
          {
             event_checksum ^= *checksum_pointer;

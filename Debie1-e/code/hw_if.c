@@ -562,7 +562,7 @@ void PatchCode(memory_patch_variables_t EXTERNAL *patch_variables)
    old_checksum = 0;
 
    /* Memory block is copied from SRAM3 to SRAM1. */
-        
+   #pragma loopbound min 32 max 32 /* MEM_BUFFER_SIZE */
    for (i=0 ; i < patch_variables -> data_amount ; i++)
    {
       old_checksum ^= GET_DATA_BYTE(patch_variables -> destination + i);

@@ -100,6 +100,7 @@ event_record_t EXTERNAL *GetFreeRecord(void)
 
 void TM_InterruptService (void) __attribute__((noinline));
 
+__attribute__((noinline))
 void TM_InterruptService (void) INTERRUPT(TM_ISR_SOURCE) USED_REG_BANK(2)
 /* Purpose        : This function handles the TM interrupts.                 */
 /* Interface      : inputs  - telemetry_pointer                              */
@@ -247,7 +248,7 @@ unsigned int FindMinQualityRecord(void)
    min_quality_location = 0;
    /* First event is selected and compared against */
    /* the following events in the science_data.    */
-
+   #pragma loopbound min 1261 max 1261
    for (i=1; i < max_events; i++)
    {
       time = GetElapsedTime(i);
@@ -465,10 +466,12 @@ void ClearEvents(void)
    /* Telecommand Execution task has higher priority than */
    /* Acquisition task.                                   */
 
+   #pragma loopbound min 4 max 4
    for(i=0;i<NUM_SU;i++)
    {
       telemetry_data.SU_hits[i] = 0;
 
+      #pragma loopbound min 10 max 10
       for(j=0;j<NUM_CLASSES;j++)
       {
          science_data.event_counter[i][j] = 0;
@@ -476,6 +479,7 @@ void ClearEvents(void)
       /*event counters are cleared in science_data                           */
    }
 
+   #pragma loopbound min 0 max 10
    for (i=0; i < event_queue_length; i++)
    {
       /* Events from the event queue are copied to the Science */

@@ -241,6 +241,7 @@ void InitTC_LookUp(void)
 }
 
 
+__attribute__((noinline))
 void TC_InterruptService (void) INTERRUPT(TC_ISR_SOURCE) USED_REG_BANK(2)
 /* Purpose        : Handles the TC interrupt                             */
 /* Interface      : inputs  - TC MSB and LSB hardware registers          */
@@ -659,6 +660,7 @@ void MemoryPatch(telecommand_t EXTERNAL *command)
 
                if (address <= (END_SRAM3 - MEM_BUFFER_SIZE + 1))
                {
+                  #pragma loopbound min 32 max 32
                   for(i=0; i<MEM_BUFFER_SIZE; i++)
                   {
                      SET_DATA_BYTE(address + i, memory_transfer_buffer[i]);
@@ -1435,6 +1437,7 @@ void InitTelecommandTask (void)
 }
 
 
+__attribute__((noinline))
 void HandleTelecommand (void)
 
 /* Purpose        : Waits for and handles one Telecommand from the TC ISR    */

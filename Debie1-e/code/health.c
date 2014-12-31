@@ -414,6 +414,7 @@ void Clear_SU_Error(void)
    sensor_index_t EXTERNAL i;
  
    DISABLE_INTERRUPT_MASTER;
+   #pragma loopbound min 4 max 4
    for (i = 0; i < NUM_SU; i++)
    {
       telemetry_data.SU_status[i] &= SUPPLY_VOLTAGE_MASK;
@@ -670,6 +671,7 @@ void Boot(void)
       
       fill_pointer = (EXTERNAL unsigned char * DIRECT_INTERNAL)&telemetry_data;
 
+      #pragma loopbound min 118 max 118
       for (i=0; i < sizeof(telemetry_data); i++)
       {
          *fill_pointer = 0;
@@ -810,6 +812,7 @@ void InitHealthMonitoring (void)
 }
 
 
+__attribute__((noinline))
 void HandleHealthMonitoring (void)
 /* Purpose        : One round of health monitoring for DEBIE.                */
 /* Interface      : inputs      - telemetry_data                             */
@@ -1194,6 +1197,7 @@ void MeasureTemperature(sensor_index_t SU_index)
 
 
 
+   #pragma loopbound min 2 max 2
    for (j=0; j < NUM_TEMP; j++)
 
    {
@@ -1346,6 +1350,7 @@ void LowVoltageCurrent(void)
    {
       /*  An error is detected, output current is limited.                   */
 
+      #pragma loopbound min 4 max 4
       for (i = 0; i < NUM_SU; i++)
 
       {
@@ -1874,6 +1879,7 @@ void VoltageFailure(channel_t ADC_channel)
 
    }
 
+   #pragma loopbound min 4 max 4
    for (i = 0; i < NUM_SU; i++)
 
    {
@@ -2037,6 +2043,7 @@ void Read_AD_Channel (ADC_parameters_t EXTERNAL * ADC_parameters)
    /* Limits the number of conversion attempts repeated because */
    /* of particle hit interrupts. Assumed to be at least 1.     */
 
+   #pragma loopbound min 0 max 255
    while (tries_left > 0)
 
    {
@@ -2319,6 +2326,7 @@ void SelfTest_SU(sensor_index_t self_test_SU_index)
    /* HV Status register is checked. */
 
    /* SU voltages are measured */
+   #pragma loopbound min 7 max 7
    for (i = channel_0_e; i <= channel_6_e; i++)
    {
       MeasureVoltage(i);

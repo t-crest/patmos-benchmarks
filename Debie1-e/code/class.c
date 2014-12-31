@@ -44,7 +44,7 @@ unsigned char RoughLogarithm (unsigned int x)
 
    greatest_non_zero_bit = 0;
    shifted = x;
-
+   #pragma loopbound min 32 max 32
    while (shifted)
    {
       greatest_non_zero_bit++;
