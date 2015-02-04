@@ -1568,7 +1568,7 @@ for the same problem can be added later with another FOR_PROBLEM.
 
 #include "problems.h"
 
-#if defined(TRACE_HARNESS)
+#if defined(TRACE_HARNESS) //|| defined(PATMOS_TEST)
 #define CASE(TXT) printf ("\nCASE: %s:\n\n", TXT)
 #else
 #define CASE(TXT)
@@ -1596,7 +1596,7 @@ static void Fail_Check (char *message)
 /* Reports a failed check. */
 {
    check_errors ++;
-#if defined(TRACE_HARNESS)
+#if defined(TRACE_HARNESS) //|| defined(PATMOS_TEST)
    printf ("%s: FAILED (#%d)\n", message, check_errors);
 #endif
 }

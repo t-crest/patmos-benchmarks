@@ -1731,6 +1731,7 @@ void Convert_AD (ADC_parameters_t EXTERNAL * ADC_parameters)
  
    conversion_count = 0;
  
+   #pragma loopbound min 0 max 255
    while(conversion_count < ADC_parameters -> conversion_max_tries  
           && (END_OF_ADC != CONVERSION_ACTIVE))
    {
