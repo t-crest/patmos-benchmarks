@@ -1,3 +1,10 @@
+__fini:
+{}
+{
+  WX__fini              <= 1
+}
+{};
+
 abort:
 {}
 {
@@ -81,22 +88,22 @@ finish_pass_master:
 preload_image:
 {}
 {
-  Xpreload_image11         <= 1
+  Xpreload_image_bmp       <= 1
   Xpreload_image           <= 1
 
-  Xpreload_image + Xpreload_image11 = 1
+  Xpreload_image + Xpreload_image_bmp  = 1
 }
 {};
 
-start_input_pass292:
+start_input_pass:
 {}
 {
-  Xstart_input_pass292             <= 1
+  Xstart_input_pass               <= 1
   Xreset_input_controller          <= 1
   Xfinish_output_pass              <= 1
   Xprepare_for_output_pass         <= 1
 
-  Xstart_input_pass292 + Xreset_input_controller + Xfinish_output_pass + Xprepare_for_output_pass <= 1
+  Xstart_input_pass + Xreset_input_controller + Xfinish_output_pass + Xprepare_for_output_pass <= 1
 }
 {};
 
@@ -110,13 +117,13 @@ post_process_prepass:
 }
 {};
 
-start_input_pass127:
+start_input_pass_coef:
 {}
 {
-  Xstart_input_pass127             <= 1 
+  Xstart_input_pass_coef           <= 1 
   Xreset_input_controller          <= 1
 
-  Xstart_input_pass127 + Xreset_input_controller <= 1
+  Xstart_input_pass_coef + Xreset_input_controller <= 1
 }
 {};
 

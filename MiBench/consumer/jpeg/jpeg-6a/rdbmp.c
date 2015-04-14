@@ -184,7 +184,7 @@ get_24bit_row (j_compress_ptr cinfo, cjpeg_source_ptr sinfo)
  */
 
 METHODDEF(JDIMENSION)
-preload_image (j_compress_ptr cinfo, cjpeg_source_ptr sinfo)
+preload_image_bmp (j_compress_ptr cinfo, cjpeg_source_ptr sinfo)
 {
   bmp_source_ptr source = (bmp_source_ptr) sinfo;
   register FILE *infile = source->pub.input_file;
@@ -384,7 +384,7 @@ start_input_bmp (j_compress_ptr cinfo, cjpeg_source_ptr sinfo)
   source->whole_image = (*cinfo->mem->request_virt_sarray)
     ((j_common_ptr) cinfo, JPOOL_IMAGE, FALSE,
      row_width, (JDIMENSION) biHeight, (JDIMENSION) 1);
-  source->pub.get_pixel_rows = preload_image;
+  source->pub.get_pixel_rows = preload_image_bmp;
   if (cinfo->progress != NULL) {
     cd_progress_ptr progress = (cd_progress_ptr) cinfo->progress;
     progress->total_extra_passes++; /* count file input as separate pass */
