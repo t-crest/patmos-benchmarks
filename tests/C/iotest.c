@@ -5,7 +5,7 @@
 #include <sys/time.h>
 
 int main(int argc, char** argv) {
-    volatile _SPM unsigned *p = (_SPM unsigned*)0xf0000900;
+    volatile _SPM unsigned *p = (_SPM unsigned*)0xf0090000;
     for (int i = 0; i < 3; i++) {
 	for (int j = 0; j < 32; j++) {
 	unsigned leds = 0;
