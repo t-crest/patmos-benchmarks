@@ -37,6 +37,7 @@ align-nest
 bcp-1
 bitfld-3
 bitfld-5
+bswap-2
 builtin-bitops-1
 builtin-constant
 eeprof-1
@@ -54,6 +55,7 @@ pr22098-2
 pr22098-3
 pr22493-1
 pr23135
+pr28865
 pr32244-1
 pr34971
 pr36765
@@ -64,6 +66,7 @@ pr43008
 pr47237
 pr51447
 pr55750
+pr64006
 printf-chk-1
 restrict-1
 scal-to-vec1
