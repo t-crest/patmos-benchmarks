@@ -48,8 +48,8 @@ foreach( SRC ${SOURCES} )
 
   list(FIND SOURCES_NO_HW ${SRC} DISABLE_HW)
   if(${DISABLE_HW} EQUAL -1)
-    set(mrtc-${EXEC_NAME}-run-hw-test true)
     setup_build_for_emulator(${EXEC_NAME})
+    enable_emulator_test(mrtc-${EXEC_NAME})
   endif()
 
   run_io(mrtc-${EXEC_NAME} ${CMAKE_CURRENT_BINARY_DIR}/${EXEC_NAME} "" "" "")
@@ -61,7 +61,7 @@ foreach( SRC ${SOURCES} )
              ${CMAKE_CURRENT_BINARY_DIR}/${EXEC_NAME}
              ${CMAKE_CURRENT_BINARY_DIR}/mrtc-${EXEC_NAME}-wcet.txt
              360
-             3
+             4
              main)
   endif()
 endforeach(SRC)
