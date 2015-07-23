@@ -23,6 +23,9 @@ pr44575
 pr53645
 pr53645-2
 pr56866
+pr60003
+pr60960
+pr65053-2
 simd-6
 stdarg-3
 strct-stdarg-1

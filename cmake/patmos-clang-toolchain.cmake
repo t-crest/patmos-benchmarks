@@ -67,8 +67,8 @@ endif()
 #
 
 # use platin tool-config to configure clang/llvm and pasim
-set(CONFIG_PML    "scripts/patmos-config-sim.pml" CACHE STRING "PML target arch description file (default/pasim).")
-set(CONFIG_PML_HW "scripts/patmos-config-hw.pml"  CACHE STRING "PML target arch description file (hw/emulator).")
+set(CONFIG_PML          "scripts/patmos-config.pml" CACHE STRING "PML target arch description file (default).")
+set(CONFIG_PML_LARGERAM "scripts/patmos-config-64m.pml"  CACHE STRING "PML target arch description file (large RAM).")
 
 # support relative and absolute path to a .pml
 if (IS_ABSOLUTE ${CONFIG_PML})
@@ -77,10 +77,10 @@ else()
   set(CONFIG_PML_FILE "${PROJECT_SOURCE_DIR}/${CONFIG_PML}")
 endif()
 
-if (IS_ABSOLUTE ${CONFIG_PML_HW})
-  set(CONFIG_PML_HW_FILE ${CONFIG_PML_HW})
+if (IS_ABSOLUTE ${CONFIG_PML_LARGERAM})
+  set(CONFIG_PML_LARGERAM_FILE ${CONFIG_PML_LARGERAM})
 else()
-  set(CONFIG_PML_HW_FILE "${PROJECT_SOURCE_DIR}/${CONFIG_PML_HW}")
+  set(CONFIG_PML_LARGERAM_FILE "${PROJECT_SOURCE_DIR}/${CONFIG_PML_LARGERAM}")
 endif()
 
 find_program(PLATIN_EXECUTABLE NAMES platin DOC "Path to platin tool.")
@@ -91,7 +91,7 @@ endif()
 
 # trigger reconfigure if config PML changes
 configure_file(${CONFIG_PML_FILE} ${CMAKE_CURRENT_BINARY_DIR}/config.pml.timestamp.txt)
-configure_file(${CONFIG_PML_HW_FILE} ${CMAKE_CURRENT_BINARY_DIR}/config.hw.pml.timestamp.txt)
+configure_file(${CONFIG_PML_LARGERAM_FILE} ${CMAKE_CURRENT_BINARY_DIR}/config.largeram.pml.timestamp.txt)
 
 function(execute_platin_tool_config TOOL PML RESULTVAR)
   if (EXISTS ${PML})
@@ -112,17 +112,17 @@ endfunction()
 
 function(get_target_config TGT PML)
   get_target_property(config_prop ${TGT} BUILD_CONFIG)
-  if(${config_prop} STREQUAL "hw")
-    set(${PML} ${CONFIG_PML_HW_FILE} PARENT_SCOPE)
+  if(${config_prop} STREQUAL "largeram")
+    set(${PML} ${CONFIG_PML_LARGERAM_FILE} PARENT_SCOPE)
   else()
     set(${PML} ${CONFIG_PML_FILE} PARENT_SCOPE)
   endif()
 endfunction()
 
-execute_platin_tool_config("clang"  ${CONFIG_PML_FILE}    CLANG_PATMOS_CONFIG)
-execute_platin_tool_config("clang"  ${CONFIG_PML_HW_FILE} CLANG_PATMOS_CONFIG_HW)
-execute_platin_tool_config("pasim"  ${CONFIG_PML_FILE}    PASIM_CONFIG)
-execute_platin_tool_config("pasim"  ${CONFIG_PML_HW_FILE} PASIM_CONFIG_HW)
+execute_platin_tool_config("clang"  ${CONFIG_PML_FILE}          CLANG_PATMOS_CONFIG)
+execute_platin_tool_config("clang"  ${CONFIG_PML_LARGERAM_FILE} CLANG_PATMOS_CONFIG_LARGERAM)
+execute_platin_tool_config("pasim"  ${CONFIG_PML_FILE}          PASIM_CONFIG)
+execute_platin_tool_config("pasim"  ${CONFIG_PML_LARGERAM_FILE} PASIM_CONFIG_LARGERAM)
 
 # set some compiler-related variables;
 set(CMAKE_C_COMPILE_OBJECT   "<CMAKE_C_COMPILER>   -target ${TRIPLE} -fno-builtin -emit-llvm <DEFINES> <FLAGS> -o <OBJECT> -c <SOURCE>")
@@ -274,9 +274,23 @@ endif()
 # call this macro when a program should be built for emulator compatability
 macro (setup_build_for_emulator exec)
   if(PATMOS_EMULATOR AND ENABLE_EMULATOR)
+    # Note: This build-config is currently handled just like the default config,
+    #       i.e., it uses the same configuration for compiler and pasim, but
+    #       we keep this function around for possible future needs.
     set_target_properties(${exec} PROPERTIES BUILD_CONFIG "hw")
   endif()
 endmacro()
+
+# call this macro when a program requires more than 2Mb RAM
+macro (setup_build_for_large_ram exec)
+  set_target_properties(${exec} PROPERTIES BUILD_CONFIG "largeram")
+endmacro()
+
+# call this macro when a program should (also) be tested with the emulator
+macro (enable_emulator_test name)
+  set(${name}-run-hw-test true)
+endmacro()
+
 
 # We need to append the mem/cache configuration to the LINK_FLAGS for the clang link call and cmake does not support
 # defaults for target properties. thus we depend on the list of executables we collect in our add_executable() overwrite
@@ -292,10 +306,8 @@ function (setup_all_link_flags)
     endif()
 
     get_target_property(config_prop ${TGT} BUILD_CONFIG)
-    if(${config_prop} STREQUAL "hw")
-      # XXX base addresses not supported by PML yet
-      set(HW_LINK_FLAGS "${CLANG_PATMOS_CONFIG_HW} -mpatmos-stack-base=0x1f0000 -mpatmos-shadow-stack-base=0x200000")
-      set_target_properties(${TGT} PROPERTIES LINK_FLAGS "${existing_link_flags} ${HW_LINK_FLAGS}")
+    if(${config_prop} STREQUAL "largeram")
+      set_target_properties(${TGT} PROPERTIES LINK_FLAGS "${existing_link_flags} ${CLANG_PATMOS_CONFIG_LARGERAM}")
     else()
       set_target_properties(${TGT} PROPERTIES LINK_FLAGS "${existing_link_flags} ${CLANG_PATMOS_CONFIG}")
     endif()
@@ -331,8 +343,8 @@ macro (run_io name prog in out ref)
   if(PASIM_EXECUTABLE)
     get_filename_component(exec ${prog}  NAME_WE)
     get_target_property(config_prop ${exec} BUILD_CONFIG)
-    if (${config_prop} STREQUAL "hw")
-      set(sim_config ${PASIM_CONFIG_HW})
+    if (${config_prop} STREQUAL "largeram")
+      set(sim_config ${PASIM_CONFIG_LARGERAM})
     else()
       set(sim_config ${PASIM_CONFIG})
     endif()

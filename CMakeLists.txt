@@ -94,7 +94,7 @@ if(SUBVERSION_FOUND AND ENABLE_CTORTURE)
 
   # TODO: Update revision to be checked out every once in a while
   set(GCC_C_TORTURE_REPO svn://gcc.gnu.org/svn/gcc/trunk/gcc/testsuite/gcc.c-torture)
-  set(GCC_C_TORTURE_REVISION 200887)
+  set(GCC_C_TORTURE_REVISION 223851)
 
   # we only want the "execute" part of the torture tests
   execute_process(COMMAND ${Subversion_SVN_EXECUTABLE}

@@ -41,8 +41,8 @@ foreach(SRC ${SOURCES})
 
     add_executable(${EXEC_NAME} ${SRC})
     if(${NO_HW_TEST} EQUAL -1)
-        set(torture-${EXEC_NAME}-run-hw-test true)
 	setup_build_for_emulator(${EXEC_NAME})
+	enable_emulator_test(torture-${EXEC_NAME})
     endif()
 
     run_io(torture-${EXEC_NAME}
