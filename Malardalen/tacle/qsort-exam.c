@@ -54,7 +54,7 @@ int istack[100];
 
 void sort(unsigned long n)
 {
-  unsigned long i,ir=n,j,k,l=1;
+  unsigned long i=2,ir=n,j,k,l=1;
   int jstack=0;
   int flag;
   float a,temp;
