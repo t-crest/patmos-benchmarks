@@ -51,6 +51,7 @@ set(ENABLE_MIBENCH true CACHE BOOL "Enable MiBench tests)")
 set(ENABLE_MEDIABENCH true CACHE BOOL "Enable Mediabench tests)")
 set(ENABLE_DEBIE true CACHE BOOL "Enable Debie tests)")
 set(ENABLE_HELI true CACHE BOOL "Enable Heli tests)")
+set(ENABLE_NONFREE true CACHE BOOL "Enable non-free tests)")
 
 # add benchmark sub-directories
 if(ENABLE_DEBIE)
@@ -76,10 +77,12 @@ endif()
 add_subdirectory(WTC14-misc)
 
 # add non-free benchmarks
-if(EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/nonfree)
-  add_subdirectory(nonfree)
-else()
-  message("Omitting non-free benchmarks.")
+if(ENABLE_NONFREE)
+  if(EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/nonfree)
+    add_subdirectory(nonfree)
+  else()
+    message("Omitting non-free benchmarks.")
+  endif()
 endif()
 
 
