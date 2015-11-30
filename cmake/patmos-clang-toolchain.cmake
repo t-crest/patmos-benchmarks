@@ -291,6 +291,14 @@ macro (enable_emulator_test name)
   set(${name}-run-hw-test true)
 endmacro()
 
+macro (use_source_flowfacts name)
+  # TODO add option to disable trace analysis completely (set TRACE_FACTS to no)
+  set(${name}-trace-facts "enabled")
+endmacro()
+
+macro (add_pml_input name pml)
+  set(${name}-add-pml-input ${pml})
+endmacro()
 
 # We need to append the mem/cache configuration to the LINK_FLAGS for the clang link call and cmake does not support
 # defaults for target properties. thus we depend on the list of executables we collect in our add_executable() overwrite
@@ -399,14 +407,30 @@ else()
   endif()
 endif()
 
+function (get_target_platin_options name options)
+  
+  if(${name}-add-pml-input)
+    set(add_pml --input ${${name}-add-pml-input})
+  endif()
+
+  if(${name}-trace-facts STREQUAL "enabled")
+    set(trace_opts --recorders "g:bcil" --enable-trace-analysis)
+  else()
+    set(trace_opts --recorders "g:bcil" --use-trace-facts)
+  endif()
+
+  set(${options} ${trace_opts} ${add_pml} PARENT_SCOPE)
+endfunction()
+
 macro (run_wcet name prog report timeout factor entry)
   if (PLATIN_ENABLE_WCET)
     get_filename_component(exec ${prog}  NAME_WE)
     set_property(DIRECTORY APPEND PROPERTY ADDITIONAL_MAKE_CLEAN_FILES ${report} ${report}.dir)
     get_target_config(${exec} config_pml)
-    add_test(NAME ${name} COMMAND ${PLATIN_EXECUTABLE} wcet ${PLATIN_WCA_TOOL} ${PLATIN_OPTIONS}
-                                                            --recorders "g:bcil" --analysis-entry ${entry}
-                                                            --use-trace-facts  --binary ${prog} --report ${report}
+    get_target_platin_options(${name} platin_options)
+    add_test(NAME ${name} COMMAND ${PLATIN_EXECUTABLE} wcet ${PLATIN_WCA_TOOL} ${PLATIN_OPTIONS} ${platin_options}
+                                                            --analysis-entry ${entry}
+                                                            --binary ${prog} --report ${report}
                                                             --input ${config_pml} --input ${prog}.pml
                                                             --check ${factor}
                                                             --objdump-command ${LLVM_OBJDUMP_EXECUTABLE} --pasim-command ${PASIM_EXECUTABLE}
