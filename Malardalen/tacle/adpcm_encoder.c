@@ -305,7 +305,7 @@ int my_sin( int rad )
 
 
   /* MAX dependent on rad's value, say 50 */
-  _Pragma("loopbound min 0 max 0")
+  _Pragma("loopbound min 0 max 2")
   while ( rad > 2 * PI ) {
     rad -= 2 * PI;
   }
@@ -795,13 +795,15 @@ int main(void)
   /* XXmain_0, MAX: 2 */
   /* Since the number of times we loop in my_sin depends on the argument we
      add the fact: xxmain_0:[]: */
-  _Pragma("loopbound min 3 max 3")
+  // TODO generates wrong loopbound in pml
+  //_Pragma("loopbound min 3 max 3")
   for ( i = 0 ; i < SIZE ; i++) {
     test_data[i] = (int) j * my_cos( f * PI * i );
   }
 
   /* MAX: 2 */
- _Pragma("loopbound min 2 max 2")
+  // TODO generates wrong loopbound in pml
+  //_Pragma("loopbound min 2 max 2")
   for ( i = 0 ; i < IN_END ; i += 2 ) {
     compressed[i/2] = encode( test_data[i], test_data[i+1] );
   }
