@@ -1,8 +1,5 @@
 #include "wccfile.h"
 
-#define size_t unsigned long
-#define EOF -1
-
 size_t wccfread(void* ptr, size_t size, size_t count, struct wccFILE* stream)
 {
   if ( wccfeof( stream ) ) {
