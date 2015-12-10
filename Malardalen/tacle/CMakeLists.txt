@@ -53,14 +53,14 @@ foreach( SRC ${SOURCES} )
   use_source_flowfacts(tacle-mrtc_platin-${EXEC_NAME})
   # add_pml_input(mrtc_platin-${EXEC_NAME} flow.pml)
 
-  run_io(mrtc-${EXEC_NAME} ${CMAKE_CURRENT_BINARY_DIR}/${EXEC_NAME} "" "" "")
+  run_io(tacle-mrtc-${EXEC_NAME} ${CMAKE_CURRENT_BINARY_DIR}/${EXEC_NAME} "" "" "")
 
   # Platin WCET analysis
   list(FIND SOURCES_NO_WCET ${SRC} DISABLE_WCA)
   if(${DISABLE_WCA} EQUAL -1)
     run_wcet(tacle-mrtc_platin-${EXEC_NAME}
              ${CMAKE_CURRENT_BINARY_DIR}/${EXEC_NAME}
-             ${CMAKE_CURRENT_BINARY_DIR}/mrtc-${EXEC_NAME}-wcet.txt
+             ${CMAKE_CURRENT_BINARY_DIR}/tacle-mrtc-${EXEC_NAME}-wcet.txt
              360
              16 # needs high factor because we do not use trace facts
              main)

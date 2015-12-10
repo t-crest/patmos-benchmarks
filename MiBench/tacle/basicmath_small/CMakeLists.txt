@@ -4,13 +4,10 @@ add_executable(basicmath_small basicmath_small.c   rad2deg.c  cubic.c   isqrt.c 
 
 run_io(tacle-mibench-basicmath_small ${CMAKE_CURRENT_BINARY_DIR}/basicmath_small "" "" "")
 
-# Takes nearly one hour on the simulator
-#run_io(mibench-basicmath_small ${CMAKE_CURRENT_BINARY_DIR}/basicmath_small
-#	-
-#        output_small.txt
-#        ${CMAKE_CURRENT_SOURCE_DIR}/ref_small.txt)
-# Takes a very, *very* long time
-#run_io(mibench-basicmath_small ${CMAKE_CURRENT_BINARY_DIR}/basicmath_large
-#	-
-#        output_large.txt
-#        ${CMAKE_CURRENT_SOURCE_DIR}/ref_large.txt)
+run_wcet(tacle-mibench_platin-basicmath_small
+         ${CMAKE_CURRENT_BINARY_DIR}/basicmath_small
+         ${CMAKE_CURRENT_BINARY_DIR}/tacle-mibench-basicmath_small-wcet.txt
+         360
+         16 # needs high factor because we do not use trace facts
+         main)
+

@@ -8,4 +8,9 @@ endif()
 
 run_io(tacle-mibench-rijndael_decoder ${CMAKE_CURRENT_BINARY_DIR}/rijndael_decoder "" "" "")
 
-
+run_wcet(tacle-mibench_platin-rijndael_decoder
+         ${CMAKE_CURRENT_BINARY_DIR}/rijndael_decoder
+         ${CMAKE_CURRENT_BINARY_DIR}/tacle-mibench-rijndael_decoder-wcet.txt
+         360
+         16 # needs high factor because we do not use trace facts
+         main)
