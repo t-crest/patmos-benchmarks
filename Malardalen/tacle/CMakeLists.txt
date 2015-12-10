@@ -47,10 +47,10 @@ foreach( SRC ${SOURCES} )
   list(FIND SOURCES_NO_HW ${SRC} DISABLE_HW)
   if(${DISABLE_HW} EQUAL -1)
     setup_build_for_emulator(${EXEC_NAME})
-    enable_emulator_test(mrtc-${EXEC_NAME})
+    enable_emulator_test(tacle-mrtc-${EXEC_NAME})
   endif()
 
-  use_source_flowfacts(mrtc_platin-${EXEC_NAME})
+  use_source_flowfacts(tacle-mrtc_platin-${EXEC_NAME})
   # add_pml_input(mrtc_platin-${EXEC_NAME} flow.pml)
 
   run_io(mrtc-${EXEC_NAME} ${CMAKE_CURRENT_BINARY_DIR}/${EXEC_NAME} "" "" "")
@@ -58,7 +58,7 @@ foreach( SRC ${SOURCES} )
   # Platin WCET analysis
   list(FIND SOURCES_NO_WCET ${SRC} DISABLE_WCA)
   if(${DISABLE_WCA} EQUAL -1)
-    run_wcet(mrtc_platin-${EXEC_NAME}
+    run_wcet(tacle-mrtc_platin-${EXEC_NAME}
              ${CMAKE_CURRENT_BINARY_DIR}/${EXEC_NAME}
              ${CMAKE_CURRENT_BINARY_DIR}/mrtc-${EXEC_NAME}-wcet.txt
              360

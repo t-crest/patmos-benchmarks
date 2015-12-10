@@ -45,19 +45,21 @@
 /*
  * Changes:
  * AJ 2014/08/20: Don't access arr[20] at index 20, return something.
+ * SH 2015/12/03: Moved array initialization out of select to avoid 
+ *                unbounded memcpy.
  */
 #define SWAP(a,b) temp=(a);(a)=(b);(b)=temp;
+
+static float arr[20] = {
+  5.0f,   4.0f,  10.3f,   1.1f,   5.7f, 
+  100.0f, 231.0f, 111.0f,  49.5f,  99.0f,
+  10.0f, 150.0f, 222.22f, 101.0f, 77.0f, 
+  44.0f,  35.0f,  20.54f, 99.99f, 888.88f
+};
 
 
 static float select(unsigned long k, unsigned long n)
 {
-  float arr[20] = {
-    5.0f,   4.0f,  10.3f,   1.1f,   5.7f, 
-    100.0f, 231.0f, 111.0f,  49.5f,  99.0f,
-    10.0f, 150.0f, 222.22f, 101.0f, 77.0f, 
-    44.0f,  35.0f,  20.54f, 99.99f, 888.88f
-  };
-
   unsigned long i,ir,j,l,mid;
   float a,temp;
   int flag, flag2;
