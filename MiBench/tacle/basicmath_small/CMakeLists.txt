@@ -4,10 +4,12 @@ add_executable(basicmath_small basicmath_small.c   rad2deg.c  cubic.c   isqrt.c 
 
 run_io(tacle-mibench-basicmath_small ${CMAKE_CURRENT_BINARY_DIR}/basicmath_small "" "" "")
 
+use_source_flowfacts(tacle-mibench_platin-basicmath_small)
+
 run_wcet(tacle-mibench_platin-basicmath_small
          ${CMAKE_CURRENT_BINARY_DIR}/basicmath_small
          ${CMAKE_CURRENT_BINARY_DIR}/tacle-mibench-basicmath_small-wcet.txt
-         360
+         720
          16 # needs high factor because we do not use trace facts
          main)
 

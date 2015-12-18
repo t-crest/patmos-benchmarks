@@ -293,7 +293,8 @@ endmacro()
 
 macro (use_source_flowfacts name)
   # TODO add option to disable trace analysis completely (set TRACE_FACTS to no)
-  set(${name}-trace-facts "enabled")
+  # Lets still run the trace analysis and compare the results
+  set(${name}-trace-facts "compare")
 endmacro()
 
 macro (add_pml_input name pml)
@@ -413,8 +414,8 @@ function (get_target_platin_options name options)
     set(add_pml --input ${${name}-add-pml-input})
   endif()
 
-  if(${name}-trace-facts STREQUAL "enabled")
-    set(trace_opts --recorders "g:bcil" --enable-trace-analysis)
+  if(${name}-trace-facts STREQUAL "compare")
+    set(trace_opts --recorders "g:bcil" --compare-trace-facts)
   else()
     set(trace_opts --recorders "g:bcil" --use-trace-facts)
   endif()

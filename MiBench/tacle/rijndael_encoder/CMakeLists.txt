@@ -8,6 +8,8 @@ endif()
 
 run_io(tacle-mibench-rijndael_encoder ${CMAKE_CURRENT_BINARY_DIR}/rijndael_encoder "" "" "")
 
+use_source_flowfacts(tacle-mibench_platin-rijndael_encoder)
+
 run_wcet(tacle-mibench_platin-rijndael_encoder
          ${CMAKE_CURRENT_BINARY_DIR}/rijndael_encoder
          ${CMAKE_CURRENT_BINARY_DIR}/tacle-mibench-rijndael_encoder-wcet.txt
