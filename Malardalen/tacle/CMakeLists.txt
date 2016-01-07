@@ -62,7 +62,7 @@ foreach( SRC ${SOURCES} )
              ${CMAKE_CURRENT_BINARY_DIR}/${EXEC_NAME}
              ${CMAKE_CURRENT_BINARY_DIR}/tacle-mrtc-${EXEC_NAME}-wcet.txt
              360
-             16 # needs high factor because we do not use trace facts
+             40 # needs high factor because we do not use trace facts
              main)
   endif()
 endforeach(SRC)
