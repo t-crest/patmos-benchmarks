@@ -119,11 +119,6 @@ function(get_target_config TGT PML)
   endif()
 endfunction()
 
-execute_platin_tool_config("clang"  ${CONFIG_PML_FILE}          CLANG_PATMOS_CONFIG)
-execute_platin_tool_config("clang"  ${CONFIG_PML_LARGERAM_FILE} CLANG_PATMOS_CONFIG_LARGERAM)
-execute_platin_tool_config("pasim"  ${CONFIG_PML_FILE}          PASIM_CONFIG)
-execute_platin_tool_config("pasim"  ${CONFIG_PML_LARGERAM_FILE} PASIM_CONFIG_LARGERAM)
-
 # set some compiler-related variables;
 set(CMAKE_C_COMPILE_OBJECT   "<CMAKE_C_COMPILER>   -target ${TRIPLE} -fno-builtin -emit-llvm <DEFINES> <FLAGS> <INCLUDES> -o <OBJECT> -c <SOURCE>")
 set(CMAKE_CXX_COMPILE_OBJECT "<CMAKE_CXX_COMPILER> -target ${TRIPLE} -fno-builtin -emit-llvm <DEFINES> <FLAGS> <INCLUDES> -o <OBJECT> -c <SOURCE>")
@@ -176,28 +171,7 @@ if(NOT LLVM_AR_EXECUTABLE)
   message(FATAL_ERROR "llvm-ar required for a Patmos build.")
 endif()
 
-
 set(CMAKE_AR ${LLVM_AR_EXECUTABLE} CACHE FILEPATH "Archiver")
-
-# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
-# find llvm-as
-find_program(LLVM_AS_EXECUTABLE NAMES patmos-llvm-as llvm-as DOC "Path to the llvm-as tool.")
-
-if(NOT LLVM_AS_EXECUTABLE)
-  message(FATAL_ERROR "llvm-as required for a Patmos build.")
-endif()
-
-set(CMAKE_AS ${LLVM_AS_EXECUTABLE} CACHE FILEPATH "LLVM assembler")
-
-# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
-# find llvm-ranlib
-find_program(LLVM_RANLIB_EXECUTABLE NAMES patmos-ranlib patmos-llvm-ranlib llvm-ranlib DOC "Path to the llvm-ranlib tool.")
-
-if(NOT LLVM_RANLIB_EXECUTABLE)
-  message(FATAL_ERROR "llvm-ranlib required for a Patmos build.")
-endif()
-
-set(CMAKE_RANLIB ${LLVM_RANLIB_EXECUTABLE} CACHE FILEPATH "Ranlib tool")
 
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 # find llvm-link
@@ -206,26 +180,6 @@ find_program(LLVM_LINK_EXECUTABLE NAMES patmos-llvm-link llvm-link DOC "Path to 
 if(NOT LLVM_LINK_EXECUTABLE)
   message(FATAL_ERROR "llvm-link required for a Patmos build.")
 endif()
-
-# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
-# find llvm-dis
-find_program(LLVM_DIS_EXECUTABLE NAMES patmos-llvm-dis llvm-dis DOC "Path to the llvm-dis tool.")
-
-if(NOT LLVM_DIS_EXECUTABLE)
-  message(FATAL_ERROR "llvm-dis required for a Patmos build.")
-endif()
-
-set(CMAKE_DIS ${LLVM_DIS_EXECUTABLE} CACHE FILEPATH "LLVM disassembler")
-
-# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
-# find llvm-nm
-find_program(LLVM_NM_EXECUTABLE NAMES patmos-llvm-nm llvm-nm DOC "Path to the llvm-nm tool.")
-
-if(NOT LLVM_NM_EXECUTABLE)
-  message(FATAL_ERROR "llvm-nm required for a Patmos build.")
-endif()
-
-set(CMAKE_NM ${LLVM_NM_EXECUTABLE} CACHE FILEPATH "Archive inspector")
 
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 # find llvm-objdump
@@ -408,6 +362,13 @@ else()
     set(PLATIN_ENABLE_WCET false)
     message(WARNING "No WCET analysis tool available (WCA disabled and a3 not found). Disabling WCET tests.")
   endif()
+endif()
+
+if(PLATIN_ENABLE_WCET)
+	execute_platin_tool_config("clang"  ${CONFIG_PML_FILE}          CLANG_PATMOS_CONFIG)
+	execute_platin_tool_config("clang"  ${CONFIG_PML_LARGERAM_FILE} CLANG_PATMOS_CONFIG_LARGERAM)
+	execute_platin_tool_config("pasim"  ${CONFIG_PML_FILE}          PASIM_CONFIG)
+	execute_platin_tool_config("pasim"  ${CONFIG_PML_LARGERAM_FILE} PASIM_CONFIG_LARGERAM)
 endif()
 
 function (get_target_platin_options name options)
