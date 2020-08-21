@@ -201,7 +201,7 @@ set(PASIM_EXTRA_OPTIONS "" CACHE STRING "Additional command-line options passed 
 separate_arguments(PASIM_EXTRA_OPTIONS)
 
 if (ENABLE_EMULATOR)
-  find_program(PATMOS_EMULATOR NAMES patmos-emulator DOC "Path to the Chisel-based patmos emulator.")
+  find_program(PATMOS_EMULATOR NAMES patemu DOC "Path to the Chisel-based patmos emulator.")
   set(PATMOS_EMULATOR_OPTIONS "" CACHE STRING "Additional command-line options passed to the Chisel-based patmos emulator.")
   separate_arguments(PATMOS_EMULATOR_OPTIONS)
 else()
@@ -221,7 +221,7 @@ if(PATMOS_EMULATOR)
   set(ENABLE_TESTING true)
 else()
   if(ENABLE_EMULATOR)
-    message(WARNING "patmos-emulator not found, testing with emulator is disabled.")
+    message(WARNING "Patmos emulator (patemu) not found, testing with emulator is disabled.")
   endif()
 endif()
 
