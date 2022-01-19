@@ -61,22 +61,22 @@ void sort(unsigned long n)
 
   _Pragma("marker outside_L1")
   flag = 0;
-  __llvm_pcmarker(0);
+  //__llvm_pcmarker(0);
   _Pragma("loopbound min 11 max 11")
   for (;i;) {
-    __llvm_pcmarker(1);
+    //__llvm_pcmarker(1);
     _Pragma("marker inside_L1")
     if (ir-l < M) {
-      __llvm_pcmarker(4);
+      //__llvm_pcmarker(4);
       _Pragma("loopbound min 0 max 4")
       for (j=l+1;j<=ir;j++) {
-	__llvm_pcmarker(5);
+	//__llvm_pcmarker(5);
 	a=arr[j];
-	__llvm_pcmarker(6);
+	//__llvm_pcmarker(6);
 	_Pragma("loopbound min 1 max 2")
 	for (i=j-1;i>=l;i--) {
 	  if (arr[i] <= a) break;
-	  __llvm_pcmarker(7);
+	  //__llvm_pcmarker(7);
 	  arr[i+1]=arr[i];
 	}
 	arr[i+1]=a;
@@ -101,22 +101,22 @@ void sort(unsigned long n)
       i=l+1;
       j=ir;
       a=arr[l+1];
-      __llvm_pcmarker(2);
+      //__llvm_pcmarker(2);
       _Pragma("loopbound min 1 max 3")
       for (;i;) {
-	__llvm_pcmarker(3);
+	//__llvm_pcmarker(3);
 	i++;
-	__llvm_pcmarker(8);
+	//__llvm_pcmarker(8);
 	_Pragma("loopbound min 0 max 12")
 	while (arr[i] < a) {
-	  __llvm_pcmarker(9);
+	  //__llvm_pcmarker(9);
 	  i++;
 	}
 	j--;
-	__llvm_pcmarker(10);
+	//__llvm_pcmarker(10);
 	_Pragma("loopbound min 0 max 16")
 	while (j>=0&&arr[j] > a) {
-	  __llvm_pcmarker(11);
+	  //__llvm_pcmarker(11);
 	  j--;
 	}
 	if (j < i) break;

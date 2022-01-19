@@ -278,10 +278,10 @@ void fir_filter_int( long* in, long* out, long in_len,
     #ifdef PROFILING
     iters_j = 0;
     #endif
-    __llvm_pcmarker(0);
+    //__llvm_pcmarker(0);
     _Pragma("loopbound min 17 max 26")
     for(j = 1 ; j < acc_length ; j++) {
-      __llvm_pcmarker(1);
+      //__llvm_pcmarker(1);
       #ifdef PROFILING
       iters_j++;
       #endif

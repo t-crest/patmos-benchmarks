@@ -126,12 +126,12 @@ int main(void){
   stabMotorSpeed3 = 0;
     
   sec = 0;
-  __llvm_pcmarker(31);
+  //__llvm_pcmarker(31);
   while (1) {          
-    __llvm_pcmarker(32);
+    //__llvm_pcmarker(32);
     if ( (ADCSR & PIN6) == 0) { // end of ADC conversion
       processSensorData();  
-      __llvm_pcmarker(33);
+      //__llvm_pcmarker(33);
     }
     runFlightPlan();
   }
@@ -224,7 +224,7 @@ void processSensorData(void){
 
     if (heliState == HOVER) {
 
-      __llvm_pcmarker(21);
+      //__llvm_pcmarker(21);
       addSample(aromX,7,data_in);
       filtered_data = fixFilter(aromX,7); 
 	                               
@@ -267,7 +267,7 @@ void processSensorData(void){
                                                           
     if (heliState == HOVER){
       
-      __llvm_pcmarker(22);
+      //__llvm_pcmarker(22);
       addSample(aromY, 7, data_in);
       filtered_data = fixFilter(aromY,7);
 	                               
@@ -307,7 +307,7 @@ void processSensorData(void){
                                                               
     if (heliState == HOVER){
 
-      __llvm_pcmarker(23);
+      //__llvm_pcmarker(23);
       addSample(aromZ, 7, data_in);
       filtered_data = fixFilter(aromZ,8);
 	                               

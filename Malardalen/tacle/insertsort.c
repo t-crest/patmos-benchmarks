@@ -79,10 +79,10 @@ int main( void )
   #ifdef PROFILING
   iters_i = 0;
   #endif
-  __llvm_pcmarker(2);
+  //__llvm_pcmarker(2);
   _Pragma("loopbound min 9 max 9")
   while(i <= 10){
-    __llvm_pcmarker(3);
+    //__llvm_pcmarker(3);
     cnt1++;
     #ifdef PROFILING
     iters_i++;
@@ -93,11 +93,11 @@ int main( void )
     #ifdef PROFILING
     iters_a = 0;
     #endif
-    __llvm_pcmarker(0);
+    //__llvm_pcmarker(0);
     _Pragma("loopbound min 1 max 9")
     while (a[j] < a[j-1])
     {
-      __llvm_pcmarker(1);
+      //__llvm_pcmarker(1);
       #ifdef PROFILING
       iters_a++;
       #endif
