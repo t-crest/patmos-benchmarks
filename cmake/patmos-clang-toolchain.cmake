@@ -120,9 +120,12 @@ function(get_target_config TGT PML)
 endfunction()
 
 # set some compiler-related variables;
-set(CMAKE_C_COMPILE_OBJECT   "<CMAKE_C_COMPILER>   -target ${TRIPLE} -fno-builtin -emit-llvm <DEFINES> <FLAGS> <INCLUDES> -o <OBJECT> -c <SOURCE>")
+set(CMAKE_C_COMPILE_OBJECT   "<CMAKE_C_COMPILER>   -target ${TRIPLE} -fno-builtin -emit-llvm <DEFINES> <FLAGS> <INCLUDES> -o <OBJECT> -c <SOURCE> -Wno-everything")
 set(CMAKE_CXX_COMPILE_OBJECT "<CMAKE_CXX_COMPILER> -target ${TRIPLE} -fno-builtin -emit-llvm <DEFINES> <FLAGS> <INCLUDES> -o <OBJECT> -c <SOURCE>")
-set(CMAKE_C_LINK_EXECUTABLE  "${PATMOS_GOLD_ENV}<CMAKE_C_COMPILER> -target ${TRIPLE} -fno-builtin <FLAGS> <CMAKE_C_LINK_FLAGS> <LINK_FLAGS> <OBJECTS> -o <TARGET> -mpreemit-bitcode=<TARGET>.bc -mserialize=<TARGET>.pml -mpatmos-sca-serialize=<TARGET>.scml <LINK_LIBRARIES>")
+if(PLATIN_ENABLE_WCET)
+  set(WCET_FLAGS "-mpreemit-bitcode=<TARGET>.bc -mserialize=<TARGET>.pml -mpatmos-sca-serialize=<TARGET>.scml")
+endif()
+set(CMAKE_C_LINK_EXECUTABLE  "${PATMOS_GOLD_ENV}<CMAKE_C_COMPILER> -target ${TRIPLE} -fno-builtin <FLAGS> <CMAKE_C_LINK_FLAGS> <LINK_FLAGS> <OBJECTS> -o <TARGET> ${WCET_FLAGS} <LINK_LIBRARIES>")
 set(CMAKE_FORCE_C_OUTPUT_EXTENSION ".bc" FORCE)
 
 # RTEMS linking support

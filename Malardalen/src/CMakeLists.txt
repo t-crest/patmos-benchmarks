@@ -26,16 +26,16 @@ set( SOURCES
   minver.c
   ndes.c
   ns.c
-  nsichneu.c # exceed method cache size?
+  nsichneu.c
   qsort-exam.c
   qurt.c
   recursion.c # recursive
   select.c
   sqrt.c
   statemate.c
-  # st.c # needs math library
+  st.c
   ud.c
-  # whet.c # needs math library
+  whet.c
   )
 set( SOURCES_NO_HW ) # exceed memory size
 set( SOURCES_NO_WCET fac.c recursion.c duff.c) # recursion, non-natural loops

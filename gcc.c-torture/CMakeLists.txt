@@ -6,7 +6,58 @@ file(STRINGS FailHost.txt SOURCES_FAIL_HOST)
 
 # Sources that fail building for Patmos
 # TODO: Try to get rid of the build errors
-file(STRINGS FailBuildTarget.txt SOURCES_FAIL_BUILDTARGET)
+SET(SOURCES_FAIL_BUILDTARGET 
+	"20040811-1"
+	"920625-1"
+	"920908-1"
+	"931004-10"
+	"931004-12"
+	"931004-14"
+	"931004-2"
+	"931004-4"
+	"931004-6"
+	"931004-8"
+	"980526-1"
+	"990413-2"
+	"built-in-setjmp"
+	"frame-address"
+	"loop-2f"
+	"loop-2g"
+	"pr17377"
+	"pr38151"
+	"pr40022"
+	"pr40657"
+	"pr43220"
+	"pr44575"
+	"pr53645"
+	"pr53645-2"
+	"pr56866"
+	"pr60003"
+	"pr60960"
+	"pr65053-2"
+	"simd-6"
+	"stdarg-3"
+	"strct-stdarg-1"
+	"strct-varg-1"
+	"va-arg-22"
+	"vla-dealloc-1"
+	"20030323-1"
+	"complex-5" # Uses '__divsc3'
+	# Following fail on new LLVM at runtime
+	"20031003-1"
+    "20040409-1"
+    "20040409-2"
+    "20040409-3"
+    "20040709-1"
+    "20040709-2"
+    "920711-1"
+    "930529-1"
+    "950809-1"
+    "960312-1"
+    "pr23047"
+	"930518-1"
+	"20021127-1"
+)
 
 # Sources that fail during a non-optimizing (-O0) build
 file(STRINGS FailO0.txt SOURCES_FAIL_NONOPT)
