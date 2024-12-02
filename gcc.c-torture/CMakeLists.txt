@@ -43,7 +43,7 @@ SET(SOURCES_FAIL_BUILDTARGET
 	"vla-dealloc-1"
 	"20030323-1"
 	"complex-5" # Uses '__divsc3'
-	# Following fail on new LLVM at runtime
+	# Following fail on new LLVM at runtime but only on pasim (succeed on patemu)
 	"20031003-1"
     "20040409-1"
     "20040409-2"
@@ -51,11 +51,11 @@ SET(SOURCES_FAIL_BUILDTARGET
     "20040709-1"
     "20040709-2"
     "920711-1"
-    "930529-1"
-    "950809-1"
-    "960312-1"
-    "pr23047"
 	"930518-1"
+    "930529-1" # Infinite loop
+    "950809-1"
+    "960312-1" 
+    "pr23047"
 	"20021127-1"
 )
 
